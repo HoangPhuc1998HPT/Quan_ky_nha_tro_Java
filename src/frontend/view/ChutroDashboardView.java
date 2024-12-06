@@ -9,7 +9,7 @@ import java.awt.*;
 public class ChutroDashboardView {
     private final JFrame frame;
 
-    public ChutroDashboardView() {
+    public ChutroDashboardView(String entryUsername) {
         frame = new JFrame("ChutroDashboardView");
         frame.setSize(600, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,7 +33,7 @@ public class ChutroDashboardView {
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.ipadx = 2;
-        show_information_chutro.addActionListener(e-> DashboardChutroController.go_to_show_information_churtro());
+        show_information_chutro.addActionListener(e-> DashboardChutroController.go_to_show_information_churtro(entryUsername));
         panel.add(show_information_chutro, gbc);
         // Tạo nút tạo phòng trọ
         JButton create_rooms = new JButton("Tạo phòng trọ");
@@ -73,7 +73,8 @@ public class ChutroDashboardView {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(ChutroDashboardView::new);
+        String entryUsername = "demo";
+        SwingUtilities.invokeLater(() -> new ChutroDashboardView(entryUsername));
     }
 
 }
