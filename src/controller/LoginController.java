@@ -1,6 +1,7 @@
 // Trong thư mục controller
 package controller;
 
+
 import backend.Login;
 import frontend.view.ChutroDashboardView;
 import frontend.view.adminDashboard;
@@ -8,6 +9,10 @@ import frontend.view.loginView;
 import frontend.view.nguoiThueTroDashboardView;
 
 import javax.swing.*;
+
+import javax.swing.JFrame;
+
+
 
 
 public class LoginController {
@@ -21,6 +26,7 @@ public class LoginController {
     public static void showLoginView(JFrame frame) {
         // Mã để hiển thị giao diện đăng nhập
         frame.setVisible(false);
+
         new loginView();
         System.out.println("Chuyển đến giao diện đăng nhập");
     }
@@ -47,4 +53,5 @@ public class LoginController {
             new adminDashboard();
         }
     }
+
 }

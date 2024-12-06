@@ -1,4 +1,6 @@
 package backend;
+
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,8 +16,6 @@ public class Login {
         int check_login = 1 ;
         return check_login;
     }
-
-
 
 
 }
