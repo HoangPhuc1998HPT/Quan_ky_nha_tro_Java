@@ -7,9 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 
 public class loginView {
-    private JFrame f;
-    private JTextField entryUsername;
-    private JPasswordField entryPassword ;
+    private final JFrame f;
+    private final JTextField entryUsername;
+    private final JPasswordField entryPassword ;
 
     public loginView() {
         f = new JFrame("Đăng nhập");
