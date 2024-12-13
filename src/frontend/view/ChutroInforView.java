@@ -6,7 +6,7 @@ import java.awt.*;
 import static controller.DashboardChutroController.go_back_dashboardchutro;
 // trả về 1 mảng truy cập thông tin của chủ trọ từ đó đưa thông tin vào các trường
 public class ChutroInforView {
-    public ChutroInforView(String id_chutro_infor) {
+    public ChutroInforView(String id_chutro) {
         JFrame frame = new JFrame("Thông tin chủ trọ");
         frame.setSize(600, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,7 +92,7 @@ public class ChutroInforView {
         JButton button_back = new JButton("Quay lại");
         gbc.gridx = 1;
         gbc.gridy = 6;
-        button_back.addActionListener(e -> go_back_dashboardchutro(frame,id_chutro_infor ));
+        button_back.addActionListener(e -> go_back_dashboardchutro(frame,id_chutro ));
         panel.add(button_back, gbc);
 
         // Thêm panel vào frame
@@ -104,7 +104,7 @@ public class ChutroInforView {
     }
 
     public static void main(String[] args) {
-        String id_chutro_infor = "CT001";
-        SwingUtilities.invokeLater(() -> new ChutroInforView(id_chutro_infor));
+        String id_chutro = "CT001";
+        SwingUtilities.invokeLater(() -> new ChutroInforView(id_chutro));
     }
 }

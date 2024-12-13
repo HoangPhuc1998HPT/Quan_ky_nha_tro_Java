@@ -6,10 +6,13 @@ import controller.LoginController;
 import javax.swing.*;
 import java.awt.*;
 
+import static backend.model.chutro.get_id_chutro_from_username;
+
 public class ChutroDashboardView {
     private final JFrame frame;
 
     public ChutroDashboardView(String entryUsername) {
+        String id_chutro = get_id_chutro_from_username(entryUsername);
         frame = new JFrame("ChutroDashboardView");
         frame.setSize(600, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -39,7 +42,7 @@ public class ChutroDashboardView {
         JButton create_rooms = new JButton("Tạo phòng trọ");
         gbc.gridx = 0;
         gbc.gridy = 2;
-        create_rooms.addActionListener(e-> DashboardChutroController.go_to_create_room());
+        create_rooms.addActionListener(e-> DashboardChutroController.go_to_create_room(id_chutro));
         panel.add(create_rooms, gbc);
         // Tạo nút xem danh sách phòng trọ
         JButton show_list_rooms = new JButton(" Xem danh sách phòng trọ");
