@@ -43,4 +43,9 @@ public class DashboardChutroController {
         // id_rooms, id_chutro, các thông tin liên quan, vị trí id_nguoithuetro để trống
         System.out.println("Đã lưu thông tin phòng trọ");
     }
+    public static String get_room_list(String id_chutro) {
+        // Lấy id phong từ id chủ tro
+        String id_phong = "P001";
+        return  id_phong ;
+    }
 }
