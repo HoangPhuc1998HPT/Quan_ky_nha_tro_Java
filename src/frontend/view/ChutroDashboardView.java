@@ -24,7 +24,7 @@ public class ChutroDashboardView {
         gbc.insets = new Insets(10, 10, 10, 10); // Khoảng cách giữa các thành phần
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel DashboarLabel = new JLabel("Cháo mừng ai đó đến với Dasboard Chủ trọ");
+        JLabel DashboarLabel = new JLabel("Cháo mừng ai đó đến với Dasboard Chủ trọ"); // Thêm tên chủ vào vị trí ai đó
         DashboarLabel.setFont(new Font("Be Vietnam Pro", Font.PLAIN,16));
         gbc.gridx = 0;
         gbc.gridy = 0;

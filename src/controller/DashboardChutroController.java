@@ -32,6 +32,7 @@ public class DashboardChutroController {
     }
     public static void go_back_dashboardchutro(JFrame frame, String id_chutro){
         System.out.println(id_chutro);
+        // đóng tab khi dashboard chủ trọ khi mở
         new ChutroDashboardView(id_chutro);
         frame.setVisible(false);
     }

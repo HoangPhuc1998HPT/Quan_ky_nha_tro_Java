@@ -6,9 +6,10 @@ import controller.RoomController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Map;
+
 
 import static controller.DashboardChutroController.get_room_list;
+
 import static controller.DashboardChutroController.go_back_dashboardchutro;
 import static controller.RoomController.deletePhong;
 
@@ -22,7 +23,6 @@ public class ChutroOneRoomView  {
 
     public ChutroOneRoomView(String id_chutro) {
         this.id_chutro = id_chutro;
-        this.controller = new DashboardChutroController();
         //this.controller = new DashboardChutroController();
 
         // Tạo frame
@@ -41,14 +41,19 @@ public class ChutroOneRoomView  {
         scrollPane.setViewportView(roomFrame);
 
         // Lấy danh sách phòng qua controller
-        get_room_list(id_chutro);
+        // Đoạn code lấy danh sách phòng sẽ fix lại sau khi có được truy vấn từ backend
+
+        get_room_list(id_chutro); // get information của phòng để kích hoạt displayroom
 
         frame.setVisible(true);
     }
+    // tách room riêng ra 1 class
+
     public void displayRooms(String id_room) {
         // Lấy tên người thuê
+
         String tenantName = NguoiThueTro.getTenNguoiThueInRoom(id_room);
-        JLabel tenantLabel = new JLabel("Tên Người Thuê: " + (tenantName != null ? tenantName : "Không có"));
+        JLabel tenantLabel = new JLabel("Tên Người Thuê: " + (tenantName != null ? tenantName : "Không có") + " - Phòng: " + "?? tên phòng ??");
         tenantLabel.setFont(new Font("Arial", Font.PLAIN, 10));
         tenantLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         frame.add(tenantLabel);

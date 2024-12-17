@@ -28,5 +28,11 @@ public class RoomController {
     public void goToBackDashboard(JFrame frame ,String id_chutro) {
         JOptionPane.showMessageDialog(frame, "Quay lại trang chính");
     }
+    public static Object[] getThongTinPhong(String id_room, String id_chutro) {
+        System.out.println("Lấy thông tin phòng trọ");
+        Object[] roomInfor = {"id_phong","id_chutro","id)_nguoithue","gia_dien","gia_nuoc","gia_rac","chi_phi_khac",123,"bla bla"};
+  // 6-7-8 tùy thuộc vào tạo thong tin phòng như nèo
+        return roomInfor;
+    }
 
 }

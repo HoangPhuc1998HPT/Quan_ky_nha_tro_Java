@@ -15,6 +15,11 @@ Dashboard chủ trọ - Chutrodashboard vỉew
     - view_show_list_rooms
         Muốn show được list room thì phải tạo view của 1 room trước
 
+    - Tạo 1 class room hoạt động riêng biệc, khi gọi sẽ add vào 1 dashboard độc lập
+    - roomView
+        lấy thông tin từ database của các thông tin về phòng
+        
+
         - view_room
             - Các chức năng xử lý trong room
                 + Thêm người thuê trọ (thêm bằng CCCD) 
