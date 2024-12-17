@@ -18,11 +18,12 @@ public class ChutroDashboardView {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout()); // Sử dụng BorderLayout cho JFrame
 
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridBagLayout()); // Giữ các thành phần ở giữa
+        // Panel chính với GridBagLayout
+        JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10); // Khoảng cách giữa các thành phần
+        gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
+
 
         JLabel DashboarLabel = new JLabel("Cháo mừng ai đó đến với Dasboard Chủ trọ"); // Thêm tên chủ vào vị trí ai đó
         DashboarLabel.setFont(new Font("Be Vietnam Pro", Font.PLAIN,16));

@@ -34,5 +34,13 @@ public class RoomController {
   // 6-7-8 tùy thuộc vào tạo thong tin phòng như nèo
         return roomInfor;
     }
+    public static Object[] getDataRoomFromDataBase(String id_room) {
+        System.out.println(" lấy thông tin phòng phục vụ cập nhật data");
+
+        // Thay thế kết quả roomData bằng hàm xử lý ở backend
+
+        Object[] roomData = {"Tên Phòng","Địa chỉ","Giá phòng (VNĐ)","Giá điện (VNĐ)","Giá nước (VNĐ)","Số điện hiện tại","Số nước hiện tại","Giá rác (VNĐ)","Chi phí khác (VNĐ)"};
+        return roomData;
+    }
 
 }

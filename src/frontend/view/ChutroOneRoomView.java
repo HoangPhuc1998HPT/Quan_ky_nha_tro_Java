@@ -49,45 +49,12 @@ public class ChutroOneRoomView  {
     }
     // tách room riêng ra 1 class
 
-    public void displayRooms(String id_room) {
-        // Lấy tên người thuê
+    // Xử lý lại vùng hiển thị ==>
+    // Tạo 1 frame chưa 1 bảng danh sách các phòng
+    // Danh sách đó hiển thị các phòng chủ trọ sở hữu kèm cac chi tiết theo kèm
 
-        String tenantName = NguoiThueTro.getTenNguoiThueInRoom(id_room);
-        JLabel tenantLabel = new JLabel("Tên Người Thuê: " + (tenantName != null ? tenantName : "Không có") + " - Phòng: " + "?? tên phòng ??");
-        tenantLabel.setFont(new Font("Arial", Font.PLAIN, 10));
-        tenantLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        frame.add(tenantLabel);
 
-        // Nút cập nhật người thuê
-        JButton btnUpdateTenant = new JButton("Cập nhật người thuê");
-        btnUpdateTenant.addActionListener(e -> RoomController.goToUpdateNguoiThue(frame,id_room));
-        frame.add(btnUpdateTenant);
 
-        // Nút cập nhật thông tin phòng
-        JButton btnUpdateRoom = new JButton("Cập nhật thông tin phòng");
-        btnUpdateRoom.addActionListener(e -> RoomController.updateInforRoom(frame,id_room));
-        frame.add(btnUpdateRoom);
-
-        // Nút cập nhật hóa đơn
-        JButton btnUpdateInvoice = new JButton("Cập nhật hóa đơn");
-        btnUpdateInvoice.addActionListener(e -> RoomController.goToUpdateHoaDon(frame,id_room));
-        frame.add(btnUpdateInvoice);
-
-        // Nút xuất hóa đơn
-        JButton btnExportInvoice = new JButton("Xuất hóa đơn");
-        btnExportInvoice.addActionListener(e -> RoomController.goToXuatHoaDon(frame,id_room));
-        frame.add(btnExportInvoice);
-
-        // Nút xóa phòng
-        JButton btnDeleteRoom = new JButton("Xóa phòng");
-        btnDeleteRoom.addActionListener(e -> deletePhong(frame,id_room));
-        frame.add(btnDeleteRoom);
-
-        // Nút quay lại
-        JButton btnBack = new JButton("Quay lại");
-        btnBack.addActionListener(e -> go_back_dashboardchutro(new JFrame() ,id_chutro));
-        frame.add(btnBack);
-    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new ChutroOneRoomView("P001"));
 
