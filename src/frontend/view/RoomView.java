@@ -9,14 +9,17 @@ import java.awt.*;
 import static controller.DashboardChutroController.go_back_dashboardchutro;
 import static controller.RoomController.deletePhong;
 
+// class này xử lý giao diện của 1 phòng
+
+
 public class RoomView {
     // Room view phục vụ cho rooms view của chủ trọ
     private JFrame frame;
     private String id_room;
     private String id_chutro;
 
-    public RoomView(String id_room, String id_chutro, JPanel roomFrame, String idRoom){
-        this.id_room = idRoom;
+    public RoomView(String id_room, String id_chutro, JPanel roomFrame){
+        this.id_room = id_room;
         this.id_chutro = id_chutro;
         // lấy thông tin người thuê --> xem xét xóa dòng bên dưới
         String tenantName = NguoiThueTro.getTenNguoiThueInRoom(id_room);
@@ -100,7 +103,7 @@ public class RoomView {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JPanel roomPanel = new JPanel();
-            new RoomView("R001", "CT002", roomPanel, "R001");
+            new RoomView("R001", "CT002", roomPanel);
         });
     }
 }

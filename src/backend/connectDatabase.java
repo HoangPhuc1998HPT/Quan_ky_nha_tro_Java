@@ -8,7 +8,7 @@ public class connectDatabase {
     public static class DatabaseConnection {
 
         // Thông tin kết nối
-        private static final String URL = "jdbc:sqlserver://DESKTOP-C7M760B\\SQLEXPRESS;databaseName=YourDatabaseName;integratedSecurity=true";
+        private static final String URL = "jdbc:sqlserver://DESKTOP-C7M760B\\SQLEXPRESS;databaseName=QLThueNhaTro_java;integratedSecurity=true;encrypt=false";
         private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 
         public static Connection getConnection() {

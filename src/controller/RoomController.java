@@ -1,12 +1,16 @@
 package controller;
 
+import frontend.view.RoomUpdateNguoithueView;
+import backend.model.NguoiThueTro;
 import javax.swing.*;
-import java.awt.*;
+
+import static backend.model.NguoiThueTro.UpdateNguoiThueInRoom;
 
 public class RoomController {
     // Hàm xử lý các hành động (cần triển khai thực tế trong Controller)
     public static void goToUpdateNguoiThue(JFrame frame, String idPhong) {
-        JOptionPane.showMessageDialog(frame, "Cập nhật người thuê cho phòng " + idPhong);
+        //JOptionPane.showMessageDialog(frame, "Cập nhật người thuê cho phòng " + idPhong);
+        new RoomUpdateNguoithueView(idPhong);
     }
 
     public static void updateInforRoom(JFrame frame, String idPhong) {
@@ -42,5 +46,14 @@ public class RoomController {
         Object[] roomData = {"Tên Phòng","Địa chỉ","Giá phòng (VNĐ)","Giá điện (VNĐ)","Giá nước (VNĐ)","Số điện hiện tại","Số nước hiện tại","Giá rác (VNĐ)","Chi phí khác (VNĐ)"};
         return roomData;
     }
+    public static void GoToUpdateNguoiThue(String cccdValue, JFrame frame, String idPhong) {
+        // Khởi tạo đối tượng NguoiThueTro và gọi phương thức UpdateNguoiThue
+        System.out.println(" đã gọi controller GoToUpdateNguoiThue");
+        NguoiThueTro ngThueTro = new NguoiThueTro();
+        NguoiThueTro.UpdateNguoiThueInRoom(cccdValue, idPhong, frame);
+        // Update xong gửi thông báo về ==> Đã thêm người thuê trọ "name" vào"
+
+    }
+
 
 }

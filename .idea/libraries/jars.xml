@@ -1,0 +1,22 @@
+<component name="libraryTable">
+  <library name="jars">
+    <CLASSES>
+      <root url="file://D:/01.UIT/06.HK6/06.Java/sqljdbc_12.8/enu/jars" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://D:/01.UIT/06.HK6/06.Java/sqljdbc_12.8/enu/jars" />
+      <root url="file://D:/01.UIT/06.HK6/06.Java/sqljdbc_12.8/enu/samples/adaptive" />
+      <root url="file://D:/01.UIT/06.HK6/06.Java/sqljdbc_12.8/enu/samples/alwaysencrypted" />
+      <root url="file://D:/01.UIT/06.HK6/06.Java/sqljdbc_12.8/enu/samples/azureactivedirectoryauthentication" />
+      <root url="file://D:/01.UIT/06.HK6/06.Java/sqljdbc_12.8/enu/samples/connections" />
+      <root url="file://D:/01.UIT/06.HK6/06.Java/sqljdbc_12.8/enu/samples/constrained" />
+      <root url="file://D:/01.UIT/06.HK6/06.Java/sqljdbc_12.8/enu/samples/dataclassification" />
+      <root url="file://D:/01.UIT/06.HK6/06.Java/sqljdbc_12.8/enu/samples/datatypes" />
+      <root url="file://D:/01.UIT/06.HK6/06.Java/sqljdbc_12.8/enu/samples/resultsets" />
+      <root url="file://D:/01.UIT/06.HK6/06.Java/sqljdbc_12.8/enu/samples/sparse" />
+    </SOURCES>
+    <jarDirectory url="file://D:/01.UIT/06.HK6/06.Java/sqljdbc_12.8/enu/jars" recursive="false" />
+    <jarDirectory url="file://D:/01.UIT/06.HK6/06.Java/sqljdbc_12.8/enu/jars" recursive="false" type="SOURCES" />
+  </library>
+</component>
