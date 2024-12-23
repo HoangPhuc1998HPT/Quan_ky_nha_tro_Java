@@ -3,12 +3,14 @@ package frontend.view;
 import javax.swing.*;
 import java.awt.*;
 
+import static controller.RoomController.GoToBackRoomView;
 import static controller.RoomController.GoToUpdateNguoiThue;
 
 public class RoomUpdateNguoithueView {
     private JFrame frame;
     private String id_room;
     private String id_chutro;
+    private JPanel jPanel;
 
     public RoomUpdateNguoithueView(String id_room) {
         this.id_room = id_room;
@@ -16,7 +18,7 @@ public class RoomUpdateNguoithueView {
 
         // Tạo giao diện thêm người thuê
         frame = new JFrame("Thêm người thuê trọ");
-        frame.setSize(400, 300);
+        frame.setSize(400, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridBagLayout());
 
@@ -62,8 +64,24 @@ public class RoomUpdateNguoithueView {
         gbc.gridx = 0;
         gbc.gridy = 6;
         gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
         confirmButton.addActionListener(e->GoToUpdateNguoiThue(CCCDValue.trim(),frame,id_room));
         panel.add(confirmButton, gbc);
+
+        // Nút quay lại
+
+        JButton backButton = new JButton("Quay lại");
+        backButton.setFont(new Font("Be Vietnam Pro", Font.PLAIN, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.NONE;
+        backButton.addActionListener(e->GoToBackRoomView(id_room, id_chutro,jPanel));
+        panel.add(backButton, gbc);
+
+
 
         frame.add(panel, gbc);
         frame.setLocationRelativeTo(null);

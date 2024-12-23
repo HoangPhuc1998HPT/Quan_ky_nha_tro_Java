@@ -2,6 +2,8 @@ package controller;
 
 import frontend.view.RoomUpdateNguoithueView;
 import backend.model.NguoiThueTro;
+import frontend.view.RoomView;
+
 import javax.swing.*;
 
 import static backend.model.NguoiThueTro.UpdateNguoiThueInRoom;
@@ -53,6 +55,9 @@ public class RoomController {
         NguoiThueTro.UpdateNguoiThueInRoom(cccdValue, idPhong, frame);
         // Update xong gửi thông báo về ==> Đã thêm người thuê trọ "name" vào"
 
+    }
+    public static void GoToBackRoomView (String id_room, String id_chutro, JPanel roomPanel) {
+        new RoomView(id_room,id_chutro,roomPanel);
     }
 
 
