@@ -85,6 +85,7 @@ public class RoomController {
         // Hiếu viết hàm truy xuất database để lấy thông tin
         // Check ngày và Lấy ngày gần nhất.
 
+
         int oldNumberE = 100; // Số điện giả lập
         int oldNumberW = 50;  // Số nước giả lập
 
