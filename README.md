@@ -21,11 +21,17 @@ RoomView
        * class : RoomView
         lấy thông tin từ database của các thông tin về phòng
         Các chức năng:
-            + Cập nhật người thuê
-                * classRoomUpdateNguoiThueView ==> cập nhật người thuê trọ bằng CCCD
-                * Đã liên kết với UpdateNguoiThueInRoom trong backend.NguoiThueTro
-                * 
+            + Cập nhật người thuê:
+                * class: RoomUpdateNguoiThueView ==> cập nhật người thuê trọ bằng CCCD
+                * Đã liên kết với class: UpdateNguoiThueInRoom trong backend.NguoiThueTro
+            + Cập nhật thông tin phòng: class: UpdateInforRoomView
+                + Thông tin phòng gồm: UpdateRoomInfo , GoToUpdateInfor
+                    - Cập nhật số điện GetNumberElectricAndWater, 
+                    - Cập nhật số nước GetNumberElectricAndWater, 
+            # phát sinh lỗi khi mở cửa sổ cập nhật số điện số nước ==> mỏ lại cửa sổ RoomView
 
+                * class: RoomUpdateInforRoomView ==> Cập nhật thông tin phòng
+                *  
             
             + Cập nhật thông tin phòng
             + Cập nhật hóa đơn

@@ -45,7 +45,7 @@ public class RoomView {
 
 
         JLabel tenantLabel = new JLabel("Tên Người Thuê: " + (tenantName != null ? tenantName : "Không có"));
-        tenantLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        tenantLabel.setFont(new Font("Be Vietnam Pro", Font.PLAIN, 14));
         gbc.gridx = 0;
         gbc.gridy = 0;
         frame.add(tenantLabel, gbc);
@@ -59,7 +59,10 @@ public class RoomView {
 
         // Nút cập nhật thông tin phòng
         JButton btnUpdateRoom = new JButton("Cập nhật thông tin phòng");
-        btnUpdateRoom.addActionListener(e -> RoomController.updateInforRoom(frame,id_room));
+        btnUpdateRoom.addActionListener(e -> {
+            RoomController.updateInforRoom(id_room, id_chutro);
+            //JOptionPane.showMessageDialog(frame, "Thông tin phòng đã được cập nhật!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        });
         gbc.gridx = 0;
         gbc.gridy = 3;
         frame.add(btnUpdateRoom,gbc);

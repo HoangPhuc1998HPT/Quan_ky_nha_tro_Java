@@ -115,7 +115,7 @@ public class UpdateInforRoomView {
 
     public static void main(String[] args) {
         String id_phong = "T001";
-        String room_name = "Phòng 101";
+        String room_name = "Phòng  01";
         SwingUtilities.invokeLater(() -> new UpdateInforRoomView(id_phong));
     }
 }
