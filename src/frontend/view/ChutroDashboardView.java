@@ -49,7 +49,7 @@ public class ChutroDashboardView {
         JButton show_list_rooms = new JButton(" Xem danh sách phòng trọ");
         gbc.gridx = 0;
         gbc.gridy = 3;
-        show_list_rooms.addActionListener(e->DashboardChutroController.go_to_show_list_room());
+        show_list_rooms.addActionListener(e->DashboardChutroController.go_to_show_list_room(id_chutro));
         panel.add(show_list_rooms, gbc);
         // Tạo nút xem danh sách hóa đơn
         JButton show_list_invoices = new JButton("Xem danh sách hóa đơn");

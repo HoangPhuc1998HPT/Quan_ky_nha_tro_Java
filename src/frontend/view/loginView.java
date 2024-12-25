@@ -2,9 +2,12 @@ package frontend.view;
 
 import backend.Login;
 import controller.LoginController;
+import frontend.components.CustomButton;
+import frontend.components.ModernGradientButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 public class loginView {
     private final JFrame f;
@@ -54,12 +57,16 @@ public class loginView {
         gbc.gridy = 2;
         panel.add(entryPassword, gbc);
 
+        String username = entryUsername.getText();
+        String password = Arrays.toString(entryPassword.getPassword());
+
+
         // Tạo nút Đăng nhập
-        JButton buttonLogin = new JButton("Đăng nhập");
+        CustomButton buttonLogin = new CustomButton("Đăng nhập");
         gbc.gridx = 1;
         gbc.gridy = 3;
-        gbc.anchor = GridBagConstraints.LINE_END; // Căn nút về phía phải`
-        buttonLogin.addActionListener(e -> LoginController.check_login(String.valueOf(entryUsername),entryPassword));
+        //gbc.anchor = GridBagConstraints.LINE_END; // Căn nút về phía phải`
+        buttonLogin.addActionListener(e -> LoginController.checkLogin(username, password.toCharArray(),f));
         panel.add(buttonLogin, gbc);
 
         // Thêm JPanel vào trung tâm của JFrame
@@ -77,21 +84,6 @@ public class loginView {
 
     }
 
-    private void submitLogin() {
-        try {
-            String username = entryUsername.getText().trim();
-            String password = new String(entryPassword.getPassword()).trim();
-            if (!username.isEmpty() && !password.isEmpty()) {
-                System.out.println(" Đăng nhập với User: " + username + " Password " + password);
-                Login.check_login(username, password);
-            } else {
-                JOptionPane.showMessageDialog(f, "Please fill in both username and password.", "Login Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception e) {
-            System.out.println("Error in submitLogin: " + e);
-            JOptionPane.showMessageDialog(f, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(loginView::new);

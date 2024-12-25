@@ -1,5 +1,7 @@
 package frontend.view;
 
+import frontend.components.CustomButton;
+
 import javax.swing.*;
 
 import java.awt.*;
@@ -188,7 +190,7 @@ public class RoomUpdateInforRoomView {
 
 
         // Nút cập nhật thông tin
-        JButton updateButton = new JButton("Cập nhật thông tin");
+        CustomButton updateButton = new CustomButton("Cập nhật thông tin");
         updateButton.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
         gbc.gridx = 1;
         gbc.gridy = 8; // Hàng số nước mới
@@ -199,7 +201,7 @@ public class RoomUpdateInforRoomView {
 
         // Nút quay lại
         // Nút cập nhật thông tin
-        JButton backButton = new JButton("Quay lại");
+        CustomButton backButton = new CustomButton("Quay lại");
         backButton.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
         gbc.gridx = 1;
         gbc.gridy = 9; // Hàng số nước mới

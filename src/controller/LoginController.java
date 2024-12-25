@@ -40,18 +40,28 @@ public class LoginController {
         System.exit(0);
     }
 
-    public static void check_login(String entryUsername, JPasswordField entryPassword) {
-        // Gọi phương thức kiểm tra
-        int a = Login.check_login(entryUsername,entryUsername);
-        if (a == 1) {
-            new ChutroDashboardView(entryUsername);
-        }
-        else if (a == 2) {
-            new nguoiThueTroDashboardView();
-        }
-        else if (a == 0) {
-            new adminDashboard();
+
+        public static void checkLogin(String username, char[] password, JFrame frame) {
+            int loginResult = Login.check_login(username, new String(password));
+            frame.dispose(); // Đóng giao diện đăng nhập
+
+            switch (loginResult) {
+                case 1:
+                    // gọi hàm check với database trước khi xuất
+
+                    new ChutroDashboardView(username);
+                    break;
+                case 2:
+                    // gọi hàm check với database trước khi xuất
+                    new nguoiThueTroDashboardView();
+                    break;
+                case 0:
+                    // gọi hàm check với database trước khi xuất
+                    new adminDashboard();
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(frame, "Đăng nhập thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
-}

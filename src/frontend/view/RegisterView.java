@@ -1,5 +1,7 @@
 package frontend.view;
 
+import frontend.components.CustomButton;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -113,7 +115,7 @@ public class RegisterView {
         // Thêm panel vào JFrame
         frame.add(panel, BorderLayout.CENTER);
 
-        JButton backButton = new JButton("Quay lại");
+        CustomButton backButton = new CustomButton("Quay lại");
         backButton.setFont(new Font("Be Vietnampro", Font.BOLD, 14));
         gbc.gridx = 1;
         gbc.gridy = 7;

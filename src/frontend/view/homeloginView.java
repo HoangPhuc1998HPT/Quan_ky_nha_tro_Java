@@ -3,6 +3,7 @@ package frontend.view;
 import javax.swing.*;
 import java.awt.*;
 import controller.LoginController;
+import frontend.components.CustomButton;
 
 public class homeloginView {
     JFrame f;
@@ -19,14 +20,14 @@ public class homeloginView {
         System.out.println();
 
         // Tạo nút nhấn đăng ký
-        JButton registerButton = new JButton("Đăng ký tài khoản");
+        CustomButton registerButton = new CustomButton("Đăng ký tài khoản");
         registerButton.addActionListener(e -> LoginController.showRegisterView(f));
         registerButton.setBounds(100,100,200,40);
         f.add(registerButton);
 
 
         // Tạo nút nhấn đăng nhập
-        JButton loginButton = new JButton(" Đăng nhập tài khoản");
+        CustomButton loginButton = new CustomButton(" Đăng nhập tài khoản");
         loginButton.addActionListener(e -> LoginController.showLoginView(f));
         registerButton.setBounds(100,200,200,40);
         f.add(loginButton);

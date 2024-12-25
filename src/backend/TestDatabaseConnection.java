@@ -1,7 +1,7 @@
 package backend;
 
 import java.sql.Connection;
-
+// đã test thành công ==> có thể xóa
 public class TestDatabaseConnection {
     public static void main(String[] args) {
         // Thử kết nối tới cơ sở dữ liệu

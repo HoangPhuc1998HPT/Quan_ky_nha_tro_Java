@@ -1,4 +1,63 @@
 # Quan_ky_nha_tro_Java
+# Hiệu chỉnh cấu trúc file
+
+src/
+├── backend/                   # Lớp xử lý dữ liệu và cơ sở dữ liệu
+│   ├── model/                 # Các lớp mô hình dữ liệu
+│   │   ├── NguoiThueTro.java               đã có
+│   │   ├── Rooms.java                      đã có
+│   │   ├── Chutro.java                     đã có
+│   │   └── Admin.java              
+│   │   ├── Invoices.java       
+│   │   ├── InvoicesDetail.java
+│   │   └── User.java
+│   ├── connectDatabase.java            # Lớp kết nối cơ sở dữ liệu
+│   └── utilities/                      # Các tiện ích backend
+│       ├── DatabaseHelper.java
+│       └── ValidationHelper.java
+├── controller/                         # Xử lý logic và kết nối giữa Model và View
+│   ├── LoginController.java                đã có
+│   ├── RegisterController.java             đã có
+│   ├── RoomController.java                 đã có
+│   ├── DashboardChutroController.java      đã có
+│   ├── AdminController.java                đã có
+│   └── NguoiThueTroController.java         đã có
+├── frontend/                           # Lớp hiển thị giao diện (View)
+│   ├── view/                           # Các giao diện cụ thể
+│   │   ├── LoginView.java
+│   │   ├── RegisterView.java
+│   │   ├── RoomView.java
+│   │   ├── RoomUpdateInforRoomView.java
+│   │   ├── RoomUpdateNguoithueView.java
+│   │   ├── DashboardChutroView.java
+│   │   ├── AdminDashboardView.java
+│   │   └── NguoiThueTroDashboardView.java
+│   ├── components/            # Các thành phần giao diện dùng lại
+│   │   ├── CustomButton.java
+│   │   └── CustomPanel.java
+│   └── styles/                # Các định dạng giao diện
+│       ├── Fonts.java
+│       └── Colors.java
+├── Main.java                  # Điểm bắt đầu của chương trình
+├── resources/                 # Tài nguyên tĩnh
+│   ├── images/                # Hình ảnh
+│   ├── fonts/                 # Font chữ tùy chỉnh
+│   └── configs/               # File cấu hình, SQL, hoặc JSON
+│       ├── database_config.json
+│       └── roles_config.json
+└── tests/                     # Thư mục kiểm thử
+├── backend/               # Kiểm thử logic backend
+│   ├── TestNguoiThueTro.java
+│   └── TestRooms.java
+├── controller/            # Kiểm thử logic controller
+│   ├── TestRoomController.java
+│   └── TestLoginController.java
+└── frontend/              # Kiểm thử giao diện
+├── TestLoginView.java
+└── TestRoomView.java
+
+
+
 Tạo front end:
 Dashboard chủ trọ - Chutrodashboard vỉew
     - view_show_infor_chutro ====> tạm ok giao diện
@@ -12,8 +71,10 @@ Dashboard chủ trọ - Chutrodashboard vỉew
             - Giá nước
             - Giá rác
             - Lưu phòng
-    - view_show_list_rooms
+    - ChutroRoomsTableView 
         Muốn show được list room thì phải tạo view của 1 room trước
+        ==> Khi bấm vào sẽ hiển thị danh sách phòng:
+
 
 RoomView
     - Tạo 1 class room hoạt động riêng biệc, khi gọi sẽ add vào 1 dashboard độc lập
@@ -55,6 +116,31 @@ RoomView
                 + Xem hóa đơn phòng
                 + Tạo hóa đơn cho phòng
     - show_list_invoices.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     ;

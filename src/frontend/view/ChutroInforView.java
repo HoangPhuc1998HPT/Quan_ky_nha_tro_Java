@@ -1,5 +1,7 @@
 package frontend.view;
 
+import frontend.components.CustomButton;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -89,7 +91,7 @@ public class ChutroInforView {
 
 
         // Nút quay lại
-        JButton button_back = new JButton("Quay lại");
+        CustomButton button_back = new CustomButton("Quay lại");
         gbc.gridx = 1;
         gbc.gridy = 6;
         button_back.addActionListener(e -> go_back_dashboardchutro(frame,id_chutro ));
