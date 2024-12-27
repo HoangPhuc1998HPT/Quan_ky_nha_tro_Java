@@ -9,7 +9,7 @@ Create table Users (
 );
 ALTER TABLE Users ADD is_active BIT DEFAULT 0;
 select * from Users
-select * from Chutro
+	
 select * from NguoiThueTro
 select * from Admins
 select * from TTPhongtro
@@ -332,7 +332,8 @@ WHERE row_num > 1;
 INSERT INTO Users (Username, Password, Role)
 VALUES 
 ('admin_1', 'pass123', 'admin'),
-('admin_2', 'pass123', 'admin');
+('admin_2', 'pass123', 'admin'),
+('chutro_01', '123456', 'chutro');
 
 
 INSERT INTO Admins (FullName, Username, Password, IsRoot, UserID)
@@ -342,7 +343,7 @@ VALUES
 
 INSERT INTO Chutro (HoTen, CCCD, Phone, UserID)
 VALUES 
-('Nguyen Van A', '012345678901', '0901234567', 3),
+('Nguyen Van A', '012345678901', '0901234567', 2),
 ('Tran Thi B', '012345678902', '0902234567', 4),
 ('Le Van C', '012345678903', '0903234567', 5),
 ('Hoang Van D', '012345678904', '0904234567', 6),
