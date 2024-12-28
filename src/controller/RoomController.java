@@ -1,7 +1,9 @@
 package controller;
 
 import backend.connectDatabase;
-import frontend.view.RoomUpdateInforRoomView;
+import backend.model.InvoiceDetail;
+//import frontend.view.RoomUpdateInforRoomView;
+import backend.model.Room;
 import frontend.view.RoomUpdateNguoithueView;
 import backend.model.NguoiThueTro;
 import frontend.view.RoomView;
@@ -23,7 +25,7 @@ public class RoomController {
 
     public static void updateInforRoom(String idPhong,String id_chutro) {
         //JOptionPane.showMessageDialog(frame, "Cập nhật thông tin phòng " + idPhong);
-        new RoomUpdateInforRoomView(idPhong, id_chutro);
+        //new RoomUpdateInforRoomView(idPhong);
     }
 
     public static void goToUpdateHoaDon(JFrame frame, String idPhong) {
@@ -138,6 +140,21 @@ public class RoomController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public Room getRoomDetails(String roomId) {
+        // Truy vấn dữ liệu phòng từ database (giả lập)
+        return new Room(roomId, "Phòng A", "Nguyễn Văn A");
+    }
+
+    public InvoiceDetail getRoomPrices(String roomId) {
+        // Truy vấn giá phòng từ database (giả lập)
+        return new InvoiceDetail(3000000, 3000, 15000, 50000);
+    }
+
+    public static void updateRoomPrice(String roomId, double newValue, String type) {
+        // Cập nhật giá phòng vào database
+        System.out.println("Cập nhật " + type + " cho phòng " + roomId + " thành: " + newValue);
+        // TODO: Thêm logic cập nhật database
     }
 
 

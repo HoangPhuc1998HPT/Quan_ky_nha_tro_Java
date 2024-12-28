@@ -130,23 +130,27 @@ public class ChutroCreateRoomsView {
         panel.add(label_don_vi,gbc);
 
         // Nhập chi phí khác
-        JLabel label_chi_phi_khac = new JLabel("Chi phí khác");
-        gbc.gridx=0;
-        gbc.gridy=7;
-        gbc.anchor = GridBagConstraints.WEST; // Căn lề trái
-        panel.add(label_chi_phi_khac,gbc);
+        //JLabel label_chi_phi_khac = new JLabel("Chi phí khác");
+        //gbc.gridx=0;
+        //gbc.gridy=7;
+        //gbc.anchor = GridBagConstraints.WEST; // Căn lề trái
+        //panel.add(label_chi_phi_khac,gbc);
 
-        JTextField chi_phi_khac = new JTextField(40);
-        chi_phi_khac.setPreferredSize(new Dimension(200, 25));
-        gbc.gridx = 1;
-        gbc.gridy = 7;
-        gbc.anchor = GridBagConstraints.CENTER; // Căn giữa ô nhập liệu
-        panel.add(chi_phi_khac,gbc);
+        //JTextField chi_phi_khac = new JTextField(40);
+        //chi_phi_khac.setPreferredSize(new Dimension(200, 25));
+        //gbc.gridx = 1;
+       // gbc.gridy = 7;
+        //gbc.anchor = GridBagConstraints.CENTER; // Căn giữa ô nhập liệu
+        //panel.add(chi_phi_khac,gbc);
 
-        label_don_vi = new JLabel("VNĐ");
-        gbc.gridx = 2;
-        gbc.gridy = 7;
-        panel.add(label_don_vi,gbc);
+       // label_don_vi = new JLabel("VNĐ");
+       // gbc.gridx = 2;
+       // gbc.gridy = 7;
+       // panel.add(label_don_vi,gbc);
+
+
+
+
 
         // Lưu phòng
         JButton save_room = new JButton("Lưu phòng");

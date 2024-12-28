@@ -118,6 +118,9 @@ RoomView
     - show_list_invoices.
 
 
+    28/12 BigUpdate
+        - ChutroCreateRoomsView
+
 
 
 
