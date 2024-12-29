@@ -121,7 +121,7 @@ public class ChutroRoomsTableView {
             System.out.println("Đi đến RoomView cho phòng: " + roomId);
 
             // Mở RoomView cho phòng đã chọn
-            new RoomView(roomId, id_chutro, new JPanel());
+            new RoomView(roomId, id_chutro);
         }
     }
     public static void main(String[] args) {

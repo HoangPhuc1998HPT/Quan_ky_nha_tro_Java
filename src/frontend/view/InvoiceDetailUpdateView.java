@@ -5,12 +5,17 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import backend.model.InvoiceDetail;
+
+import static controller.RoomController.GoToBackRoomView;
+
 public class InvoiceDetailUpdateView {
 
     private JFrame frame;
 
-    public InvoiceDetailUpdateView(String id_room, String roomName, String tenantName, String startDate, int oldElectric, int oldWater, String lastPaymentDate) {
+    public InvoiceDetailUpdateView(String id_chutro,String id_room, String roomName, String tenantName, String startDate, int oldElectric, int oldWater, String lastPaymentDate) {
         // Tạo JFrame
+
         frame = new JFrame("Cập nhật chi tiết hóa đơn");
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,6 +33,7 @@ public class InvoiceDetailUpdateView {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 3; // Chiếm 3 cột
+        gbc.anchor = GridBagConstraints.CENTER;
         panel.add(title, gbc);
 
         gbc.gridwidth = 1; // Reset gridwidth
@@ -190,10 +196,10 @@ public class InvoiceDetailUpdateView {
                 int newWater = Integer.parseInt(newWaterField.getText());
                 double discount = Double.parseDouble(discountField.getText());
                 String invoiceDate = dateField.getText();
-                System.out.println("Số điện mới: " + newElectric);
-                System.out.println("Số nước mới: " + newWater);
-                System.out.println("Giảm giá: " + discount);
-                System.out.println("Ngày xuất hóa đơn: " + invoiceDate);
+                //System.out.println("Số điện mới: " + newElectric);
+                //System.out.println("Số nước mới: " + newWater);
+                //System.out.println("Giảm giá: " + discount);
+                //System.out.println("Ngày xuất hóa đơn: " + invoiceDate);
 
                 // Gọi hàm Controller để lưu thông tin
                 updateInvoiceDetails(id_room, roomName, newElectric, newWater, discount, invoiceDate);
@@ -202,6 +208,16 @@ public class InvoiceDetailUpdateView {
             }
         });
         panel.add(updateButton, gbc);
+
+        JButton backButton = new JButton("Quay lại");
+        backButton.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 12;
+        gbc.gridwidth = 3; // Chiếm 3 cột
+        gbc.anchor = GridBagConstraints.CENTER;
+        backButton.addActionListener(e -> GoToBackRoomView( frame,  id_room,  id_chutro));
+        panel.add(backButton, gbc);
+
 
         // Thêm panel vào frame
         frame.add(panel, BorderLayout.CENTER);
@@ -219,15 +235,5 @@ public class InvoiceDetailUpdateView {
         // TODO: Thêm logic cập nhật cơ sở dữ liệu ở đây
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new InvoiceDetailUpdateView(
-                "P001",
-                "Phòng A",
-                "Nguyễn Văn A",
-                "01/01/2023",
-                100,
-                50,
-                "01/05/2023"
-        ));
-    }
+
 }

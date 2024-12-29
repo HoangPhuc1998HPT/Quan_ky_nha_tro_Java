@@ -78,7 +78,7 @@ public class RoomUpdateNguoithueView {
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.NONE;
-        backButton.addActionListener(e->GoToBackRoomView(id_room, id_chutro,jPanel));
+        backButton.addActionListener(e->GoToBackRoomView(frame,id_room, id_chutro));
         panel.add(backButton, gbc);
 
 

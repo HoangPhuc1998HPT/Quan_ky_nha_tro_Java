@@ -7,9 +7,13 @@ import frontend.view.RoomUpdatePriceView;
 import javax.swing.*;
 import java.awt.*;
 
+import static controller.RoomController.GoToBackRoomView;
+import static controller.RoomController.GoToBackRoomViewFromUpdate;
+
 
 public class RoomUpdateInforRoomView {
     private JFrame frame;
+    private String id_chutro;
 
     public RoomUpdateInforRoomView(String roomId) {
         frame = new JFrame("Cập nhật thông tin phòng");
@@ -87,8 +91,8 @@ public class RoomUpdateInforRoomView {
         gbc.gridx = 0;
         gbc.gridy = labels.length + 2;
         gbc.gridwidth = 4;
-        backButton.addActionListener(e -> frame.dispose());
-        // chuyển về dashboard
+        backButton.addActionListener(e -> GoToBackRoomViewFromUpdate(frame, roomId, id_chutro));
+        // chuyển về dashboard Room
 
         frame.add(backButton, gbc);
 

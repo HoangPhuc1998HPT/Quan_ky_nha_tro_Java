@@ -36,7 +36,7 @@ public class ChutroCreateRoomsView {
         panel.add(label_ten_phong,gbc);
 
         JTextField ten_phong = new JTextField();
-        ten_phong.setPreferredSize(new Dimension(200, 25));
+        ten_phong.setPreferredSize(new Dimension(150, 25));
         gbc.gridx = 1;
         gbc.gridy = 1;
         panel.add(ten_phong,gbc);
@@ -48,7 +48,7 @@ public class ChutroCreateRoomsView {
         panel.add(label_dia_chi,gbc);
 
         JTextField dia_chi = new JTextField(40);
-        dia_chi.setPreferredSize(new Dimension(200, 25));
+        dia_chi.setPreferredSize(new Dimension(150, 25));
         gbc.gridx = 1;
         gbc.gridy = 2;
         panel.add(dia_chi,gbc);
@@ -61,7 +61,7 @@ public class ChutroCreateRoomsView {
         panel.add(label_gia_phong,gbc);
 
         JTextField gia_phong = new JTextField(40);
-        gia_phong.setPreferredSize(new Dimension(200, 25));
+        gia_phong.setPreferredSize(new Dimension(150, 25));
         gbc.gridx = 1;
         gbc.gridy = 3;
         gbc.anchor = GridBagConstraints.CENTER; // Căn giữa ô nhập liệu
@@ -80,7 +80,7 @@ public class ChutroCreateRoomsView {
         panel.add(label_gia_dien,gbc);
 
         JTextField gia_dien = new JTextField(40);
-        gia_dien.setPreferredSize(new Dimension(200, 25));
+        gia_dien.setPreferredSize(new Dimension(150, 25));
         gbc.gridx = 1;
         gbc.gridy = 4;
         gbc.anchor = GridBagConstraints.CENTER; // Căn giữa ô nhập liệu
@@ -99,7 +99,7 @@ public class ChutroCreateRoomsView {
         panel.add(label_gia_nuoc,gbc);
 
         JTextField gia_nuoc = new JTextField(40);
-        gia_nuoc.setPreferredSize(new Dimension(200, 25));
+        gia_nuoc.setPreferredSize(new Dimension(150, 25));
         gbc.gridx = 1;
         gbc.gridy = 5;
         gbc.anchor = GridBagConstraints.CENTER; // Căn giữa ô nhập liệu
@@ -118,7 +118,7 @@ public class ChutroCreateRoomsView {
         panel.add(label_gia_rac,gbc);
 
         JTextField gia_rac = new JTextField(40);
-        gia_rac.setPreferredSize(new Dimension(200, 25));
+        gia_rac.setPreferredSize(new Dimension(150, 25));
         gbc.gridx = 1;
         gbc.gridy = 6;
         gbc.anchor = GridBagConstraints.CENTER; // Căn giữa ô nhập liệu

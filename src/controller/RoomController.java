@@ -4,6 +4,8 @@ import backend.connectDatabase;
 import backend.model.InvoiceDetail;
 //import frontend.view.RoomUpdateInforRoomView;
 import backend.model.Room;
+import frontend.view.InvoiceDetailUpdateView;
+import frontend.view.RoomUpdateInforRoomView;
 import frontend.view.RoomUpdateNguoithueView;
 import backend.model.NguoiThueTro;
 import frontend.view.RoomView;
@@ -16,21 +18,45 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import static backend.model.InvoiceDetail.*;
+import static frontend.view.RoomView.*;
+
 public class RoomController {
     // Hàm xử lý các hành động (cần triển khai thực tế trong Controller)
     public static void goToUpdateNguoiThue(JFrame frame, String idPhong) {
         //JOptionPane.showMessageDialog(frame, "Cập nhật người thuê cho phòng " + idPhong);
+        frame.setVisible(false);
         new RoomUpdateNguoithueView(idPhong);
     }
 
-    public static void updateInforRoom(String idPhong,String id_chutro) {
+    public static void updateInforRoom(JFrame frame, String idPhong,String id_chutro) {
         //JOptionPane.showMessageDialog(frame, "Cập nhật thông tin phòng " + idPhong);
-        //new RoomUpdateInforRoomView(idPhong);
+        frame.setVisible(false);
+        new RoomUpdateInforRoomView(idPhong);
     }
 
-    public static void goToUpdateHoaDon(JFrame frame, String idPhong) {
-        JOptionPane.showMessageDialog(frame, "Cập nhật hóa đơn cho phòng " + idPhong);
+    public static void goToUpdateHoaDon(JFrame frame, String id_room,String id_chutro) {
+        try {
+            // Lấy thông tin từ database
+            String roomName = getRoomName(id_room); // Hàm để lấy tên phòng từ database
+            String tenantName = getTenantName(id_room); // Hàm để lấy tên người thuê từ database
+            String startDate = getStartDate(id_room); // Hàm để lấy ngày bắt đầu thuê từ database
+            int oldElectric = getOldElectricReading(id_room); // Hàm để lấy số điện cũ
+            int oldWater = getOldWaterReading(id_room); // Hàm để lấy số nước cũ
+            String lastPaymentDate = getLastPaymentDate(id_room); // Hàm để lấy ngày thu tiền nhà tháng trước
+
+            // Ẩn frame hiện tại
+            frame.setVisible(false);
+
+            // Hiển thị giao diện cập nhật chi tiết hóa đơn
+            new InvoiceDetailUpdateView(id_chutro, id_room, roomName, tenantName, startDate, oldElectric, oldWater, lastPaymentDate);
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(frame, "Không thể tải dữ liệu phòng: " + id_room, "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }
+
 
     public static void goToXuatHoaDon(JFrame frame, String idPhong) {
         JOptionPane.showMessageDialog(frame, "Xuất hóa đơn cho phòng " + idPhong);
@@ -40,9 +66,6 @@ public class RoomController {
         JOptionPane.showMessageDialog(frame, "Xóa phòng " + idPhong);
     }
 
-    public void goToBackDashboard(JFrame frame, String id_chutro) {
-        JOptionPane.showMessageDialog(frame, "Quay lại trang chính");
-    }
 
     public static Object[] getThongTinPhong(String id_room, String id_chutro) {
         System.out.println("Lấy thông tin phòng trọ");
@@ -69,57 +92,13 @@ public class RoomController {
 
     }
 
-    public static ActionListener GoToBackRoomView(String id_room, String id_chutro, JPanel roomPanel) {
-        //roomPanel.setVisible(false);
-        new RoomView(id_room, id_chutro, roomPanel);
+    public static ActionListener GoToBackRoomView(JFrame frame, String id_room, String id_chutro) {
+        frame.setVisible(false);
+        new RoomView(id_room, id_chutro);
 
         return null;
     }
 
-    public static String GetNameRoom(String id_room) {
-        // lấy tên phòng -> xuất ra
-        String name_room = "Phòng  01";
-        return name_room;
-    }
-
-    public static int[] GetNumberElectricAndWater(String id_room) {
-
-        // Hiếu viết hàm truy xuất database để lấy thông tin
-        // Check ngày và Lấy ngày gần nhất.
-
-
-        int oldNumberE = 100; // Số điện giả lập
-        int oldNumberW = 50;  // Số nước giả lập
-
-        int[] numberElecAndWater;
-        return new int[]{oldNumberE, oldNumberW};
-    }
-
-    public static ActionListener GoToUpdateInfor(JTextField textE, JTextField textW, String id_room) {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    // Lấy giá trị từ JTextField
-                    int newElectric = Integer.parseInt(textE.getText());
-                    int newWater = Integer.parseInt(textW.getText());
-
-                    // In giá trị để kiểm tra
-                    System.out.println("Số điện mới: " + newElectric);
-                    System.out.println("Số nước mới: " + newWater);
-
-                    // Gọi controller để xử lý cập nhật
-                    UpdateRoomInfoWE(id_room, newElectric, newWater);
-                    // Hiển thị thông báo thành công
-                    JOptionPane.showMessageDialog(null, "Cập nhật thông tin thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                } catch (NumberFormatException ex) {
-                    // Hiển thị lỗi nếu giá trị nhập vào không hợp lệ
-                    JOptionPane.showMessageDialog(null, "Vui lòng nhập số nguyên hợp lệ!", "Lỗi nhập liệu", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        };
-
-    }
     //new function
 
     // Hiếu -- Function này có thể đưa vào Class Room
@@ -155,6 +134,10 @@ public class RoomController {
         // Cập nhật giá phòng vào database
         System.out.println("Cập nhật " + type + " cho phòng " + roomId + " thành: " + newValue);
         // TODO: Thêm logic cập nhật database
+    }
+    public static void GoToBackRoomViewFromUpdate(JFrame frame, String id_room, String id_chutro) {
+        frame.setVisible(false);
+        new RoomView(id_room,id_chutro);
     }
 
 

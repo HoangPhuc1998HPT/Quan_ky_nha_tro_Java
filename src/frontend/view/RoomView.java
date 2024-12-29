@@ -1,10 +1,14 @@
 package frontend.view;
 
+import backend.connectDatabase;
 import backend.model.NguoiThueTro;
 import controller.RoomController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import static controller.DashboardChutroController.go_back_dashboardchutro;
 import static controller.RoomController.deletePhong;
@@ -15,12 +19,8 @@ import static controller.RoomController.deletePhong;
 public class RoomView {
     // Room view phục vụ cho rooms view của chủ trọ
     private JFrame frame;
-    private String id_room;
-    private String id_chutro;
 
-    public RoomView(String id_room, String id_chutro, JPanel roomFrame){
-        this.id_room = id_room;
-        this.id_chutro = id_chutro;
+    public RoomView(String id_room, String id_chutro){
         // lấy thông tin người thuê --> xem xét xóa dòng bên dưới
         String tenantName = NguoiThueTro.getTenNguoiThueInRoom(id_room);
         //
@@ -29,7 +29,7 @@ public class RoomView {
         // Hàm trên trả về 1 mảng thông tin của phong ==> trích xuất thông tin này để xử lý các nội dung của phòng bên dưới
 
         frame = new JFrame("Phòng trọ số : ....");
-        frame.setSize(400,800);
+        frame.setSize(400,650);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridBagLayout());
 
@@ -45,7 +45,7 @@ public class RoomView {
 
 
         JLabel tenantLabel = new JLabel("Tên Người Thuê: " + (tenantName != null ? tenantName : "Không có"));
-        tenantLabel.setFont(new Font("Be Vietnam Pro", Font.PLAIN, 14));
+        tenantLabel.setFont(new Font("Be Vietnam Pro", Font.BOLD, 16));
         gbc.gridx = 0;
         gbc.gridy = 0;
         frame.add(tenantLabel, gbc);
@@ -60,8 +60,9 @@ public class RoomView {
         // Nút cập nhật thông tin phòng
         JButton btnUpdateRoom = new JButton("Cập nhật thông tin phòng");
         btnUpdateRoom.addActionListener(e -> {
-            RoomController.updateInforRoom(id_room, id_chutro);
+            RoomController.updateInforRoom(frame,id_room, id_chutro);
             //JOptionPane.showMessageDialog(frame, "Thông tin phòng đã được cập nhật!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
         });
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -69,7 +70,7 @@ public class RoomView {
 
         // Nút cập nhật hóa đơn
         JButton btnUpdateInvoice = new JButton("Cập nhật hóa đơn");
-        btnUpdateInvoice.addActionListener(e -> RoomController.goToUpdateHoaDon(frame,id_room));
+        btnUpdateInvoice.addActionListener(e -> RoomController.goToUpdateHoaDon(frame,id_room, id_chutro));
         gbc.gridx = 0;
         gbc.gridy = 4;
         frame.add(btnUpdateInvoice,gbc);
@@ -103,10 +104,12 @@ public class RoomView {
 
     }
 
+
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JPanel roomPanel = new JPanel();
-            new RoomView("R001", "CT002", roomPanel);
+            new RoomView("R001", "CT002");
         });
     }
 }

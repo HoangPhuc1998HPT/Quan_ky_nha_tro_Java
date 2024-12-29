@@ -24,14 +24,68 @@ src/
 │   └── NguoiThueTroController.java         đã có
 ├── frontend/                           # Lớp hiển thị giao diện (View)
 │   ├── view/                           # Các giao diện cụ thể
-│   │   ├── LoginView.java
-│   │   ├── RegisterView.java
-│   │   ├── RoomView.java
-│   │   ├── RoomUpdateInforRoomView.java
-│   │   ├── RoomUpdateNguoithueView.java
-│   │   ├── DashboardChutroView.java
-│   │   ├── AdminDashboardView.java
-│   │   └── NguoiThueTroDashboardView.java
+            
+│   │   ├── adminDashboard.java ==> Show View Admin Dashboard
+│   │   ├── ChutroCreateRoomView.java ==> Show view tạo phòng trọ mới
+│   │   ├── ChutroDashboardView.java ==> Show View chủ trọ Dashboard
+                Gồm các chức năng:
+                    + Xem thông tin chủ trọ (1)
+                    + Tạo phòng trọ
+                    + Xem danh sách phòng trọ   
+                    + Xem danh sách hóa đơn
+                    + Đăng xuất khỏi sever trái đất
+│   │   ├── ChutoInforView.java ==> hiển thị chức năng xem thông tin chủ trọ (1)
+│   │   ├── ChutroRoomTableView.java ==> Xem danh sách phòng ==> nơi kết nối với chi tiết phòng
+                    + ID phòng (hoàn thiện backend sẽ bỏ)
+                    + Tên phòng 
+                    + Người thuê 
+                    + Xem chi tiết phòng ==> Nơi cập nhật, tạo các hóa đơn liên quan
+│   │   ├── homeloginView.java ==> View đăng nhập/ đăng kí tài khoản
+                    + Đăng nhập ==> đã tạo view(2)
+                    + Đăng ký ==> đã tạo view liên kết
+│   │   └── InvoiceDetailUpdateView.java ==>Cập nhật chi tiết hóa đơn (6)
+                    + Thông tin phòng
+                    + Số điện cũ / nước cũ 
+                    + Số điện mới / nước mới
+                    + Ngày thu tiền nhà tháng trước
+                    + Ngày xuất hóa đơn
+                    + Giảm giá
+                    + Cập nhật
+│   │   └── loginView.java
+                    + Giao diện đăng nhập (2)
+│   │   └── nguoiThueTroDashboardView.java ==> hiển thị Dashboard người thuê
+                    + chưa tạo khỉ khô gì
+│   │   └── RegisterView.java ==> Hiển thị giao diện đăng kí tài khoản
+                    + Vai trò ( chủ trọ / người thuê trọ)
+                    + Đăng kí tài khoản mật khấu ==> cần hàm check với database
+                    + Nút Đăng kí , quay lại
+│   │   └── RoomBaseUpdateView.java  ==> abstract class câp nhật giá trị mới (giá điện/ nước)
+                    + Nút cập nhật (3)
+                    + Nút quay lại
+│   │   └── RoomUpdateInforRoomView.java (5)
+                    + Tên phòng
+                    + Tên người thuê
+                    + Giá thuê phòng ==> Nút cập nhật (3)
+                    + Giá điện ==> Nút cập nhât (3)
+                    + Giá nước ==> Nút cập nhât (3)
+                    + Giá rác ==> Nút cập nhât (3)
+                    + Nút quay lại
+│   │   └── RoomUpdateNguoithueView.java ==> Cập nhât người thuê vào phòng trọ (4)
+                    + Nhập mã số CCCD
+                    + Nút xác nhận
+                    + Nút quay lại
+│   │   └── RoomUpdatePriceView.java
+                    + Cập nhật giá cho (3)
+│   │   └── RoomView.java ==> có thể gọi là Dashboard phòng
+                    + Cập nhật người thuê (4) ==> đã hiệu chỉnh
+                    + Cập nhật thông tin phòng (5)==> đã hiệu chỉnh tạo liên kết
+                    + Cập nhật hóa đơn (6) ==> đã tạo liên kết
+                    + Xuất hóa đơn ==> chưa tạo
+                    + Xóa phòng   ==> chưa tạo  
+                    + NÚt quay lại ==> tạo liên kết sai
+
+
+
 │   ├── components/            # Các thành phần giao diện dùng lại
 │   │   ├── CustomButton.java
 │   │   └── CustomPanel.java

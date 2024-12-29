@@ -22,4 +22,6 @@ public class Room {
     public String getTenantName() {
         return tenantName;
     }
+
+
 }
