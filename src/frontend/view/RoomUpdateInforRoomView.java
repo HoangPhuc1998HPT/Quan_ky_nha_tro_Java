@@ -21,9 +21,22 @@ public class RoomUpdateInforRoomView {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridBagLayout());
 
-        // Thông tin mẫu
-        Room room = new Room(roomId, "Phòng A", "Nguyễn Văn A");
-        InvoiceDetail roomPrice = new InvoiceDetail(3000000, 3000, 15000, 50000);
+        // Lấy thông tin phòng từ database
+        Room room = Room.getRoomDetails(roomId);
+        InvoiceDetail roomPrice = room != null ? new InvoiceDetail(
+                room.getRoomPrice(),
+                room.getElectricityPrice(),
+                room.getWaterPrice(),
+                room.getGarbageFee()
+        ) : null;
+
+        if (room == null || roomPrice == null) {
+            JOptionPane.showMessageDialog(frame, "Không thể tải thông tin phòng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            frame.dispose();
+            return;
+        }
+
+        //InvoiceDetail roomPrice = new InvoiceDetail(3000000, 3000, 15000, 50000);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -74,7 +87,7 @@ public class RoomUpdateInforRoomView {
             updateButton.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
             int finalI = i;
             updateButton.addActionListener(e -> new RoomUpdatePriceView(
-                    room.getId(),
+                    room.getIdRoom(),
                     "Cập nhật " + labels[finalI],
                     labels[finalI],
                     String.valueOf(values[finalI]),

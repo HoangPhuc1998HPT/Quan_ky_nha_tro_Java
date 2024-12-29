@@ -5,25 +5,23 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class NguoiThueTro {
-    private String idNguoiThue;
+public class Admin {
+    private String idAdmin;
     private String userId;
     private String fullName;
     private String phone;
-    private String cccd;
 
     // Constructor
-    public NguoiThueTro(String idNguoiThue, String userId, String fullName, String phone, String cccd) {
-        this.idNguoiThue = idNguoiThue;
+    public Admin(String idAdmin, String userId, String fullName, String phone) {
+        this.idAdmin = idAdmin;
         this.userId = userId;
         this.fullName = fullName;
         this.phone = phone;
-        this.cccd = cccd;
     }
 
     // Getters
-    public String getIdNguoiThue() {
-        return idNguoiThue;
+    public String getIdAdmin() {
+        return idAdmin;
     }
 
     public String getUserId() {
@@ -38,26 +36,20 @@ public class NguoiThueTro {
         return phone;
     }
 
-    public String getCCCD() {
-        return cccd;
-    }
-
-
     // Static methods for database operations
-    public static NguoiThueTro getNguoiThueTroByUserId(String userId) {
+    public static Admin getAdminByUserId(String userId) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-            String sql = "SELECT * FROM NguoiThueTro WHERE UserID = ?";
+            String sql = "SELECT * FROM Admin WHERE UserID = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, userId);
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                return new NguoiThueTro(
-                        rs.getString("IDNguoiThue"),
+                return new Admin(
+                        rs.getString("IDAdmin"),
                         rs.getString("UserID"),
-                        rs.getString("Hoten"),
-                        rs.getString("Phone"),
-                        rs.getString("CCCD")
+                        rs.getString("FullName"),
+                        rs.getString("Phone")
                 );
             }
         } catch (Exception e) {

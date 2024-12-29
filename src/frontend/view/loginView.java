@@ -57,8 +57,7 @@ public class loginView {
         gbc.gridy = 2;
         panel.add(entryPassword, gbc);
 
-        String username = entryUsername.getText();
-        String password = Arrays.toString(entryPassword.getPassword());
+
 
 
         // Tạo nút Đăng nhập
@@ -66,8 +65,12 @@ public class loginView {
         gbc.gridx = 1;
         gbc.gridy = 3;
         //gbc.anchor = GridBagConstraints.LINE_END; // Căn nút về phía phải`
-        buttonLogin.addActionListener(e -> LoginController.checkLogin(username, password.toCharArray(),f));
-        panel.add(buttonLogin, gbc);
+        buttonLogin.addActionListener(e -> {
+            String username = entryUsername.getText().trim();
+            String password = new String(entryPassword.getPassword());
+
+            LoginController.checkLogin(username, password.toCharArray(), f);
+        });  panel.add(buttonLogin, gbc);
 
         // Thêm JPanel vào trung tâm của JFrame
         f.add(panel, BorderLayout.CENTER);

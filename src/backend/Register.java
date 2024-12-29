@@ -1,9 +1,13 @@
 package backend;
 
+import backend.connectDatabase;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Register {
     public static boolean registerUser(String role, String username, String password, String confirmPassword) {
-        // Kiểm tra tính hợp lệ của thông tin
         if (username == null || username.isEmpty()) {
             System.out.println("Tên tài khoản không được để trống.");
             return false;
@@ -17,12 +21,32 @@ public class Register {
             return false;
         }
 
-        // Thực hiện logic lưu thông tin người dùng vào cơ sở dữ liệu (giả lập)
-        System.out.println("Đang đăng ký người dùng:");
-        System.out.println("Vai trò: " + role);
-        System.out.println("Tên tài khoản: " + username);
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            // Kiểm tra tài khoản đã tồn tại
+            String checkUserSql = "SELECT COUNT(*) FROM Users WHERE Username = ?";
+            PreparedStatement checkStmt = conn.prepareStatement(checkUserSql);
+            checkStmt.setString(1, username);
+            ResultSet rs = checkStmt.executeQuery();
+            if (rs.next() && rs.getInt(1) > 0) {
+                System.out.println("Tài khoản đã tồn tại.");
+                return false;
+            }
 
-        // Trả về true nếu đăng ký thành công
-        return true;
+            // Thêm tài khoản mới
+            String insertSql = "INSERT INTO Users (Username, Password, Role) VALUES (?, ?, ?)";
+            PreparedStatement insertStmt = conn.prepareStatement(insertSql);
+            insertStmt.setString(1, username);
+            insertStmt.setString(2, password); // Cần hash mật khẩu ở đây
+            insertStmt.setString(3, role);
+
+            int rowsAffected = insertStmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Đăng ký thành công!");
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

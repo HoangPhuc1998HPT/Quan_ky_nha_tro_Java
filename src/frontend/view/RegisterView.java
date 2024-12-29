@@ -1,5 +1,6 @@
 package frontend.view;
 
+import controller.RegisterController;
 import frontend.components.CustomButton;
 
 import javax.swing.*;
@@ -110,6 +111,21 @@ public class RegisterView {
         gbc.gridx = 1;
         gbc.gridy = 5;
         gbc.gridwidth = 2;
+        registerButton.addActionListener(e -> {
+            String role = roleGroup.getSelection().getActionCommand(); // Vai trò
+            String username = usernameField.getText().trim();
+            String password = new String(passwordField.getPassword());
+            String confirmPassword = new String(confirmPasswordField.getPassword());
+
+            boolean result = RegisterController.handleRegister(role, username, password, confirmPassword);
+            if (result) {
+                JOptionPane.showMessageDialog(frame, "Đăng ký thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                frame.dispose();
+                new loginView();
+            } else {
+                JOptionPane.showMessageDialog(frame, "Đăng ký thất bại. Vui lòng kiểm tra thông tin!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        });
         panel.add(registerButton, gbc);
 
         // Thêm panel vào JFrame

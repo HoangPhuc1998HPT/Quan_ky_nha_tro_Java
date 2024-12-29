@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 import static backend.model.InvoiceDetail.*;
 import static frontend.view.RoomView.*;
@@ -62,8 +63,22 @@ public class RoomController {
         JOptionPane.showMessageDialog(frame, "Xuất hóa đơn cho phòng " + idPhong);
     }
 
-    public static void deletePhong(JFrame frame, String idPhong) {
-        JOptionPane.showMessageDialog(frame, "Xóa phòng " + idPhong);
+    public static void deletePhong(JFrame frame, String idRoom) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "DELETE FROM TTPhongtro WHERE IDPhong = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, idRoom);
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(frame, "Phòng " + idRoom + " đã được xóa!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(frame, "Không thể xóa phòng " + idRoom, "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(frame, "Lỗi khi xóa phòng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 
@@ -85,9 +100,8 @@ public class RoomController {
 
     public static void GoToUpdateNguoiThue(String cccdValue, JFrame frame, String idPhong) {
         // Khởi tạo đối tượng NguoiThueTro và gọi phương thức UpdateNguoiThue
-        System.out.println(" đã gọi controller GoToUpdateNguoiThue");
-        NguoiThueTro ngThueTro = new NguoiThueTro();
-        NguoiThueTro.UpdateNguoiThueInRoom(cccdValue, idPhong, frame);
+        //System.out.println(" đã gọi controller GoToUpdateNguoiThue");
+        //NguoiThueTro ngThueTro = new NguoiThueTro();guoiThueTro.UpdateNguoiThueInRoom(cccdValue, idPhong, frame);
         // Update xong gửi thông báo về ==> Đã thêm người thuê trọ "name" vào"
 
     }
@@ -120,15 +134,6 @@ public class RoomController {
             e.printStackTrace();
         }
     }
-    public Room getRoomDetails(String roomId) {
-        // Truy vấn dữ liệu phòng từ database (giả lập)
-        return new Room(roomId, "Phòng A", "Nguyễn Văn A");
-    }
-
-    public InvoiceDetail getRoomPrices(String roomId) {
-        // Truy vấn giá phòng từ database (giả lập)
-        return new InvoiceDetail(3000000, 3000, 15000, 50000);
-    }
 
     public static void updateRoomPrice(String roomId, double newValue, String type) {
         // Cập nhật giá phòng vào database
@@ -139,13 +144,30 @@ public class RoomController {
         frame.setVisible(false);
         new RoomView(id_room,id_chutro);
     }
+    // Lấy danh sách phòng dựa trên ID chủ trọ
+    public static List<String[]> getRoomListByChutro(String idChutro) {
+        return DashboardChutroController.getRoomList(idChutro);
+    }
+
+    // Lấy RoomID dựa trên tên phòng và ID chủ trọ
+    public static String getRoomIdByName(String roomName, String idChutro) {
+        List<String[]> roomList = getRoomListByChutro(idChutro);
+        for (String[] room : roomList) {
+            if (room[1].equals(roomName)) {
+                return room[0]; // RoomID ở cột 0
+            }
+        }
+        return null;
+    }
+
+    // Mở RoomView cho một phòng cụ thể
+    public static void openRoomView(String roomId, String idChutro) {
+        new RoomView(roomId, idChutro);
+    }
 
 
-
-
-
-
-
-
-
+    public static void goToBackRoomView(JFrame frame, String idRoom, String idChutro) {
+        frame.setVisible(false);
+        //new DashboardChutroidRoom,idChutro);
+    }
 }

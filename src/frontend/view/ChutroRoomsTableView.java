@@ -1,7 +1,8 @@
 package frontend.view;
 
-import controller.DashboardChutroController;
+import controller.RoomController;
 import frontend.components.CustomButton;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -14,31 +15,27 @@ public class ChutroRoomsTableView {
     private JFrame frame;
     private JTable roomTable;
     private DefaultTableModel tableModel;
-// Cần hiệu chỉnh các cột của table:
-    // STT - Tên Phòng - Người Thuê - tình trạng - Xem chi tiết
-    // ID_PHONG sẽ được ẩn nhưng vẫn nằm trong luồng truy xuất database để sử dụng
 
-
-    public ChutroRoomsTableView(String id_chutro) {
+    public ChutroRoomsTableView(String idChutro) {
         // Tạo JFrame chính
         frame = new JFrame("Danh sách phòng trọ");
-        frame.setSize(1000, 600);
+        frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
-        // Tạo tiêu đề bảng
-        JLabel title = new JLabel("Danh sách các phòng thuộc chủ trọ: " + id_chutro);
+        // Tiêu đề bảng
+        JLabel title = new JLabel("Danh sách các phòng thuộc chủ trọ: " + idChutro);
         title.setFont(new Font("Be Vietnam Pro", Font.BOLD, 18));
         title.setHorizontalAlignment(SwingConstants.CENTER);
         frame.add(title, BorderLayout.NORTH);
 
         // Tạo bảng JTable
-        String[] columnNames = {"ID Phòng", "Tên Phòng", "Người Thuê", "Xem Chi Tiết"};
+        String[] columnNames = {"Tên Phòng", "Người Thuê", "Xem Chi Tiết"};
         tableModel = new DefaultTableModel(columnNames, 0);
         roomTable = new JTable(tableModel) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return column == 3; // Chỉ cột "Xem Chi Tiết" cho phép tương tác
+                return column == 2; // Chỉ cột "Xem Chi Tiết" cho phép tương tác
             }
         };
 
@@ -48,20 +45,17 @@ public class ChutroRoomsTableView {
         roomTable.getTableHeader().setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
         roomTable.getTableHeader().setBackground(new Color(200, 200, 255));
 
-        // Gọi hàm lấy dữ liệu trực tiếp từ Controller
-        List<String[]> roomList = DashboardChutroController.getRoomList(id_chutro);
+        // Lấy danh sách phòng từ Controller
+        List<String[]> roomList = RoomController.getRoomListByChutro(idChutro);
+
         for (String[] room : roomList) {
-            tableModel.addRow(room);
+            // Chỉ thêm các cột Tên phòng, Người thuê, và nút Xem Chi Tiết vào bảng
+            tableModel.addRow(new String[]{room[1], room[2], "Xem Chi Tiết"});
         }
 
-        // Thêm dữ liệu vào bảng
-        for (String[] room : roomList) {
-            tableModel.addRow(room);
-        }
-
-        // Thêm cột nút "Xem Chi Tiết"
+        // Thêm nút "Xem Chi Tiết"
         roomTable.getColumn("Xem Chi Tiết").setCellRenderer(new CustomButton.ButtonRenderer());
-        roomTable.getColumn("Xem Chi Tiết").setCellEditor(new ButtonEditor(new JCheckBox(), id_chutro));
+        roomTable.getColumn("Xem Chi Tiết").setCellEditor(new ButtonEditor(new JCheckBox(), idChutro));
 
         // Đưa JTable vào JScrollPane
         JScrollPane scrollPane = new JScrollPane(roomTable);
@@ -70,7 +64,7 @@ public class ChutroRoomsTableView {
         // Nút quay lại
         JButton backButton = new JButton("Quay lại");
         backButton.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
-        backButton.addActionListener(e -> go_back_dashboardchutro(frame,id_chutro));
+        backButton.addActionListener(e -> go_back_dashboardchutro(frame, idChutro));
         frame.add(backButton, BorderLayout.SOUTH);
 
         // Hiển thị JFrame
@@ -83,11 +77,11 @@ public class ChutroRoomsTableView {
         private JButton button;
         private String label;
         private boolean clicked;
-        private String id_chutro;
+        private String idChutro;
 
-        public ButtonEditor(JCheckBox checkBox, String id_chutro) {
+        public ButtonEditor(JCheckBox checkBox, String idChutro) {
             super(checkBox);
-            this.id_chutro = id_chutro;
+            this.idChutro = idChutro;
             button = new JButton();
             button.setOpaque(true);
             button.setFont(new Font("Be Vietnam Pro", Font.BOLD, 12));
@@ -117,18 +111,19 @@ public class ChutroRoomsTableView {
 
         private void performAction() {
             int selectedRow = roomTable.getSelectedRow();
-            String roomId = tableModel.getValueAt(selectedRow, 0).toString();
-            System.out.println("Đi đến RoomView cho phòng: " + roomId);
+            String roomName = tableModel.getValueAt(selectedRow, 0).toString();
+            System.out.println("Đi đến RoomView cho phòng: " + roomName);
 
-            // Mở RoomView cho phòng đã chọn
-            new RoomView(roomId, id_chutro);
+            // Lấy RoomID từ dữ liệu backend
+            String roomId = RoomController.getRoomIdByName(roomName, idChutro);
+
+            // Gọi RoomView qua Controller
+            RoomController.openRoomView(roomId, idChutro);
         }
     }
+
+
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            String id_chutro = "9";
-            //List<String[]> roomList = DashboardChutroController.getRoomList(id_chutro);
-            new ChutroRoomsTableView(id_chutro);
-        });
+        SwingUtilities.invokeLater(() -> new ChutroRoomsTableView("09"));
     }
 }

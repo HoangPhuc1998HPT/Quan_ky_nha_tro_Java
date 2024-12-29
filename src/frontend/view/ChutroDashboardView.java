@@ -1,18 +1,28 @@
 package frontend.view;
 
+import backend.model.Chutro;
 import controller.DashboardChutroController;
 import controller.LoginController;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static backend.model.chutro.get_id_chutro_from_username;
+import static backend.model.Chutro.getChutroByUserId;
+
 
 public class ChutroDashboardView {
-    private final JFrame frame;
+    private JFrame frame;
+
 
     public ChutroDashboardView(String entryUsername) {
-        String id_chutro = get_id_chutro_from_username(entryUsername);
+        Chutro chutro = getChutroByUserId(entryUsername);
+        if (chutro == null) {
+            JOptionPane.showMessageDialog(null,"Không tìm thấy chủ trọ");
+            return;
+        }
+
+        String id_chutro = chutro.getIdChutro();
+
         frame = new JFrame("ChutroDashboardView");
         frame.setSize(600, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,7 +35,7 @@ public class ChutroDashboardView {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
 
-        JLabel DashboarLabel = new JLabel("Cháo mừng ai đó đến với Dasboard Chủ trọ"); // Thêm tên chủ vào vị trí ai đó
+        JLabel DashboarLabel = new JLabel("Chào đến với Dasboard Chủ trọ"); // Thêm tên chủ vào vị trí ai đó
         DashboarLabel.setFont(new Font("Be Vietnam Pro", Font.PLAIN,16));
         gbc.gridx = 0;
         gbc.gridy = 0;

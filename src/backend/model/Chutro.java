@@ -5,16 +5,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class NguoiThueTro {
-    private String idNguoiThue;
+public class Chutro {
+    private String idChutro;
     private String userId;
     private String fullName;
     private String phone;
     private String cccd;
 
     // Constructor
-    public NguoiThueTro(String idNguoiThue, String userId, String fullName, String phone, String cccd) {
-        this.idNguoiThue = idNguoiThue;
+    public Chutro(String idChutro, String userId, String fullName, String phone, String cccd) {
+        this.idChutro = idChutro;
         this.userId = userId;
         this.fullName = fullName;
         this.phone = phone;
@@ -22,8 +22,8 @@ public class NguoiThueTro {
     }
 
     // Getters
-    public String getIdNguoiThue() {
-        return idNguoiThue;
+    public String getIdChutro() {
+        return idChutro;
     }
 
     public String getUserId() {
@@ -38,22 +38,21 @@ public class NguoiThueTro {
         return phone;
     }
 
-    public String getCCCD() {
+    public String getCccd() {
         return cccd;
     }
 
-
     // Static methods for database operations
-    public static NguoiThueTro getNguoiThueTroByUserId(String userId) {
+    public static Chutro getChutroByUserId(String userId) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-            String sql = "SELECT * FROM NguoiThueTro WHERE UserID = ?";
+            String sql = "SELECT * FROM Chutro WHERE UserID = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, userId);
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                return new NguoiThueTro(
-                        rs.getString("IDNguoiThue"),
+                return new Chutro(
+                        rs.getString("IDChutro"),
                         rs.getString("UserID"),
                         rs.getString("Hoten"),
                         rs.getString("Phone"),
@@ -64,5 +63,21 @@ public class NguoiThueTro {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static boolean updateChutroInfo(String idChutro, String fullName, String phone, String cccd) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "UPDATE Chutro SET Hoten = ?, Phone = ?, CCCD = ? WHERE IDChutro = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, fullName);
+            pstmt.setString(2, phone);
+            pstmt.setString(3, cccd);
+            pstmt.setString(4, idChutro);
+
+            return pstmt.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

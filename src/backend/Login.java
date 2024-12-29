@@ -1,21 +1,47 @@
 package backend;
 
-import javax.swing.*;
+import backend.connectDatabase;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Login {
-    public static int check_login(String username, String pasword){
-        // check login
-        System.out.println(" login chưa được thiết lập");
-        // sau kiểm tra login
-        // nếu user thuộc role chủ trọ trả về tham so = 1
-        // nếu user thuộc role người thuê trọ trả về tham so = 2
-        // nếu user thuộc admin trả về tham so = 0
-        int check_login = 1 ;
-        return check_login;
+    public static LoginResult checkLogin(String username, String password) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "SELECT UserID, Role FROM Users WHERE Username = ? AND Password = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            pstmt.setString(2, password); // Mã hóa nếu cần thiết
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                String userId = rs.getString("UserID");
+                String role = rs.getString("Role");
+
+                return new LoginResult(userId, role);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null; // Đăng nhập thất bại
     }
 
+    public static class LoginResult {
+        private final String userId;
+        private final String role;
 
+        public LoginResult(String userId, String role) {
+            this.userId = userId;
+            this.role = role;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public String getRole() {
+            return role;
+        }
+    }
 }
