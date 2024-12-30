@@ -9,7 +9,7 @@ public class LoginTest {
 
     @Test
     public void testLogin_Success() {
-        Login.LoginResult role = checkLogin("testuser", "password123");
+        Login.LoginResult role = checkLogin("admin", "pass123");
         assertEquals(1, role, "Đăng nhập thất bại dù thông tin hợp lệ.");
     }
 

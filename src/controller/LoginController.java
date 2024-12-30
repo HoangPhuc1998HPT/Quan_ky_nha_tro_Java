@@ -17,7 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 
-public class LoginController {
+    public class LoginController {
     public static void showRegisterView(JFrame frame) {
         // Mã để hiển thị giao diện đăng ký
         frame.setVisible(false);
@@ -69,6 +69,7 @@ public class LoginController {
         Login.LoginResult result = Login.checkLogin(username, new String(password));
 
         if (result != null) {
+            System.out.println("Đăng nhập thành công. UserID: " + result.getUserId() + ", Role: " + result.getRole());
             String userId = result.getUserId();
             String role = result.getRole();
 
@@ -77,8 +78,12 @@ public class LoginController {
                     Chutro chutro = Chutro.getChutroByUserId(userId);
                     if (chutro != null) {
                         new ChutroDashboardView(username);
+                        System.out.println("Mở dashboard Chủ trọ thành công.");
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "Không tìm thấy thông tin chủ trọ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     }
                     break;
+
                 case "nguoithuetro":
                     NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId(userId);
                     if (tenant != null) {
@@ -100,6 +105,7 @@ public class LoginController {
                     JOptionPane.showMessageDialog(frame, "Vai trò không xác định!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         } else {
+            System.out.println("Đăng nhập thất bại.");
             JOptionPane.showMessageDialog(frame, "Đăng nhập thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }

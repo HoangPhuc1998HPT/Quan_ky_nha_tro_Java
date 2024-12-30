@@ -22,7 +22,31 @@ public class Chutro {
     }
 
     // Getters
-    public String getIdChutro() {
+    public static String getIdChutroByUsername(String username) {
+        String idChutro = null;
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            // Truy vấn để lấy UserID từ bảng Users
+            String sqlGetUserId = "SELECT UserID FROM Users WHERE Username = ?";
+            PreparedStatement pstmtUser = conn.prepareStatement(sqlGetUserId);
+            pstmtUser.setString(1, username);
+            ResultSet rsUser = pstmtUser.executeQuery();
+
+            if (rsUser.next()) {
+                String userId = rsUser.getString("UserID");
+
+                // Truy vấn để lấy IDChutro từ bảng Chutro
+                String sqlGetIdChutro = "SELECT IDChutro FROM Chutro WHERE UserID = ?";
+                PreparedStatement pstmtChutro = conn.prepareStatement(sqlGetIdChutro);
+                pstmtChutro.setString(1, userId);
+                ResultSet rsChutro = pstmtChutro.executeQuery();
+
+                if (rsChutro.next()) {
+                    idChutro = rsChutro.getString("IDChutro");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return idChutro;
     }
 
@@ -45,6 +69,7 @@ public class Chutro {
     // Static methods for database operations
     public static Chutro getChutroByUserId(String userId) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            System.out.println("Đi tới CHutro.java ");
             String sql = "SELECT * FROM Chutro WHERE UserID = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, userId);
@@ -58,7 +83,10 @@ public class Chutro {
                         rs.getString("Phone"),
                         rs.getString("CCCD")
                 );
+
             }
+            System.out.println(" đã trả về đối tượng chủ trọ hoàn chỉnh ");
+
         } catch (Exception e) {
             e.printStackTrace();
         }

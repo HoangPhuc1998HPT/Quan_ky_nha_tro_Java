@@ -3,7 +3,6 @@ package controller;
 import backend.connectDatabase;
 import frontend.view.ChutroCreateRoomsView;
 import frontend.view.ChutroDashboardView;
-import frontend.view.ChutroInforView;
 import frontend.view.ChutroRoomsTableView;
 
 import javax.swing.*;
@@ -20,7 +19,7 @@ public class DashboardChutroController {
         // Gọi backend xử lý get thông tin để truyển về cho viewshow thông tin
         // Xử lý backend tra về 1 mảng chưa full thông tin chủ tr
         String chutroList = new String();
-        new ChutroInforView(chutroList);
+
     }
 
     public static void go_to_create_room(String id_chutro) {

@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import static backend.model.Chutro.getChutroByUserId;
+import static backend.model.Chutro.getIdChutroByUsername;
 
 
 public class ChutroDashboardView {
@@ -15,13 +16,19 @@ public class ChutroDashboardView {
 
 
     public ChutroDashboardView(String entryUsername) {
-        Chutro chutro = getChutroByUserId(entryUsername);
+        // entryUsername == tên tài khoản == Username được truyền vào khi đăng nhập
+
+
+        // lấy USER ID trước khi lấy đối tượng Chutro
+
+        String id_chutro = getIdChutroByUsername(entryUsername);
+
+
+        Chutro chutro = getChutroByUserId(id_chutro);
         if (chutro == null) {
             JOptionPane.showMessageDialog(null,"Không tìm thấy chủ trọ");
             return;
         }
-
-        String id_chutro = chutro.getIdChutro();
 
         frame = new JFrame("ChutroDashboardView");
         frame.setSize(600, 600);
@@ -87,8 +94,7 @@ public class ChutroDashboardView {
     }
 
     public static void main(String[] args) {
-        String entryUsername = "demo";
-        SwingUtilities.invokeLater(() -> new ChutroDashboardView(entryUsername));
+        SwingUtilities.invokeLater(() -> new ChutroDashboardView("admin_1"));
     }
 
 }

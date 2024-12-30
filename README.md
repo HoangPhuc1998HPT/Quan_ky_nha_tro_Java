@@ -42,7 +42,7 @@ src/
                     + Xem chi tiết phòng ==> Nơi cập nhật, tạo các hóa đơn liên quan
 │   │   ├── homeloginView.java ==> View đăng nhập/ đăng kí tài khoản
                     + Đăng nhập ==> đã tạo view(2)
-                    + Đăng ký ==> đã tạo view liên kết
+                    + Đăng ký ==> đã tạo view liên kết ==> test dữ liệu vào CSDL OK
 │   │   └── InvoiceDetailUpdateView.java ==>Cập nhật chi tiết hóa đơn (6)
                     + Thông tin phòng
                     + Số điện cũ / nước cũ 
@@ -178,9 +178,13 @@ RoomView
 
 
 
+    |____ Test các chức năng
+        - Đăng ký: homelogin->Logincontroller->RegisterView->RegisterController-<Rigister
+            ==> Tạo tài khoản chủ trọ => data đã đưa về CSDL 
+        - Đăng nhập: Chưa đăng nhập được
+        - 
 
-
-
+    |_____ 
 
 
 

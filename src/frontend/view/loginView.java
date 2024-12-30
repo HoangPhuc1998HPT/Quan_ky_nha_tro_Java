@@ -15,6 +15,7 @@ public class loginView {
     private final JPasswordField entryPassword ;
 
     public loginView() {
+
         f = new JFrame("Đăng nhập");
         f.setSize(400, 300);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,7 +71,8 @@ public class loginView {
             String password = new String(entryPassword.getPassword());
 
             LoginController.checkLogin(username, password.toCharArray(), f);
-        });  panel.add(buttonLogin, gbc);
+        });
+        panel.add(buttonLogin, gbc);
 
         // Thêm JPanel vào trung tâm của JFrame
         f.add(panel, BorderLayout.CENTER);
