@@ -22,7 +22,7 @@ public class connectDatabase {
             while (attemptCount < MAX_RETRY_ATTEMPTS) {
                 try {
                     Class.forName(DRIVER);
-                    if (connection == null || connection.isClosed()) {
+                    if (connection == null) {
                         connection = DriverManager.getConnection(currentURL);
                         System.out.println("Kết nối với " + (currentURL.equals(Phuc_URL) ? "Phuc's" : "Hieu's") + " server thành công!");
                         return connection; // Return immediately on successful connection

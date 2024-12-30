@@ -2,7 +2,7 @@ package test;
 
 import org.junit.jupiter.api.Test;
 
-import static backend.Login.checkLogin;
+// import static backend.Login.checkLogin;
 import static org.junit.jupiter.api.Assertions.*;
 import backend.Login;
 public class LoginTest {
