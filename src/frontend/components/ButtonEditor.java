@@ -5,25 +5,22 @@ import controller.AdminController;
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ButtonEditor extends AbstractCellEditor implements TableCellEditor {
     private final JButton button;
     private String label;
     private boolean isPushed;
+    private JTable table;
 
     public ButtonEditor(JTable table) {
+        this.table = table;
         button = new JButton();
         button.setOpaque(true);
 
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                fireEditingStopped(); // Dừng chế độ chỉnh sửa
-                int row = table.getSelectedRow();
-                AdminController.activateUser(row, table);
-            }
+        button.addActionListener(e -> {
+            fireEditingStopped(); // Dừng chế độ chỉnh sửa
+            int row = table.getSelectedRow();
+            AdminController.activateUser(row, table);
         });
     }
 

@@ -24,8 +24,8 @@ public class  AdminController {
             while (rs.next()) {
                 String username = rs.getString("Username");
                 String role = rs.getString("Role");
-                boolean isActive = rs.getBoolean("IsActive");
-                model.addRow(new Object[]{username, role, isActive, "Active"});
+                boolean is_active = rs.getBoolean("is_active");
+                model.addRow(new Object[]{username, role, is_active, "Active"});
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,7 +39,7 @@ public class  AdminController {
         String username = (String) model.getValueAt(rowIndex, 0);
 
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-            String sql = "UPDATE Users SET IsActive = 1 WHERE Username = ?";
+            String sql = "UPDATE Users SET is_active = 1 WHERE Username = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, username);
             int rowsUpdated = pstmt.executeUpdate();
