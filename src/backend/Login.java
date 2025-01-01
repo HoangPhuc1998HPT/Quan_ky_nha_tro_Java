@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 public class Login {
     public static LoginResult checkLogin(String username, String password) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-            String sql = "SELECT UserID, Role FROM Users WHERE Username = ? AND Password = ?";
+            String sql = "SELECT UserID, Role FROM Users WHERE Username = ? AND Password = ? AND is_active = 1";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, username);
             pstmt.setString(2, password); // Mã hóa nếu cần thiết

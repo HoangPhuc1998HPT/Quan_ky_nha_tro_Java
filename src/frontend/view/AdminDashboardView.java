@@ -1,6 +1,8 @@
 package frontend.view;
 
 import controller.AdminController;
+import frontend.components.ButtonEditor;
+import frontend.components.ButtonRenderer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -46,7 +48,6 @@ public class AdminDashboardView extends JFrame {
         JButton btnShowHoadon = new JButton("Danh sách hóa đơn");
         btnShowHoadon.addActionListener(e -> new AdminShowAllHoadonView(null));
         buttonPanel.add(btnShowHoadon);
-
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 2;
@@ -63,23 +64,17 @@ public class AdminDashboardView extends JFrame {
 
 
         // Bảng hiển thị danh sách tài khoản chưa kích hoạt
-        JTable inactiveUsersTable = new JTable(new DefaultTableModel(new Object[]{"Username", "Role", "IsActive", "Action"}, 0)) {
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Username", "Role", "IsActive", "Action"}, 0);
+        JTable inactiveUsersTable = new JTable(model) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return column == 3; // Chỉ cho phép chỉnh sửa cột Action
             }
-
-            @Override
-            public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-                Component component = super.prepareRenderer(renderer, row, column);
-                if (column == 3) {
-                    JButton button = new JButton("Kích hoạt");
-                    button.addActionListener(e -> AdminController.activateUser(row, this));
-                    return button;
-                }
-                return component;
-            }
         };
+
+        // Sử dụng ButtonRenderer và ButtonEditor
+        inactiveUsersTable.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
+        inactiveUsersTable.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(inactiveUsersTable));
 
         // Load danh sách tài khoản chưa kích hoạt
         AdminController.loadInactiveUsers(inactiveUsersTable);

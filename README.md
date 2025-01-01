@@ -83,7 +83,8 @@ src/
                     + Xuất hóa đơn ==> chưa tạo
                     + Xóa phòng   ==> chưa tạo  
                     + NÚt quay lại ==> tạo liên kết sai
-
+│   │   └── AdminDashboardView.java ==> View giao diện dashboard Admin
+                    + 
 
 
 │   ├── components/            # Các thành phần giao diện dùng lại
@@ -292,3 +293,33 @@ RoomView
     Giamgia DECIMAL(10,2)
     );
     
+
+
+#### Error
+AdminController.loadInactiveUsers(inactiveUsersTable); ==> lỗi truy xuất dữ liệu từ database==> OK
+Kiểm tra loadInactiveUsers(JTable table) ==> do sai tên is_active với database
+AdminDashboardView ==> Đã xử lý set is_active vào database ==> ok
+login ==> chưa đăng nhập được ==> không tìm thấy chủ trọ
+loginView ==> LoginController.checkLogin(username, password.toCharArray(), f); ==>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
