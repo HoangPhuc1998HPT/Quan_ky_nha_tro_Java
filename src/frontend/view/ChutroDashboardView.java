@@ -7,7 +7,7 @@ import controller.LoginController;
 import javax.swing.*;
 import java.awt.*;
 
-import static backend.model.Chutro.getChutroByUserId;
+import static backend.model.Chutro.getChutrobyChutroID;
 import static backend.model.Chutro.getIdChutroByUsername;
 
 
@@ -22,9 +22,11 @@ public class ChutroDashboardView {
         // lấy USER ID trước khi lấy đối tượng Chutro
 
         String id_chutro = getIdChutroByUsername(entryUsername);
+        System.out.println(id_chutro);
 
 
-        Chutro chutro = getChutroByUserId(id_chutro);
+        Chutro chutro = getChutrobyChutroID(id_chutro);
+        System.out.println(chutro);
         if (chutro == null) {
             JOptionPane.showMessageDialog(null,"Không tìm thấy chủ trọ");
             return;

@@ -69,8 +69,9 @@ public class loginView {
         buttonLogin.addActionListener(e -> {
             String username = entryUsername.getText().trim();
             String password = new String(entryPassword.getPassword());
-
-            LoginController.checkLogin(username, password.toCharArray(), f);
+            System.out.println(username);
+            System.out.println(password.toCharArray());
+            LoginController.checkLogin(username, password, f);
         });
         panel.add(buttonLogin, gbc);
 

@@ -93,6 +93,32 @@ public class Chutro {
         return null;
     }
 
+    public static Chutro getChutrobyChutroID(String idChutro) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            System.out.println("Đi tới CHutro.java ");
+            String sql = "SELECT * FROM Chutro WHERE IDChutro = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, idChutro);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new Chutro(
+                        rs.getString("IDChutro"),
+                        rs.getString("UserID"),
+                        rs.getString("Hoten"),
+                        rs.getString("Phone"),
+                        rs.getString("CCCD")
+                );
+
+            }
+            System.out.println(" đã trả về đối tượng chủ trọ hoàn chỉnh ");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static boolean updateChutroInfo(String idChutro, String fullName, String phone, String cccd) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "UPDATE Chutro SET Hoten = ?, Phone = ?, CCCD = ? WHERE IDChutro = ?";

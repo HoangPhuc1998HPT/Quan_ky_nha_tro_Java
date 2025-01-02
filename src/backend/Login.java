@@ -14,11 +14,13 @@ public class Login {
             pstmt.setString(1, username);
             pstmt.setString(2, password); // Mã hóa nếu cần thiết
             ResultSet rs = pstmt.executeQuery();
+            System.out.println(rs);
 
             if (rs.next()) {
                 String userId = rs.getString("UserID");
                 String role = rs.getString("Role");
-
+                System.out.println(userId);
+                System.out.println(role);
                 return new LoginResult(userId, role);
             }
         } catch (Exception e) {
