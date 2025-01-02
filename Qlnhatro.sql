@@ -1,4 +1,5 @@
 ﻿create database QLThueNhaTro_java;
+use QLThueNhaTro_java;
 -- Tạo table user
 Create table Users (
 	UserID INT PRIMARY KEY IDENTITY(1,1),
@@ -9,7 +10,7 @@ Create table Users (
 );
 ALTER TABLE Users ADD is_active BIT DEFAULT 0;
 select * from Users
-	
+
 select * from NguoiThueTro
 select * from Admins
 select * from TTPhongtro
