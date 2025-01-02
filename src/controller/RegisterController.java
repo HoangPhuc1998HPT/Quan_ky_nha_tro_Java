@@ -6,7 +6,7 @@ import frontend.view.UpdateChutroInforView;
 import javax.swing.*;
 
 public class RegisterController {
-    public static void handleRegister(String username, String password, String confirmPassword, String s, JFrame frame) {
+    public static void handleRegister(String username, String password, String confirmPassword, String role, JFrame frame) {
         boolean result = Register.registerUser("chutro", username, password, confirmPassword);
 
         if (result) {

@@ -21,6 +21,7 @@ public class RegisterView {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        // Tiêu đề
         JLabel titleLabel = new JLabel("Đăng ký tài khoản", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         gbc.gridx = 0;
@@ -28,6 +29,7 @@ public class RegisterView {
         gbc.gridwidth = 5;
         panel.add(titleLabel, gbc);
 
+        // Nhập tên tài khoản
         JLabel labelUsername = new JLabel("Tên tài khoản:");
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -40,6 +42,7 @@ public class RegisterView {
         gbc.gridwidth = 3;
         panel.add(usernameField, gbc);
 
+        // Nhập mật khẩu
         JLabel labelPassword = new JLabel("Mật khẩu:");
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -52,6 +55,7 @@ public class RegisterView {
         gbc.gridwidth = 3;
         panel.add(passwordField, gbc);
 
+        // Xác nhận mật khẩu
         JLabel labelConfirmPassword = new JLabel("Xác nhận mật khẩu:");
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -78,7 +82,7 @@ public class RegisterView {
         roleGroup.add(landlordButton);
         roleGroup.add(tenantButton);
 
-        JPanel rolePanel = new JPanel();
+        JPanel rolePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         rolePanel.add(landlordButton);
         rolePanel.add(tenantButton);
 
@@ -87,6 +91,7 @@ public class RegisterView {
         gbc.gridwidth = 3;
         panel.add(rolePanel, gbc);
 
+        // Nút Đăng ký
         JButton registerButton = new JButton("Đăng ký");
         gbc.gridx = 1;
         gbc.gridy = 5;
@@ -102,10 +107,11 @@ public class RegisterView {
                 return;
             }
 
-            RegisterController.handleRegister(selectedRole, username, password, confirmPassword, frame);
+            RegisterController.handleRegister( username, password, confirmPassword,selectedRole, frame);
         });
         panel.add(registerButton, gbc);
 
+        // Nút Quay lại
         CustomButton backButton = new CustomButton("Quay lại");
         backButton.setFont(new Font("Be Vietnampro", Font.BOLD, 14));
         gbc.gridx = 1;
@@ -113,8 +119,10 @@ public class RegisterView {
         gbc.gridwidth = 2;
         panel.add(backButton, gbc);
 
+        // Thêm panel vào frame
         frame.add(panel, BorderLayout.CENTER);
 
+        // Hiển thị giao diện
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
