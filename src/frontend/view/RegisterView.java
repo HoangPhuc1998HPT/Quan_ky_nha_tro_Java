@@ -1,5 +1,6 @@
 package frontend.view;
 
+import backend.Register;
 import controller.RegisterController;
 import frontend.components.CustomButton;
 
@@ -102,12 +103,27 @@ public class RegisterView {
             String confirmPassword = new String(confirmPasswordField.getPassword());
             String selectedRole = landlordButton.isSelected() ? "chutro" : tenantButton.isSelected() ? "nguoithuetro" : "";
 
+            if (username.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Vui lòng không để trống tên đăng nhập!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (password.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Vui lòng không để trống mật khẩu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (confirmPassword.isEmpty()) {
+                JOptionPane.showMessageDialog(frame, "Vui lòng xác nhận mật khẩu đã nhập!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             if (selectedRole.isEmpty()) {
                 JOptionPane.showMessageDialog(frame, "Vui lòng chọn vai trò!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             RegisterController.handleRegister( username, password, confirmPassword,selectedRole, frame);
+
         });
         panel.add(registerButton, gbc);
 

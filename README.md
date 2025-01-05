@@ -181,8 +181,8 @@ RoomView
 
     |____ Test các chức năng
         - Đăng ký: homelogin->Logincontroller->RegisterView->RegisterController-<Rigister
-            ==> Tạo tài khoản chủ trọ => data đã đưa về CSDL 
-        - Đăng nhập: Chưa đăng nhập được
+            ==> Tạo tài khoản chủ trọ => data đã đưa về CSDL => Đang xử lý  
+        - Đăng nhập: Đã đăng nhập được
         - 
 
     |_____ 

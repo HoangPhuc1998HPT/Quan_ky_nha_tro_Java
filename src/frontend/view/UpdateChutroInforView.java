@@ -68,7 +68,8 @@ public class UpdateChutroInforView {
             String fullName = fullNameField.getText().trim();
             String cccd = cccdField.getText().trim();
             String phone = phoneField.getText().trim();
-            RegisterController.updateChutroInfo(username, fullName, cccd, phone, frame);
+//            System.out.println(username);
+            RegisterController.updateChutroInfo(fullName, cccd, phone, username, frame);
         });
         panel.add(updateButton, gbc);
 
