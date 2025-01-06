@@ -33,6 +33,7 @@ public class RegisterController {
                     frame.dispose();
                     new nguoiThueTroDashboardView();
                 } else {
+                    JOptionPane.showMessageDialog(frame, "Tên tài khoản đã tồn tại hoặc xác nhận mật khẩu không chính xác!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     JOptionPane.showMessageDialog(frame, "Đăng ký thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
                 break;
