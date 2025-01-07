@@ -14,10 +14,18 @@ TODO: - Thiết lập liên kết cho nút cập nhật ChutroInformationView (C
             + updatePhoneButton.addActionListener(e->{});  ==> Cập nhật Số điện thoại
             + changePasswordButton.addActionListener(e->{}); ==> Đỏi password
             + buittonback
+Hiếu # TODO: - Hiếu chỉnh lại phương thức ( lỗi khi tạo tài khoản người thuê trọ thiếu cập nhật thông tin)
+        + Register.updateChutroInfo ==> thành update được cho cả người thuê lẫn chủ trọ
+        + Giải thích: Khi tạo tài khoản ==> cập nhật thông tin ở (UpdateChutroInforView)
+        --> tạo xong hết đổi tên class cho cleanca
 
 Hiếu TODO: - Tạo Xử lý đổi mật khẩu cho chủ trọ và người thuê trọ (hiển thị trong ChutroInformationView)
 TODO: - Chutro.getUsernameFromIdChutro ==> Trích tên username từ id_chủ trọ để back to Dashboard chủ trọ
 Phúc TODO: - View Xem dánh sách hóa đơn chưa tạo
 Phúc + Hiếu: TODO: Tạo View cho Xuất hóa đơn cần lắm các phương thức truy xuất dữ liệu
+Hiếu TODO: - Xử lý truy vấn + logic các thông tin liên quan đến hóa đơn, Xuất hóa đơn
+ERROR TODO: Vị trí quay lại trong RoomView không trả về Dashboard Chủ trọ
+ERROR TODO: Tạo người thuê trọ không dẫn đến View nhập thông tin
+        --> Cần dẫn đến View nhập thông tin trước khi gửi database lên SQL Sever
 
 

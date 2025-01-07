@@ -61,6 +61,6 @@ public class RoomView {
     }
 
     public static void main(String[] args) {
-        new RoomView("3","2");
+        new RoomView("1","12");
     }
 }

@@ -319,8 +319,16 @@ Check: ChutroDashboardView- > DashboardChutroController.go_to_show_information_c
 Lỗi:
 btnUpdateRoom -> RoomController.updateInforRoom(frame, idRoom, idChutro) ==> chưa hoạt động do chưa có phòng nào
 
+ERROR TODO: Tạo người thuê trọ không dẫn đến View nhập thông tin
+--> Cần dẫn đến View nhập thông tin trước khi gửi database lên SQL Sever
+Check: RegisterView --> RegisterController --> handleRegister --
+Check: String userID = Register.getUserIDFromUsers(username);
+    Hiếu # TODO: - Hiếu chỉnh lại phương thức   
+        + Register.updateChutroInfo ==> thành update được cho cả người thuê lẫn chủ trọ
+    + Giải thích: Khi tạo tài khoản ==> cập nhật thông tin ở (UpdateChutroInforView) --> tạo xong hết đổi tên class cho clean
 
-
+Fix case "nguoithuetro" --> new UpdateChutroInforView(username) --> RegisterController.updateChutroInfo(fullName, cccd, phone, username, frame);
+--> 
 
 
 

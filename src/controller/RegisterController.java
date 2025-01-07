@@ -31,7 +31,7 @@ public class RegisterController {
                 if (result) {
                     JOptionPane.showMessageDialog(frame, "Bạn đã đăng ký thành công với vai trò người thuê trọ!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     frame.dispose();
-                    new nguoiThueTroDashboardView();
+                    new UpdateChutroInforView(username);
                 } else {
                     JOptionPane.showMessageDialog(frame, "Tên tài khoản đã tồn tại hoặc xác nhận mật khẩu không chính xác!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     JOptionPane.showMessageDialog(frame, "Đăng ký thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);

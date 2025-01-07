@@ -4,11 +4,8 @@ import backend.connectDatabase;
 import backend.model.InvoiceDetail;
 //import frontend.view.RoomUpdateInforRoomView;
 import backend.model.Room;
-import frontend.view.InvoiceDetailUpdateView;
-import frontend.view.RoomUpdateInforRoomView;
-import frontend.view.RoomUpdateNguoithueView;
+import frontend.view.*;
 import backend.model.NguoiThueTro;
-import frontend.view.RoomView;
 
 import javax.swing.*;
 
@@ -60,6 +57,8 @@ public class RoomController {
 
 
     public static void goToXuatHoaDon(JFrame frame, String idPhong) {
+
+        new InvoiceBefoeSentToNguoiThueView(idPhong);
         JOptionPane.showMessageDialog(frame, "Xuất hóa đơn cho phòng " + idPhong);
     }
 

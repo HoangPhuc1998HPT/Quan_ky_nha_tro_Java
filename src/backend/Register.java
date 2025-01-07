@@ -59,7 +59,7 @@ public class Register {
         }
         return null;
     }
-
+    // # TODO: Fix Hiếu chỉnh lại phương thức thành update được cho cả người thuê lẫn chủ trọ ( khi register)
     public static boolean updateChutroInfo(String userID, String fullName, String phone, String cccd) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
 //            String sql = "UPDATE Chutro SET Hoten = ?, Phone = ?, CCCD = ? WHERE Username = ?";
