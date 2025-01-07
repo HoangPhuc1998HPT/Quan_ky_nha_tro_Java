@@ -59,17 +59,84 @@ public class Register {
         }
         return null;
     }
+
+    public static boolean cccdCheck(String cccd, String role) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "SELECT CCCD FROM ? WHERE CCCD = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            if(role == "chutro") {
+                ps.setString(1, "Chutro");
+            } else {
+                ps.setString(1, "NguoiThueTro");
+            }
+            ps.setString(2, cccd);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    };
+
+    public static boolean sdtCheck(String phone, String role) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "SELECT CCCD FROM ? WHERE CCCD = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            if(role == "chutro") {
+                ps.setString(1, "Chutro");
+            } else {
+                ps.setString(1, "NguoiThueTro");
+            }
+            ps.setString(2, phone);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    };
+
+
     // # TODO: Fix Hiếu chỉnh lại phương thức thành update được cho cả người thuê lẫn chủ trọ ( khi register)
     public static boolean updateChutroInfo(String userID, String fullName, String phone, String cccd) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
 //            String sql = "UPDATE Chutro SET Hoten = ?, Phone = ?, CCCD = ? WHERE Username = ?";
-            String sql = "INSERT INTO Chutro (Hoten, CCCD, Phone, UserID) VALUES (?, ?, ?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, fullName);
-            pstmt.setString(2, phone);
-            pstmt.setString(3, cccd);
-            pstmt.setString(4, userID);
-            return pstmt.executeUpdate() > 0;
+            if(!cccdCheck(cccd, "chutro") && !sdtCheck(phone, "chutro")) {
+                String sql = "INSERT INTO Chutro (Hoten, CCCD, Phone, UserID) VALUES (?, ?, ?, ?)";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, fullName);
+                pstmt.setString(2, phone);
+                pstmt.setString(3, cccd);
+                pstmt.setString(4, userID);
+                return pstmt.executeUpdate() > 0;
+            } else {
+                return false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean updateNguoiTTInfo(String userID, String fullName, String phone, String cccd) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+//            String sql = "UPDATE Chutro SET Hoten = ?, Phone = ?, CCCD = ? WHERE Username = ?";
+            if(!cccdCheck(cccd, "nguoithuetro") && !sdtCheck(phone, "nguoithuetro")) {
+                String sql = "INSERT INTO NguoiThueTro (Hoten, CCCD, Phone, UserID, Ngaybatdauthue, Ngayketthucthue) VALUES (?, ?, ?, ?, ?, ?)";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, fullName);
+                pstmt.setString(2, phone);
+                pstmt.setString(3, cccd);
+                pstmt.setString(4, userID);
+                pstmt.setString(5, null);
+                pstmt.setString(6, null);
+                return pstmt.executeUpdate() > 0;
+            } else {
+                return false;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

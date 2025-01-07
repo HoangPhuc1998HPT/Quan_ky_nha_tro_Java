@@ -24,7 +24,7 @@ public class connectDatabase {
                     Class.forName(DRIVER);
                     if (connection == null) {
                         connection = DriverManager.getConnection(currentURL);
-                        System.out.println("Kết nối với " + (currentURL.equals(Phuc_URL) ? "Phuc's" : "Hieu's") + " server thành công!");
+//                        System.out.println("Kết nối với " + (currentURL.equals(Phuc_URL) ? "Phuc's" : "Hieu's") + " server thành công!");
                         return connection; // Return immediately on successful connection
                     }
 
@@ -33,13 +33,13 @@ public class connectDatabase {
                     e.printStackTrace();
                     return null; // Exit early on driver error
                 } catch (SQLException e) {
-                    System.out.printf("Kết nối với %s thất bại (lần %d): %s\n", (currentURL.equals(Phuc_URL) ? "Phuc's" : "Hieu's"), attemptCount + 1, e.getMessage());
+//                    System.out.printf("Kết nối với %s thất bại (lần %d): %s\n", (currentURL.equals(Phuc_URL) ? "Phuc's" : "Hieu's"), attemptCount + 1, e.getMessage());
                     attemptCount++;
 
                     // Switch to the other URL after the first attempt fails
                     if (attemptCount == 1) {
                         currentURL = (currentURL.equals(Phuc_URL) ? Hieu_URL : Phuc_URL);
-                        System.out.println("Đang chuyển sang kết nối với " + (currentURL.equals(Phuc_URL) ? "Phuc's" : "Hieu's") + " server...");
+//                        System.out.println("Đang chuyển sang kết nối với " + (currentURL.equals(Phuc_URL) ? "Phuc's" : "Hieu's") + " server...");
 
                     }
                 }

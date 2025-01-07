@@ -42,13 +42,13 @@ public class DashboardChutroController {
 
     }
 
-    public static void go_back_dashboardchutro(JFrame frame, String id_chutro) {
-        System.out.println(id_chutro);
-        // đóng tab khi dashboard chủ trọ khi mở
-        //String username = getUsernameFromIdChutro(id_chutro); // trả về username
-        new ChutroDashboardView(getUsernameFromIdChutro(id_chutro));
-        frame.setVisible(false);
-    }
+//    public static void go_back_dashboardchutro(JFrame frame, String id_chutro) {
+//        System.out.println(id_chutro);
+//        // đóng tab khi dashboard chủ trọ khi mở
+//        //String username = getUsernameFromIdChutro(id_chutro); // trả về username
+//        new ChutroDashboardView(getUsernameFromIdChutro(id_chutro));
+//        frame.setVisible(false);
+//    }
 
     public static void save_room_into_database(String id_chutro) {
 

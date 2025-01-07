@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class UpdateChutroInforView {
-    public UpdateChutroInforView(String username) {
+    public UpdateChutroInforView(String username, String role) {
         JFrame frame = new JFrame("Cập nhật thông tin chủ trọ");
         frame.setSize(600, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -69,7 +69,7 @@ public class UpdateChutroInforView {
             String cccd = cccdField.getText().trim();
             String phone = phoneField.getText().trim();
 //            System.out.println(username);
-            RegisterController.updateChutroInfo(fullName, cccd, phone, username, frame);
+            RegisterController.updateInfo(fullName, cccd, phone, username, role, frame);
         });
         panel.add(updateButton, gbc);
 

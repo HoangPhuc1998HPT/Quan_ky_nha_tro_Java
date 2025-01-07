@@ -88,7 +88,7 @@ import java.sql.ResultSet;
                     case "nguoithuetro":
                         NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId(userId);
                         if (tenant != null) {
-                            //new NguoiThueTroDashboardView(tenant);
+                            new nguoiThueTroDashboardView();
                             frame.setVisible(false);
                             System.out.println(" nhờ mở new Dashboard NGười thuê trọ");
                             //TODO: Tạo dashboard Người thuê trọ rồi kích hoạt lại ==> giờ tắt xóa lỗi
@@ -101,7 +101,7 @@ import java.sql.ResultSet;
                             new AdminDashboardView(); // chưa c
                             frame.setVisible(false);
                             System.out.println(" nhờ mở new Dashboard ADmin");
-                            //TODO: Tạo dashboard Admin rồi kích hoạt lại ==> giờ tắt xóa lỗi
+                            // STRIKE TODO: Tạo dashboard Admin rồi kích hoạt lại ==> giờ tắt xóa lỗi
                         }
                         break;
                     default:

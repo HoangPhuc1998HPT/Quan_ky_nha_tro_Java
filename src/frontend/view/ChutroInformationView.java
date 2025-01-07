@@ -86,7 +86,7 @@ public class ChutroInformationView {
         gbc.gridx = 1;
         gbc.gridy = 6;
         JButton backButton = new JButton("Quay lại");
-        backButton.addActionListener(e -> DashboardChutroController.go_back_dashboardchutro(frame, idChutro));
+        backButton.addActionListener(e -> frame.dispose());
         frame.add(backButton, gbc);
 
         // Hiển thị JFrame

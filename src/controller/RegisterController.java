@@ -20,7 +20,7 @@ public class RegisterController {
                 if (result) {
                     JOptionPane.showMessageDialog(frame, "Bạn đã đăng ký thành công với vai trò chủ trọ!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     frame.dispose();
-                    new UpdateChutroInforView(username); // Chuyển hướng đến UpdateChutroInforView
+                    new UpdateChutroInforView(username, role); // Chuyển hướng đến UpdateChutroInforView
                 } else {
                     JOptionPane.showMessageDialog(frame, "Tên tài khoản đã tồn tại hoặc xác nhận mật khẩu không chính xác!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     JOptionPane.showMessageDialog(frame, "Đăng ký thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -31,7 +31,7 @@ public class RegisterController {
                 if (result) {
                     JOptionPane.showMessageDialog(frame, "Bạn đã đăng ký thành công với vai trò người thuê trọ!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     frame.dispose();
-                    new UpdateChutroInforView(username);
+                    new UpdateChutroInforView(username, role);
                 } else {
                     JOptionPane.showMessageDialog(frame, "Tên tài khoản đã tồn tại hoặc xác nhận mật khẩu không chính xác!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     JOptionPane.showMessageDialog(frame, "Đăng ký thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -41,18 +41,31 @@ public class RegisterController {
 
     }
 
-    public static void updateChutroInfo(String fullName, String cccd, String phone, String username, JFrame frame) {
+    public static void updateInfo(String fullName, String cccd, String phone, String username, String role, JFrame frame) {
 //        System.out.println(username);
         String userID = Register.getUserIDFromUsers(username);
 //        System.out.println("UserID: " + userID);
-        boolean result = Register.updateChutroInfo(userID, fullName, cccd, phone);
-
-        if (result) {
-            JOptionPane.showMessageDialog(frame, "Cập nhật thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-            frame.dispose();
-            new loginView();
-        } else {
-            JOptionPane.showMessageDialog(frame, "Cập nhật thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        switch (role) {
+            case "chutro":
+                boolean resultChutro = Register.updateChutroInfo(userID, fullName, cccd, phone);
+                if(resultChutro) {
+                    JOptionPane.showMessageDialog(frame, "Cập nhật thành công thông tin chủ trọ thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    frame.dispose();
+                    new loginView();
+                } else {
+                    JOptionPane.showMessageDialog(frame, "CCCD hay SĐT đã bị trùng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Cập nhật thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            case "nguoithuetro":
+                boolean resultNguoiTT = Register.updateNguoiTTInfo(userID, fullName, cccd, phone);
+                if(resultNguoiTT) {
+                    JOptionPane.showMessageDialog(frame, "Cập nhật thành công thông tin người thuê trọ thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    frame.dispose();
+                    new loginView();
+                } else {
+                    JOptionPane.showMessageDialog(frame, "CCCD hay SĐT đã bị trùng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Cập nhật thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
         }
     }
 }
