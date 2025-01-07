@@ -3,6 +3,7 @@ package controller;
 import backend.connectDatabase;
 import frontend.view.ChutroCreateRoomsView;
 import frontend.view.ChutroDashboardView;
+import frontend.view.ChutroInformationView;
 import frontend.view.ChutroRoomsTableView;
 
 import javax.swing.*;
@@ -12,11 +13,15 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import static backend.model.Chutro.getUsernameFromIdChutro;
+
 
 public class DashboardChutroController {
-    public static void go_to_show_information_churtro(String username) {
+    public static void go_to_show_information_churtro(String id_chutro) {
         System.out.println(" đi đến xem thông tin chủ trọ ");
         // Gọi backend xử lý get thông tin để truyển về cho viewshow thông tin
+
+        new ChutroInformationView(id_chutro);
         // Xử lý backend tra về 1 mảng chưa full thông tin chủ tr
         String chutroList = new String();
 
@@ -40,7 +45,8 @@ public class DashboardChutroController {
     public static void go_back_dashboardchutro(JFrame frame, String id_chutro) {
         System.out.println(id_chutro);
         // đóng tab khi dashboard chủ trọ khi mở
-        new ChutroDashboardView(id_chutro);
+        //String username = getUsernameFromIdChutro(id_chutro); // trả về username
+        new ChutroDashboardView(getUsernameFromIdChutro(id_chutro));
         frame.setVisible(false);
     }
 
@@ -53,11 +59,6 @@ public class DashboardChutroController {
         System.out.println("Đã lưu thông tin phòng trọ");
     }
 
-    public static String get_room_list(String id_chutro) {
-        // Lấy id phong từ id chủ tro
-        String id_phong = "P001";
-        return id_phong;
-    }
 
     public static List<String[]> getRoomList(String id_chutro) {
         List<String[]> roomList = new ArrayList<>();

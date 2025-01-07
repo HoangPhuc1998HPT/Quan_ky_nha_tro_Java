@@ -1,7 +1,7 @@
 package controller;
 
 import backend.Register;
-import frontend.view.RegisterView;
+import frontend.view.loginView;
 import frontend.view.UpdateChutroInforView;
 import frontend.view.nguoiThueTroDashboardView;
 
@@ -50,6 +50,7 @@ public class RegisterController {
         if (result) {
             JOptionPane.showMessageDialog(frame, "Cập nhật thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             frame.dispose();
+            new loginView();
         } else {
             JOptionPane.showMessageDialog(frame, "Cập nhật thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }

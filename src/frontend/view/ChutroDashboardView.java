@@ -51,31 +51,36 @@ public class ChutroDashboardView {
         panel.add(DashboarLabel, gbc);
 
         frame.add(panel, BorderLayout.CENTER);
+
         // Tạo nút Xem thông tin chủ trọ
         JButton show_information_chutro = new JButton(" Xem thông tin chủ trọ");
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.ipadx = 2;
-        show_information_chutro.addActionListener(e-> DashboardChutroController.go_to_show_information_churtro(entryUsername));
+        show_information_chutro.addActionListener(e-> DashboardChutroController.go_to_show_information_churtro(id_chutro));
         panel.add(show_information_chutro, gbc);
+
         // Tạo nút tạo phòng trọ
         JButton create_rooms = new JButton("Tạo phòng trọ");
         gbc.gridx = 0;
         gbc.gridy = 2;
         create_rooms.addActionListener(e-> DashboardChutroController.go_to_create_room(id_chutro));
         panel.add(create_rooms, gbc);
+
         // Tạo nút xem danh sách phòng trọ
         JButton show_list_rooms = new JButton(" Xem danh sách phòng trọ");
         gbc.gridx = 0;
         gbc.gridy = 3;
         show_list_rooms.addActionListener(e->DashboardChutroController.go_to_show_list_room(id_chutro));
         panel.add(show_list_rooms, gbc);
+
         // Tạo nút xem danh sách hóa đơn
         JButton show_list_invoices = new JButton("Xem danh sách hóa đơn");
         gbc.gridx = 0;
         gbc.gridy = 4;
         show_list_invoices.addActionListener(e-> DashboardChutroController.go_to_show_list_invoices());
         panel.add(show_list_invoices, gbc);
+
         // Tao nút thoát ra login
         JButton logout = new JButton("Đăng xuất");
         gbc.gridx = 0;

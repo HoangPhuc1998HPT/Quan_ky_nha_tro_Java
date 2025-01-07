@@ -1,0 +1,21 @@
+Lỗi - Các mục chưa làm
+
+Hiếu TODO: - Lỗi: check trùng CCCD và Số điện thoại khi tạo tài khoản  ==> Hiếu bổ sung nhe
+Hiếu TODO: - Chưa đăng nhập admin được
+# TODO: - Khi bấm đăng nhập login không tắt view đăng nhập ==> đã xử lý
+Phúc TODO: - Chức năng xem thông tin chủ trọ chưa hoạt động ==> đã xử lý
+Hiếu TODO: - Chức năng tạo phòng trọ ==> chưa lưu được phòng tro khi tạo
+Hiếu TODO: - Chức năng Xem danh sách phòng ==> chưa hoạt động do Chức năng tạo phòng trọ chưa có
+# TODO: - Xem thông tin chủ trọ chưa có View ==> đã tạo
+TODO: - Thiết lập liên kết cho nút cập nhật ChutroInformationView (ChutroInformationView(String idChutro)
+        - ChutroInformationView:
+            + updateNameButton.addActionListener(e->{});    ==> cập nhật họ tên
+            + updatePhoneButton.addActionListener(e->{});  ==> Cập nhật Số điện thoại
+            + changePasswordButton.addActionListener(e->{}); ==> Đỏi password
+            + buittonback
+
+Hiếu TODO: - Tạo Xử lý đổi mật khẩu cho chủ trọ và người thuê trọ (hiển thị trong ChutroInformationView)
+TODO: - Chutro.getUsernameFromIdChutro ==> Trích tên username từ id_chủ trọ để back to Dashboard chủ trọ
+Phúc TODO: - View Xem dánh sách hóa đơn chưa tạo
+
+

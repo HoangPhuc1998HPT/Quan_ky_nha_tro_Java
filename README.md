@@ -302,12 +302,22 @@ AdminDashboardView ==> Đã xử lý set is_active vào database ==> ok
 login ==> chưa đăng nhập được ==> không tìm thấy chủ trọ
 loginView ==> LoginController.checkLogin(username, password.toCharArray(), f); ==>
 
+- Lỗi logic Hiếu ư:
+  - Sau khi tạo tài khoản xong ==> Chuyển sang đăng nhập
+  - Check: RegisterView -> RegisterController.handleRegister -> new UpdateChutroInforView(username) 
+  -> RegisterController.updateChutroInfo(fullName, cccd, phone, username, frame) 
+===> fix thêm new loginView() vào updateChutroInfo;
 
+TODO: - Lỗi: check trùng CCCD và Số điện thoại khi tạo tài khoản 
 
+- Lỗi: Khi bấm đăng nhập login không tắt view đăng nhập
+- Check: loginView -> LoginController.checkLogin(username, password, f) -> đã xử lý
 
+TODO: - Xem thông tin chủ trọ chưa có View
+Check: ChutroDashboardView- > DashboardChutroController.go_to_show_information_churtro(entryUsername)
 
-
-
+Lỗi:
+btnUpdateRoom -> RoomController.updateInforRoom(frame, idRoom, idChutro) ==> chưa hoạt động do chưa có phòng nào
 
 
 

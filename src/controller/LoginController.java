@@ -78,6 +78,7 @@ import java.sql.ResultSet;
                         Chutro chutro = Chutro.getChutroByUserId(userId);
                         if (chutro != null) {
                             new ChutroDashboardView(username);
+                            frame.setVisible(false);
                             System.out.println("Mở dashboard Chủ trọ thành công.");
                         } else {
                             JOptionPane.showMessageDialog(frame, "Không tìm thấy thông tin chủ trọ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -88,6 +89,7 @@ import java.sql.ResultSet;
                         NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId(userId);
                         if (tenant != null) {
                             //new NguoiThueTroDashboardView(tenant);
+                            frame.setVisible(false);
                             System.out.println(" nhờ mở new Dashboard NGười thuê trọ");
                             //TODO: Tạo dashboard Người thuê trọ rồi kích hoạt lại ==> giờ tắt xóa lỗi
 
@@ -97,6 +99,7 @@ import java.sql.ResultSet;
                         Admin admin = Admin.getAdminByUserId(userId);
                         if (admin != null) {
                             new AdminDashboardView(); // chưa c
+                            frame.setVisible(false);
                             System.out.println(" nhờ mở new Dashboard ADmin");
                             //TODO: Tạo dashboard Admin rồi kích hoạt lại ==> giờ tắt xóa lỗi
                         }

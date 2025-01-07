@@ -50,8 +50,10 @@ public class Chutro {
         return idChutro;
     }
 
-    public String getUserId() {
-        return userId;
+    public static String getUsernameFromIdChutro(String idChutro) {
+        String username = "testchutro02" ; //"Hiếu lấy Username từ id chủ trọ ra nhe" ;
+        // TODO: Trích tên username từ id_chủ trọ để back to Dashboard chủ trọ
+        return username;
     }
 
     public String getFullName() {
