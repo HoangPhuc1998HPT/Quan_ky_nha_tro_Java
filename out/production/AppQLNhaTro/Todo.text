@@ -6,7 +6,7 @@ Hiếu TODO: - Chưa đăng nhập admin được
 # Phúc TODO: - Chức năng xem thông tin chủ trọ chưa hoạt động ==> đã xử lý
 Hiếu TODO: - Chức năng tạo phòng trọ ==> chưa lưu được phòng tro khi tạo
 Hiếu TODO: - Chức năng Xem danh sách phòng ==> chưa hoạt động do Chức năng tạo phòng trọ chưa có
-
+Hiếu TODO; - Một tá def trong Room.java chưa được viết hàm
 # TODO: - Xem thông tin chủ trọ chưa có View ==> đã xử lý
 TODO: - Thiết lập liên kết cho nút cập nhật ChutroInformationView (ChutroInformationView(String idChutro)
         - ChutroInformationView:
@@ -27,5 +27,7 @@ Hiếu TODO: - Xử lý truy vấn + logic các thông tin liên quan đến hó
 ERROR TODO: Vị trí quay lại trong RoomView không trả về Dashboard Chủ trọ
 ERROR TODO: Tạo người thuê trọ không dẫn đến View nhập thông tin
         --> Cần dẫn đến View nhập thông tin trước khi gửi database lên SQL Sever
-
-
+ERROR TODO: Lõi View cập nhật thông tin phòng
+            + RoomController.updateInforRoom(frame, idRoom, idChutro)
+ERROR TODO: updateRoomPrice(String roomId, double newValue, String type) chưa được xử lý
+    ==>
