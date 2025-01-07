@@ -10,13 +10,13 @@ public class InvoiceDetail {
     private double rentPrice;
     private double electricPrice;
     private double waterPrice;
-    private double garbagePrice;
+    //private double garbagePrice;
 
     public InvoiceDetail(double rentPrice, double electricPrice, double waterPrice, double garbagePrice) {
         this.rentPrice = rentPrice;
         this.electricPrice = electricPrice;
         this.waterPrice = waterPrice;
-        this.garbagePrice = garbagePrice;
+        //this.garbagePrice = garbagePrice;
     }
 
     public double getRentPrice() {
@@ -43,13 +43,13 @@ public class InvoiceDetail {
         this.waterPrice = waterPrice;
     }
 
-    public double getGarbagePrice() {
-        return garbagePrice;
-    }
+    //public double getGarbagePrice() {
+        //return garbagePrice;
+    //}
 
-    public void setGarbagePrice(double garbagePrice) {
-        this.garbagePrice = garbagePrice;
-    }
+    //public void setGarbagePrice(double garbagePrice) {
+      //  this.garbagePrice = garbagePrice;
+    //}
 
     // Hàm lấy thông tin chi tiết hóa đơn từ database
     public static InvoiceDetail getInvoiceDetail(String idRoom) {

@@ -1,21 +1,18 @@
 package frontend.view;
 
-import backend.model.InvoiceDetail;
 import backend.model.Room;
-import frontend.view.RoomUpdatePriceView;
+import controller.RoomController;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static controller.RoomController.GoToBackRoomView;
 import static controller.RoomController.GoToBackRoomViewFromUpdate;
-
 
 public class RoomUpdateInforRoomView {
     private JFrame frame;
     private String id_chutro;
 
-    public RoomUpdateInforRoomView(String roomId) {
+    public RoomUpdateInforRoomView(String roomId, String id_chutro) {
         frame = new JFrame("Cập nhật thông tin phòng");
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,20 +20,12 @@ public class RoomUpdateInforRoomView {
 
         // Lấy thông tin phòng từ database
         Room room = Room.getRoomDetails(roomId);
-        InvoiceDetail roomPrice = room != null ? new InvoiceDetail(
-                room.getRoomPrice(),
-                room.getElectricityPrice(),
-                room.getWaterPrice(),
-                room.getGarbageFee()
-        ) : null;
 
-        if (room == null || roomPrice == null) {
+        if (room == null) {
             JOptionPane.showMessageDialog(frame, "Không thể tải thông tin phòng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             frame.dispose();
             return;
         }
-
-        //InvoiceDetail roomPrice = new InvoiceDetail(3000000, 3000, 15000, 50000);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -59,7 +48,7 @@ public class RoomUpdateInforRoomView {
 
         // Cấu trúc bảng
         String[] labels = {"Giá thuê phòng:", "Giá điện:", "Giá nước:", "Giá rác:"};
-        double[] values = {roomPrice.getRentPrice(), roomPrice.getElectricPrice(), roomPrice.getWaterPrice(), roomPrice.getGarbagePrice()};
+        double[] values = {room.getRoomPrice(), room.getElectricityPrice(), room.getWaterPrice(), RoomController.getGarbageFee(roomId)};
         String[] units = {"VNĐ/tháng", "VNĐ/kWh", "VNĐ/m³", "VNĐ/tháng"};
 
         for (int i = 0; i < labels.length; i++) {
@@ -105,7 +94,6 @@ public class RoomUpdateInforRoomView {
         gbc.gridy = labels.length + 2;
         gbc.gridwidth = 4;
         backButton.addActionListener(e -> GoToBackRoomViewFromUpdate(frame, roomId, id_chutro));
-        // chuyển về dashboard Room
 
         frame.add(backButton, gbc);
 
@@ -114,6 +102,6 @@ public class RoomUpdateInforRoomView {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new RoomUpdateInforRoomView("R001"));
+        SwingUtilities.invokeLater(() -> new RoomUpdateInforRoomView("1", "12"));
     }
 }

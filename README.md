@@ -330,8 +330,10 @@ Check: String userID = Register.getUserIDFromUsers(username);
 Fix case "nguoithuetro" --> new UpdateChutroInforView(username) --> RegisterController.updateChutroInfo(fullName, cccd, phone, username, frame);
 --> 
 
-
-
+ERROR TODO: Lõi View cập nhật thông tin phòng
++ RoomController.updateInforRoom(frame, idRoom, idChutro) -> new RoomUpdateInforRoomView(idPhong)
++ Check: Room.getRoomDetails(roomId)
+  +     
 
 
 

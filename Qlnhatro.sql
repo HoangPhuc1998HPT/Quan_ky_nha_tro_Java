@@ -291,13 +291,7 @@ select Hoadon.Ngayxuathoadon, HoaDon.BillID, CTHoadon.ghichu, Hoadon.Tongchiphi,
                 join Chutro on Chutro.IDchutro = TTPhongtro.IDchutro
                 where TTPhongtro.IDnguoithue = 2
 	
-select * from Chutro
-select * from HoaDon	
-select * from CTHoadon
-select* from NguoiThueTro
-select * from TTPhongtro	
-select* from Users
-select* from Admins
+
 
 Insert Admins(FullName,Username,Password,IsRoot,UserID)values ('Trần Hoàng Phúc',' admin_01', 'pass123',1,69)
 
@@ -397,4 +391,34 @@ SELECT
                     JOIN
                         CTHoadon ON CTHoadon.IDPhong = TTPhongtro.IDPhong
                     JOIN
-                        HoaDon ON CTHoadon.idCTHD = HoaDon.idCTHD 
+                        HoaDon ON CTHoadon.idCTHD = HoaDon.idCTHD;
+-- Data ảo
+
+SET IDENTITY_INSERT TTPhongtro ON;
+
+INSERT INTO TTPhongtro (IDPhong, TenPhong, IDChutro)
+VALUES 
+('1', N'Phòng 1', '12'),
+('2', N'Phòng 2', '12');
+
+SET IDENTITY_INSERT TTPhongtro OFF;
+
+
+INSERT INTO HoaDon (IDPhong, TienNha, TienDien, TienNuoc, TienRac, ChiPhiKhac, GiamGia, TongChiPhi, NgayXuatHoaDon)
+VALUES 
+('1', 3000000, 50000, 15000, 20000, 50000, 10000, 
+        (3000000 + 50000 + 15000 + 20000 + 50000 - 10000), GETDATE());
+
+INSERT INTO HoaDon (IDPhong, TienNha, TienDien, TienNuoc, TienRac, ChiPhiKhac, GiamGia, TongChiPhi, NgayXuatHoaDon)
+VALUES 
+('2', 2500000, 40000, 12000, 15000, 30000, 5000, 
+        (2500000 + 40000 + 12000 + 15000 + 30000 - 5000), GETDATE());
+
+
+select * from Chutro
+select * from HoaDon	
+select * from CTHoadon
+select* from NguoiThueTro
+select * from TTPhongtro	
+select* from Users
+select* from Admins

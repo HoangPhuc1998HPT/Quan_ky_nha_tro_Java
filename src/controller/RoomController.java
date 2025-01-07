@@ -1,15 +1,11 @@
 package controller;
 
 import backend.connectDatabase;
-import backend.model.InvoiceDetail;
 //import frontend.view.RoomUpdateInforRoomView;
-import backend.model.Room;
 import frontend.view.*;
-import backend.model.NguoiThueTro;
 
 import javax.swing.*;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +13,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static backend.model.InvoiceDetail.*;
-import static frontend.view.RoomView.*;
 
 public class RoomController {
     // Hàm xử lý các hành động (cần triển khai thực tế trong Controller)
@@ -30,7 +25,7 @@ public class RoomController {
     public static void updateInforRoom(JFrame frame, String idPhong,String id_chutro) {
         //JOptionPane.showMessageDialog(frame, "Cập nhật thông tin phòng " + idPhong);
         frame.setVisible(false);
-        new RoomUpdateInforRoomView(idPhong);
+        new RoomUpdateInforRoomView(idPhong,id_chutro);
     }
 
     public static void goToUpdateHoaDon(JFrame frame, String id_room,String id_chutro) {
@@ -55,7 +50,7 @@ public class RoomController {
         }
     }
 
-
+    // TODO: đang lỗi ở đây nè
     public static void goToXuatHoaDon(JFrame frame, String idPhong) {
 
         new InvoiceBefoeSentToNguoiThueView(idPhong);
@@ -138,6 +133,7 @@ public class RoomController {
         // Cập nhật giá phòng vào database
         System.out.println("Cập nhật " + type + " cho phòng " + roomId + " thành: " + newValue);
         // TODO: Thêm logic cập nhật database
+        // TODO: Hiếu xử lý logic trong Class ROOM để add vào chổ này nha
     }
     public static void GoToBackRoomViewFromUpdate(JFrame frame, String id_room, String id_chutro) {
         frame.setVisible(false);
@@ -169,4 +165,10 @@ public class RoomController {
         frame.setVisible(false);
         //new DashboardChutroidRoom,idChutro);
     }
+
+    public static double getGarbageFee (String id_phong){
+        // TODo: Truy xuất từ Table HoaDon, nếu chưa có thì cho bằng 0. Khi cập nhật cho số hóa đơn gần nhất
+        return 0;
+    }
+
 }
