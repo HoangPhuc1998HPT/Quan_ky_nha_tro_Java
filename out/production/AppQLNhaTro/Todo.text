@@ -29,5 +29,7 @@ ERROR TODO: Tạo người thuê trọ không dẫn đến View nhập thông ti
         --> Cần dẫn đến View nhập thông tin trước khi gửi database lên SQL Sever
 ERROR TODO: Lõi View cập nhật thông tin phòng
             + RoomController.updateInforRoom(frame, idRoom, idChutro)
-ERROR TODO: updateRoomPrice(String roomId, double newValue, String type) chưa được xử lý
-    ==>
+Hiếu ERROR TODO: updateRoomPrice(String roomId, double newValue, String type) chưa được xử lý
+    ==> RoomUpdateInforRoomView -> RoomUpdatePriceView -->updateButton --> updateRoomPrice-->
+     --> RoomController.updateRoomPrice --> 4 nút cập nhật
+Hiếu ERROR TODO: Kiểm tra lại regiester user ==?

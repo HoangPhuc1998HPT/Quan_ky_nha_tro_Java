@@ -333,7 +333,8 @@ Fix case "nguoithuetro" --> new UpdateChutroInforView(username) --> RegisterCont
 ERROR TODO: Lõi View cập nhật thông tin phòng
 + RoomController.updateInforRoom(frame, idRoom, idChutro) -> new RoomUpdateInforRoomView(idPhong)
 + Check: Room.getRoomDetails(roomId)
-  +     
+  + Còn 4 nút cập nhật chưa có API
++ 
 
 
 
