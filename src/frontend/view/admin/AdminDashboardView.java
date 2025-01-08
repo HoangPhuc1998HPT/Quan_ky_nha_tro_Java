@@ -1,8 +1,8 @@
 package frontend.view.admin;
 
 import controller.AdminController;
-import frontend.components.ButtonEditor;
-import frontend.components.ButtonRenderer;
+import frontend.components.ButtonEditorAdmin;
+import frontend.components.ButtonRendererAdmin;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -72,8 +72,8 @@ public class AdminDashboardView extends JFrame {
         };
 
         // Sử dụng ButtonRenderer và ButtonEditor
-        inactiveUsersTable.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
-        inactiveUsersTable.getColumnModel().getColumn(3).setCellEditor(new ButtonEditor(inactiveUsersTable));
+        inactiveUsersTable.getColumnModel().getColumn(3).setCellRenderer(new ButtonRendererAdmin());
+        inactiveUsersTable.getColumnModel().getColumn(3).setCellEditor(new ButtonEditorAdmin(inactiveUsersTable));
 
         // Load danh sách tài khoản chưa kích hoạt
         AdminController.loadInactiveUsers(inactiveUsersTable);

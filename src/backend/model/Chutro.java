@@ -190,4 +190,12 @@ public class Chutro {
         }
         return roomList;
     }
+    // TODO: Xử lý lấy thông tin tên chủ trọ và tổng số phòng chủ trụ nắm giữ
+    public static String getNameChutroFromIdChutro(String idChutro){
+        return "Văn A";
+    }
+    public static int getCountRoomFromIdChutro(String idChutro){
+        return 0;
+    }
+
 }

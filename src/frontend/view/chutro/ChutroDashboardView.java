@@ -78,7 +78,7 @@ public class ChutroDashboardView {
         JButton show_list_invoices = new JButton("Xem danh sách hóa đơn");
         gbc.gridx = 0;
         gbc.gridy = 4;
-        show_list_invoices.addActionListener(e-> DashboardChutroController.go_to_show_list_invoices());
+        show_list_invoices.addActionListener(e-> DashboardChutroController.go_to_show_list_invoices(id_chutro));
         panel.add(show_list_invoices, gbc);
 
         // Tao nút thoát ra login
@@ -87,9 +87,6 @@ public class ChutroDashboardView {
         gbc.gridy = 5;
         logout.addActionListener(e-> LoginController.logout(frame));
         panel.add(logout, gbc);
-
-
-
 
 
         frame.setVisible(true);

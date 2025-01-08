@@ -7,6 +7,7 @@ import frontend.view.Invoices.InvoiceCreateNewInvoice;
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.List;
 
 public class InvoicesController {
     private InvoiceCreateNewInvoice view;
@@ -18,6 +19,21 @@ public class InvoicesController {
         this.id_chutro = id_chutro;
         this.id_phong = id_phong;
     }
+
+    public static List<Object[]> getInvoiceList(String idChutro) {
+        return Invoices.getInvoiceList(idChutro);
+    }
+
+    public static void markInvoiceAsPaid(String idInvoice) {
+        try {
+            // Logic cập nhật trạng thái thanh toán
+            JOptionPane.showMessageDialog(null, "Đã cập nhật trạng thái thanh toán cho hóa đơn ID: " + idInvoice, "Thành công", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Không thể cập nhật trạng thái thanh toán!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
     public void loadThongTinHoadon( String id_phong) {
         try {
             Object[] hoadonData = Invoices.getInvoiceData(id_phong);
@@ -91,6 +107,32 @@ public class InvoicesController {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Lỗi khi cập nhật hóa đơn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    // Đang hiệu chỉnh
+    public static int getTotalInvoices(String idChutro) {
+        return Invoices.getTotalInvoices(idChutro);
+    }
+
+    public static int getPaidInvoices(String idChutro) {
+        return Invoices.getPaidInvoices(idChutro);
+    }
+
+    public static int getUnpaidInvoices(String idChutro) {
+        return Invoices.getUnpaidInvoices(idChutro);
+    }
+
+    public static double getTotalValue(String idChutro) {
+        return Invoices.getTotalValue(idChutro);
+    }
+
+    public static double getUnpaidValue(String idChutro) {
+        return Invoices.getUnpaidValue(idChutro);
+    }
+
+    public static double getPaidRate(String idChutro) {
+        int total = getTotalInvoices(idChutro);
+        int paid = getPaidInvoices(idChutro);
+        return total == 0 ? 0 : ((double) paid / total) * 100;
     }
 
 

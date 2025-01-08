@@ -2,6 +2,7 @@ package controller;
 
 import backend.connectDatabase;
 import backend.model.Chutro;
+import frontend.view.Invoices.InvoiceListsView;
 import frontend.view.chutro.ChutroCreateRoomsView;
 import frontend.view.chutro.ChutroDashboardView;
 import frontend.view.chutro.ChutroInformationView;
@@ -14,7 +15,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import static backend.model.Chutro.getUsernameFromIdChutro;
+import static backend.model.Chutro.*;
 
 
 public class DashboardChutroController {
@@ -42,9 +43,12 @@ public class DashboardChutroController {
         new ChutroRoomsTableView(id_chutro);
     }
 
-    public static void go_to_show_list_invoices() {
+    public static void go_to_show_list_invoices(String idChutro) {
         System.out.println("Đi đến view xem danh sách tất cả hóa đơn thuộc chur trọ");
-
+        String nameChutro = getNameChutroFromIdChutro(idChutro);
+        int roomCount = getCountRoomFromIdChutro(idChutro);
+        new InvoiceListsView(idChutro, nameChutro, roomCount);
+        //InvoiceListsView(String idChutro, String landlordName, int roomCount)
     }
 
 //    public static void go_back_dashboardchutro(JFrame frame, String id_chutro) {

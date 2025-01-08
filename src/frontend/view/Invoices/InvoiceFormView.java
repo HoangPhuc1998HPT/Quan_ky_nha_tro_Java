@@ -11,7 +11,7 @@ public class InvoiceFormView {
     public InvoiceFormView() {
         // Tạo JFrame
         JFrame frame = new JFrame("HÓA ĐƠN GIÁ TRỊ GIA TĂNG");
-        frame.setSize(800, 1000);
+        frame.setSize(850, 1000);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 

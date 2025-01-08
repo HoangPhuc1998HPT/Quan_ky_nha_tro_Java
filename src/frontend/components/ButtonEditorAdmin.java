@@ -1,18 +1,19 @@
 package frontend.components;
 
 import controller.AdminController;
+import controller.InvoicesController;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import java.awt.*;
 
-public class ButtonEditor extends AbstractCellEditor implements TableCellEditor {
+public class ButtonEditorAdmin extends AbstractCellEditor implements TableCellEditor {
     private final JButton button;
     private String label;
     private boolean isPushed;
     private JTable table;
 
-    public ButtonEditor(JTable table) {
+    public ButtonEditorAdmin(JTable table) {
         this.table = table;
         button = new JButton();
         button.setOpaque(true);
@@ -23,7 +24,6 @@ public class ButtonEditor extends AbstractCellEditor implements TableCellEditor 
             AdminController.activateUser(row, table);
         });
     }
-
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         label = (value == null) ? "Kích hoạt" : value.toString();

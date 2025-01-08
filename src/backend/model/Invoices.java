@@ -6,7 +6,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Invoices {
     // Hàm lấy thông tin hóa đơn mới nhất cho một phòng
@@ -102,5 +104,62 @@ public class Invoices {
         }
         return false;
     }
+    // TODO: Invoice list view đã tạo, Hiếu kiểm tra lại logic xem truy xuất dữ liệu cho Invoices.InvoiceListsView  nha
+    public static List<Object[]> getInvoiceList(String idChutro) {
+        List<Object[]> invoices = new ArrayList<>();
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+                SELECT 
+                    ROW_NUMBER() OVER (ORDER BY hd.NgayXuatHoaDon DESC) AS STT,
+                    pt.TenPhong,
+                    nt.Hoten AS TenNguoiThue,
+                    hd.TongChiPhi,
+                    hd.NgayXuatHoaDon,
+                    CASE WHEN hd.TongChiPhi > 0 THEN 'Chưa Thanh Toán' ELSE 'Đã Thanh Toán' END AS TinhTrang
+                FROM HoaDon hd
+                JOIN TTPhongtro pt ON hd.IDPhong = pt.IDPhong
+                LEFT JOIN NguoiThueTro nt ON pt.IDNguoiThue = nt.IDNguoiThue
+                WHERE pt.IDChutro = ?
+            """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, idChutro);
+            ResultSet rs = pstmt.executeQuery();
 
+            while (rs.next()) {
+                invoices.add(new Object[]{
+                        rs.getInt("STT"),
+                        rs.getString("TenPhong"),
+                        rs.getString("TenNguoiThue"),
+                        rs.getDouble("TongChiPhi"),
+                        rs.getDate("NgayXuatHoaDon"),
+                        rs.getString("TinhTrang")
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return invoices;
+    }
+
+    public static int getTotalInvoices(String idChutro) {
+
+        return 0;
+    }
+
+    public static int getPaidInvoices(String idChutro) {
+
+        return 0;
+    }
+
+    public static int getUnpaidInvoices(String idChutro) {
+        return 0;
+    }
+
+    public static double getTotalValue(String idChutro) {
+        return 0;
+    }
+
+    public static double getUnpaidValue(String idChutro) {
+        return 0;
+    }
 }
