@@ -6,7 +6,8 @@ Hiếu TODO; - Một tá def trong Room.java chưa được viết hàm
 Hiếu TODO: - Tạo Xử lý đổi mật khẩu cho chủ trọ và người thuê trọ (hiển thị trong ChutroInformationView)
         => Đợi anh Phúc tạo windows để cập
            ==> đã có View đổi mật khẩu cho chủ trọ
-
+        go_to_show_information_churtro(id_chutro) -> ChutroInformationView(id_chutro, chutro)
+        ->ChutroInformationView -> UpdatePasswordView(idChutro)
 Phúc + Hiếu: TODO: Tạo View cho Xuất hóa đơn cần lắm các phương thức truy xuất dữ liệu
 Hiếu TODO: - Xử lý truy vấn + logic các thông tin liên quan đến hóa đơn, Xuất hóa đơn
 ERROR TODO: Lõi View cập nhật thông tin phòng
