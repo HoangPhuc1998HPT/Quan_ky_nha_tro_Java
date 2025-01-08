@@ -359,4 +359,4 @@ DashboardChutroController.go_to_show_information_churtro(id_chutro) ->
 + Đổi mật khẩu==> đã thực hiện
 # Phúc TODO: View xóa phòng chưa có --> đã có
 # Phúc TODO: - View Xem dánh sách hóa đơn chưa tạo ==> đã tạo
-
+# Phúc TODO: liên kết mở và return xem danh sách phòng trọ lỗi -- Đã xử lý
