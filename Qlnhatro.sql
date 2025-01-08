@@ -414,6 +414,11 @@ VALUES
 ('2', 2500000, 40000, 12000, 15000, 30000, 5000, 
         (2500000 + 40000 + 12000 + 15000 + 30000 - 5000), GETDATE());
 
+UPDATE TTPhongtro
+SET GiaNuoc = 20000
+WHERE idPhong = 1;
+
+
 
 select * from Chutro
 select * from HoaDon	

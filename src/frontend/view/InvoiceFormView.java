@@ -1,9 +1,11 @@
 package frontend.view;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-// test thoi được thì xóa của nợ này
+
+// Form này được tạo để hiển thị hóa đơn xem
 
 public class InvoiceFormView {
     public InvoiceFormView() {
@@ -16,7 +18,15 @@ public class InvoiceFormView {
         // Panel chính
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        // Tạo viền ngoài
+        Border lineBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
+
+        // Tạo padding bên trong
+        Border emptyBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+
+        // Kết hợp viền + padding
+        mainPanel.setBorder(BorderFactory.createCompoundBorder(emptyBorder, lineBorder));
 
         // Tiêu đề hóa đơn
         JLabel title = new JLabel("HÓA ĐƠN GIÁ TRỊ GIA TĂNG", SwingConstants.CENTER);
@@ -25,24 +35,95 @@ public class InvoiceFormView {
         mainPanel.add(title);
 
         // Thông tin chung
-        JPanel infoPanel = new JPanel(new GridLayout(6, 2, 5, 5));
-        infoPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        JPanel infoPanelTop = new JPanel(new GridLayout(2, 2, 2, 2));
+        infoPanelTop.setBorder(BorderFactory.createEmptyBorder(0, 0, 0 , 10));
 
-        infoPanel.add(new JLabel("Ký hiệu:", SwingConstants.LEFT));
-        infoPanel.add(new JLabel("1C21TAA"));
-        infoPanel.add(new JLabel("Số:", SwingConstants.LEFT));
-        infoPanel.add(new JLabel("123"));
-        infoPanel.add(new JLabel("Ngày:", SwingConstants.LEFT));
-        infoPanel.add(new JLabel("02/01/2021"));
+        infoPanelTop.add(new JLabel(""));
+        infoPanelTop.add(new JLabel("Ký hiệu: 1C21TAA", SwingConstants.RIGHT));
+        infoPanelTop.add(new JLabel(""));
+        infoPanelTop.add(new JLabel("Số: 123", SwingConstants.RIGHT));
 
-        infoPanel.add(new JLabel("Tên người bán:", SwingConstants.LEFT));
-        infoPanel.add(new JLabel("CÔNG TY TNHH A"));
-        infoPanel.add(new JLabel("Mã số thuế:", SwingConstants.LEFT));
-        infoPanel.add(new JLabel("123456789"));
-        infoPanel.add(new JLabel("Địa chỉ:", SwingConstants.LEFT));
-        infoPanel.add(new JLabel("45 phố X, quận Y, thành phố Hà Nội"));
+        mainPanel.add(infoPanelTop);
 
-        mainPanel.add(infoPanel);
+        JPanel rowDate = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        rowDate.add(new JLabel("Ngày: 02/01/2021"));
+        mainPanel.add(rowDate);
+
+        // Thông tin người bán
+        JPanel infoPanelSeller = new JPanel();
+        infoPanelSeller.setLayout(new BoxLayout(infoPanelSeller, BoxLayout.Y_AXIS));
+        infoPanelSeller.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.BLACK));
+
+        // Hàng 1
+        JPanel row1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        row1.add(new JLabel("Tên người bán:"));
+        row1.add(new JLabel("CÔNG TY TNHH A"));
+        infoPanelSeller.add(row1);
+
+        // Hàng 2
+        JPanel row2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        row2.add(new JLabel("Mã số thuế:"));
+        row2.add(new JLabel("123456789"));
+        infoPanelSeller.add(row2);
+
+        // Hàng 3
+        JPanel row3 = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        row3.add(new JLabel("Địa chỉ:"));
+        row3.add(new JLabel("45 phố X, quận Y, thành phố Hà Nội"));
+        infoPanelSeller.add(row3);
+
+        // Hàng 4 - Điện thoại & Số tài khoản chung
+        JPanel row4 = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        row4.add(new JLabel("Điện thoại:"));
+        row4.add(new JLabel("0123456789"));
+        row4.add(Box.createHorizontalStrut(100)); // thêm khoảng trống
+        row4.add(new JLabel("Số tài khoản:"));
+        row4.add(new JLabel("987654321"));
+        infoPanelSeller.add(row4);
+        mainPanel.add(infoPanelSeller);
+
+        // Thông tin người mua
+        JPanel infoPanelBuy = new JPanel();
+        infoPanelBuy.setLayout(new BoxLayout(infoPanelBuy, BoxLayout.Y_AXIS));
+        infoPanelBuy.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+        infoPanelBuy.setBorder(BorderFactory.createMatteBorder(1, 0, 0, 0, Color.BLACK));
+
+        // Hàng 1
+        JPanel row_1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        row_1.add(new JLabel("Họ tên người mua:"));
+        row_1.add(new JLabel("Nguyễn"));
+        infoPanelBuy.add(row_1);
+
+        // Hàng 2
+        JPanel row_2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        row_2.add(new JLabel("Tên người mua:"));
+        row_2.add(new JLabel("A"));
+        infoPanelBuy.add(row_2);
+
+        // Hàng 2
+        JPanel row_3 = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        row_3.add(new JLabel("Mã số thuế:"));
+        row_3.add(new JLabel("11111"));
+        infoPanelBuy.add(row_3);
+
+        // Hàng 3
+        JPanel row_4 = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        row_4.add(new JLabel("Địa chỉ:"));
+        row_4.add(new JLabel("45 phố X, quận Y, thành phố Hà Nội"));
+        infoPanelBuy.add(row_4);
+
+        // Hàng 4 - Điện thoại & Số tài khoản chung
+        JPanel row_5 = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        row_5.add(new JLabel("Hình thức thanh toán:"));
+        row_5.add(new JLabel("Ship Cod"));
+        row_5.add(Box.createHorizontalStrut(100)); // thêm khoảng trống
+        row_5.add(new JLabel("Số tài khoản:"));
+        row_5.add(new JLabel("987654321"));
+        row_5.add(Box.createHorizontalStrut(100));
+        row_5.add(new JLabel("Đồng tiền thanh toán:"));
+        row_5.add(new JLabel("VNĐ"));
+        infoPanelBuy.add(row_5);
+        mainPanel.add(infoPanelBuy);
 
         // Tạo bảng hóa đơn
         String[] columnNames = {
@@ -68,11 +149,29 @@ public class InvoiceFormView {
         mainPanel.add(scrollPane);
 
         // Tổng cộng
-        JPanel totalPanel = new JPanel(new GridLayout(3, 1, 5, 5));
-        totalPanel.add(new JLabel("Tổng tiền chưa có thuế GTGT: ..................."));
-        totalPanel.add(new JLabel("Tổng tiền thuế GTGT: ..................."));
-        totalPanel.add(new JLabel("Tổng tiền thanh toán: ..................."));
-        mainPanel.add(totalPanel);
+        JPanel totalNoTax = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        totalNoTax.add(new JLabel("Tổng tiền chưa có thuế GTGT: ..................."));
+        totalNoTax.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        mainPanel.add(totalNoTax);
+
+        JPanel totalTax = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        totalTax.add(new JLabel("Tổng tiền thuế GTGT: ..................."));
+        totalTax.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+        mainPanel.add(totalTax);
+
+        JPanel totaInvoice = new JPanel();
+        totaInvoice.setLayout(new BoxLayout(totaInvoice, BoxLayout.Y_AXIS));
+        totaInvoice.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
+
+        JPanel row_in_1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+        row_in_1.add(new JLabel("Tổng tiền thanh toán: ..................."));
+        totaInvoice.add(row_in_1);
+
+        JPanel row_in_2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        row_in_2.add(new JLabel("Số tiền viết bằng chữ:"));
+        row_in_2.add(new JLabel("........................................................................................................................................................"));
+        totaInvoice.add(row_in_2);
+        mainPanel.add(totaInvoice);
 
         // Người ký
         JPanel signPanel = new JPanel(new GridLayout(1, 2, 20, 20));
@@ -89,6 +188,13 @@ public class InvoiceFormView {
         signPanel.add(rightSign);
 
         mainPanel.add(signPanel);
+
+        JPanel invoiceNote = new JPanel(new GridLayout(3, 1));
+        invoiceNote.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        invoiceNote.add(new JLabel(""));
+        invoiceNote.add(new JLabel(""));
+        invoiceNote.add(new JLabel("(Cần kiểm tra, đối chiếu khi lập, nhận hóa đơn)", SwingConstants.LEFT));
+        mainPanel.add(invoiceNote);
 
         // Thêm panel chính vào frame
         frame.add(mainPanel, BorderLayout.CENTER);

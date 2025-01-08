@@ -335,9 +335,15 @@ ERROR TODO: Lõi View cập nhật thông tin phòng
 + Check: Room.getRoomDetails(roomId)
   + Còn 4 nút cập nhật chưa có API
 + 
-
-
-
+# STRIKE TODO: - Khi bấm đăng nhập login không tắt view đăng nhập ==> đã xử lý
+# Phúc STRIKE TODO: - Chức năng xem thông tin chủ trọ chưa hoạt động ==> đã xử lý
+# Hiếu STRIKE TODO: - Lỗi: check trùng CCCD và Số điện thoại khi tạo tài khoản  ==> đã xử lý
+# Hiếu STRIKE TODO: - Chưa đăng nhập admin được => đã xử lý
+# STRIKE TODO: - Xem thông tin chủ trọ chưa có View ==> đã xử lý
+# ERROR STRIKE TODO: Vị trí quay lại trong RoomView không trả về Dashboard Chủ trọ => đã xử lý
+# ERROR STRIKE TODO: Tạo người thuê trọ không dẫn đến View nhập thông tin
+--> Cần dẫn đến View nhập thông tin trước khi gửi database lên SQL Sever => đã xử lý
+# STRIKE TODO: - Chutro.getUsernameFromIdChutro ==> Trích tên username từ id_chủ trọ để back to Dashboard chủ trọ => đã xử lý
 
 
 

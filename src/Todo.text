@@ -1,13 +1,8 @@
 Lỗi - Các mục chưa làm
 
-Hiếu STRIKE TODO: - Lỗi: check trùng CCCD và Số điện thoại khi tạo tài khoản  ==> đã xử lý
-Hiếu STRIKE TODO: - Chưa đăng nhập admin được => đã xử lý
-# STRIKE TODO: - Khi bấm đăng nhập login không tắt view đăng nhập ==> đã xử lý
-# Phúc STRIKE TODO: - Chức năng xem thông tin chủ trọ chưa hoạt động ==> đã xử lý
 Hiếu TODO: - Chức năng tạo phòng trọ ==> chưa lưu được phòng tro khi tạo
 Hiếu TODO: - Chức năng Xem danh sách phòng ==> chưa hoạt động do Chức năng tạo phòng trọ chưa có
 Hiếu TODO; - Một tá def trong Room.java chưa được viết hàm
-# STRIKE TODO: - Xem thông tin chủ trọ chưa có View ==> đã xử lý
 Phúc TODO: - Thiết lập liên kết cho nút cập nhật ChutroInformationView (ChutroInformationView(String idChutro)
         - ChutroInformationView:
             + updateNameButton.addActionListener(e->{});    ==> cập nhật họ tên
@@ -18,15 +13,12 @@ Hiếu # STRIKE TODO: - Hiếu chỉnh lại phương thức ( lỗi khi tạo t
         + Register.updateChutroInfo ==> thành update được cho cả người thuê lẫn chủ trọ
         + Giải thích: Khi tạo tài khoản ==> cập nhật thông tin ở (UpdateChutroInforView)
         --> tạo xong hết đổi tên class cho cleanca => đã xử lý
-
 Hiếu TODO: - Tạo Xử lý đổi mật khẩu cho chủ trọ và người thuê trọ (hiển thị trong ChutroInformationView) => Đợi anh Phúc tạo windows để cập
-STRIKE TODO: - Chutro.getUsernameFromIdChutro ==> Trích tên username từ id_chủ trọ để back to Dashboard chủ trọ => đã xử lý
 Phúc TODO: - View Xem dánh sách hóa đơn chưa tạo
 Phúc + Hiếu: TODO: Tạo View cho Xuất hóa đơn cần lắm các phương thức truy xuất dữ liệu
 Hiếu TODO: - Xử lý truy vấn + logic các thông tin liên quan đến hóa đơn, Xuất hóa đơn
-ERROR STRIKE TODO: Vị trí quay lại trong RoomView không trả về Dashboard Chủ trọ => đã xử lý
-ERROR STRIKE TODO: Tạo người thuê trọ không dẫn đến View nhập thông tin
-        --> Cần dẫn đến View nhập thông tin trước khi gửi database lên SQL Sever => đã xử lý
+
+
 ERROR TODO: Lõi View cập nhật thông tin phòng
             + RoomController.updateInforRoom(frame, idRoom, idChutro)
 Hiếu ERROR TODO: updateRoomPrice(String roomId, double newValue, String type) chưa được xử lý

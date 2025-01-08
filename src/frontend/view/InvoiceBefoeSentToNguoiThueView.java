@@ -8,7 +8,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.SQLException;
-
+//Form này được tạo để xem
 public class InvoiceBefoeSentToNguoiThueView {
     private JFrame frame;
 
@@ -111,6 +111,6 @@ public class InvoiceBefoeSentToNguoiThueView {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new InvoiceBefoeSentToNguoiThueView("P001"));
+        SwingUtilities.invokeLater(() -> new InvoiceBefoeSentToNguoiThueView("01"));
     }
 }

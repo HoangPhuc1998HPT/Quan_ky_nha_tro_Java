@@ -7,12 +7,14 @@ import frontend.view.ChutroInformationView;
 import frontend.view.ChutroRoomsTableView;
 
 import javax.swing.*;
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import static backend.model.Chutro.getIdChutroByUsername;
 import static backend.model.Chutro.getUsernameFromIdChutro;
 
 
@@ -89,4 +91,10 @@ public class DashboardChutroController {
         }
         return roomList;
     }
+    public static void   go_back_dashboardchutro(JFrame frame, String idChutro) {
+        String username = getUsernameFromIdChutro(idChutro);
+        new ChutroDashboardView(username);
+        frame.setVisible(false);
+    }
+
 }
