@@ -1,4 +1,4 @@
-package frontend.view;
+package frontend.view.Invoices;
 
 import javax.swing.*;
 import javax.swing.border.Border;

@@ -65,4 +65,9 @@ public class NguoiThueTro {
         }
         return null;
     }
+    public static String getIdNguoiThueFromCCCD(String CCCD){
+        // CCCD
+        String id_nguoithue = String.valueOf('1');
+        return id_nguoithue;
+    }
 }

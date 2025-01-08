@@ -3,7 +3,9 @@ package controller;
 import backend.connectDatabase;
 //import frontend.view.rooms.RoomUpdateInforRoomView;
 import backend.model.Chutro;
-import frontend.view.*;
+import backend.model.Room;
+import frontend.view.Invoices.InvoiceBefoeSentToNguoiThueView;
+import frontend.view.Invoices.InvoiceDetailUpdateView;
 import frontend.view.rooms.RoomUpdateInforRoomView;
 import frontend.view.rooms.RoomUpdateNguoithueView;
 import frontend.view.rooms.RoomView;
@@ -17,6 +19,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static backend.model.InvoiceDetail.*;
+import static backend.model.Room.updateNguoiThueTroInRoom;
 
 public class RoomController {
     // Hàm xử lý các hành động (cần triển khai thực tế trong Controller)
@@ -61,24 +64,6 @@ public class RoomController {
         JOptionPane.showMessageDialog(frame, "Xuất hóa đơn cho phòng " + idPhong);
     }
 
-    public static void deletePhong(JFrame frame, String idRoom) {
-        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-            String sql = "DELETE FROM TTPhongtro WHERE IDPhong = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, idRoom);
-            int rowsAffected = pstmt.executeUpdate();
-
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(frame, "Phòng " + idRoom + " đã được xóa!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(frame, "Không thể xóa phòng " + idRoom, "Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(frame, "Lỗi khi xóa phòng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
 
     public static Object[] getThongTinPhong(String id_room, String id_chutro) {
         System.out.println("Lấy thông tin phòng trọ");
@@ -101,7 +86,8 @@ public class RoomController {
         //System.out.println(" đã gọi controller GoToUpdateNguoiThue");
         //NguoiThueTro ngThueTro = new NguoiThueTro();guoiThueTro.UpdateNguoiThueInRoom(cccdValue, idPhong, frame);
         // Update xong gửi thông báo về ==> Đã thêm người thuê trọ "name" vào"
-
+        updateNguoiThueTroInRoom(cccdValue, idPhong);
+        frame.setVisible(false);
     }
 
     public static ActionListener GoToBackRoomView(JFrame frame, String id_room, String id_chutro) {
@@ -165,14 +151,34 @@ public class RoomController {
     }
 
 
-    public static void goToBackRoomView(JFrame frame, String idRoom, String idChutro) {
-        frame.setVisible(false);
-        //new DashboardChutroidRoom,idChutro);
-    }
-
     public static double getGarbageFee (String id_phong){
         // TODo: Truy xuất từ Table HoaDon, nếu chưa có thì cho bằng 0. Khi cập nhật cho số hóa đơn gần nhất
         return 0;
     }
+
+
+    public static void deletePhong(JFrame frame, String idRoom) {
+        int confirm = JOptionPane.showConfirmDialog(
+                frame,
+                "Bạn có chắc chắn muốn xóa phòng này không?",
+                "Xác nhận xóa phòng",
+                JOptionPane.YES_NO_OPTION
+        );
+        if (confirm == JOptionPane.YES_OPTION) {
+            boolean isDeleted = Room.deleteRoom(idRoom);
+            if (isDeleted) {
+                JOptionPane.showMessageDialog(frame, "Xóa phòng thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                frame.dispose(); // Đóng frame sau khi xóa
+            } else {
+                JOptionPane.showMessageDialog(frame, "Xóa phòng thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    public static void goToBackRoomView(JFrame frame, String idRoom, String idChutro) {
+        frame.dispose();
+        new frontend.view.rooms.RoomView(idRoom, idChutro); // Điều hướng quay lại RoomView
+    }
+
 
 }

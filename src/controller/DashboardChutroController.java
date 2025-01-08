@@ -66,8 +66,9 @@ public class DashboardChutroController {
 
     public static void   go_back_dashboardchutro(JFrame frame, String idChutro) {
         String username = getUsernameFromIdChutro(idChutro);
-        new ChutroDashboardView(username);
         frame.setVisible(false);
+        //new ChutroDashboardView(username);
+
     }
 
 }

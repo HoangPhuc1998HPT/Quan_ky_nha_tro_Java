@@ -1,11 +1,9 @@
-package frontend.view;
+package frontend.view.Invoices;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-
-import backend.model.InvoiceDetail;
 
 import static controller.RoomController.GoToBackRoomView;
 

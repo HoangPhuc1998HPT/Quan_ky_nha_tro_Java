@@ -175,8 +175,5 @@ public class ChutroCreateRoomsView {
         frame.setVisible(true);
 
     }
-        public static void main(String[] args) {
-            String id_chutro_infor = "CT001";
-            SwingUtilities.invokeLater(() -> new ChutroCreateRoomsView(id_chutro_infor));
-        }
+
     }

@@ -1,6 +1,5 @@
-package frontend.view;
+package frontend.view.Invoices;
 
-import backend.model.InvoiceDetail;
 import backend.model.Invoices;
 import backend.model.Room;
 

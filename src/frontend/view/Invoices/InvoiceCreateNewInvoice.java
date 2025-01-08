@@ -1,4 +1,4 @@
-package frontend.view;
+package frontend.view.Invoices;
 
 import controller.InvoicesController;
 

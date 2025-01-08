@@ -352,9 +352,11 @@ ERROR TODO: Lõi View cập nhật thông tin phòng
 Phúc TODO: View Chủ trọ dashboardView -> Xem thông tin chủ trọ ->
 DashboardChutroController.go_to_show_information_churtro(id_chutro) ->
 
-+ Các View cập nhật chưa thực hiện
-+ Cập nhật họ tên
-+ Cập nhật SDT
-+ Đổi mật khẩu
+# Phúc TODO: View Chủ trọ dashboardView -> Xem thông tin chủ trọ ==> đã thực hiện
++ Các View cập nhật chưa thực hiện ==> đã thực hiện
++ Cập nhật họ tên ==> đã thực hiện
++ Cập nhật SDT==> đã thực hiện
++ Đổi mật khẩu==> đã thực hiện
+# Phúc TODO: View xóa phòng chưa có --> đã có
 
 

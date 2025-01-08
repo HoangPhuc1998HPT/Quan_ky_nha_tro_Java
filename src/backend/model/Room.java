@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import static backend.model.NguoiThueTro.getIdNguoiThueFromCCCD;
+
 public class Room {
     private String idRoom;
     private String name;
@@ -95,5 +97,15 @@ public class Room {
         return null; // Trả về null nếu không có dữ liệu
     }
 
+    public static boolean deleteRoom(String idRoom) {
+        // TODO: Hiếu kiểm tra Tạo truy vấn xóa phòng ==> Cơ chế tốt nhất là sau khi delete th không cho truy vấn id phòng đó nữa
+        //..............
+        return false;
+    }
+
+    public static void updateNguoiThueTroInRoom(String idRoom, String CCCD) {
+        //TODO: Hiếu tạo truy vấn cho update thông tin người thuê vào phòng trọ lên database
+       String id_nguoithue = getIdNguoiThueFromCCCD(CCCD);
+    }
 
 }

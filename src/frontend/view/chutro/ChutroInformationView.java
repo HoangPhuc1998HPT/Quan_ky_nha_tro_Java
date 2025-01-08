@@ -40,7 +40,6 @@ public class ChutroInformationView {
         gbc.gridx = 2; // Nút cập nhật
         JButton updateNameButton = new JButton("Cập nhật");
         updateNameButton.addActionListener(e->new UpdateFullNameView(idChutro, chutro.getFullName()));
-        //TODO: Thiết lập liên kết cho nút cập nhật ChutroInformationView
         frame.add(updateNameButton, gbc);
 
 
@@ -58,7 +57,6 @@ public class ChutroInformationView {
         gbc.gridx = 2; // Nút cập nhật
         JButton updatePhoneButton = new JButton("Cập nhật");
         updatePhoneButton.addActionListener(e->new UpdatePhoneView(idChutro, chutro.getPhone()));
-        //TODO: Thiết lập liên kết cho nút cập nhật ChutroInformationView
         frame.add(updatePhoneButton, gbc);
 
         // Hiển thị mật khẩu
@@ -72,7 +70,6 @@ public class ChutroInformationView {
         gbc.gridy = 5;
         JButton changePasswordButton = new JButton("Đổi mật khẩu");
         changePasswordButton.addActionListener(e->new UpdatePasswordView(idChutro));
-        //TODO: Thiết lập liên kết cho nút cập nhật ChutroInformationView
         frame.add(changePasswordButton, gbc);
 
         // Nút quay lại

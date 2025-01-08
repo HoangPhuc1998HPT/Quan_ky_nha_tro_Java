@@ -2,7 +2,7 @@ package controller;
 
 import backend.connectDatabase;
 import backend.model.Invoices;
-import frontend.view.InvoiceCreateNewInvoice;
+import frontend.view.Invoices.InvoiceCreateNewInvoice;
 
 import javax.swing.*;
 import java.sql.Connection;

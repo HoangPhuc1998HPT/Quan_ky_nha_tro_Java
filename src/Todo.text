@@ -3,12 +3,6 @@ Lỗi - Các mục chưa làm
 Hiếu TODO: - Chức năng tạo phòng trọ ==> chưa lưu được phòng tro khi tạo
 Hiếu TODO: - Chức năng Xem danh sách phòng ==> chưa hoạt động do Chức năng tạo phòng trọ chưa có
 Hiếu TODO; - Một tá def trong Room.java chưa được viết hàm
-Phúc TODO: - Thiết lập liên kết cho nút cập nhật ChutroInformationView (ChutroInformationView(String idChutro)
-        - ChutroInformationView:
-            + updateNameButton.addActionListener(e->{});    ==> cập nhật họ tên
-            + updatePhoneButton.addActionListener(e->{});  ==> Cập nhật Số điện thoại
-            + changePasswordButton.addActionListener(e->{}); ==> Đỏi password
-            + buittonback
 Hiếu TODO: - Tạo Xử lý đổi mật khẩu cho chủ trọ và người thuê trọ (hiển thị trong ChutroInformationView) => Đợi anh Phúc tạo windows để cập
 Phúc TODO: - View Xem dánh sách hóa đơn chưa tạo
 Phúc + Hiếu: TODO: Tạo View cho Xuất hóa đơn cần lắm các phương thức truy xuất dữ liệu
@@ -20,10 +14,24 @@ Hiếu ERROR TODO: updateRoomPrice(String roomId, double newValue, String type) 
      --> RoomController.updateRoomPrice --> 4 nút cập nhật
 Hiếu ERROR TODO: Kiểm tra lại regiester user ==? => Anh Phúc kiểm tra lại nha, em thấy bên em bình thường
 Phúc TODO: View Chủ trọ dashboardView -> Xem thông tin chủ trọ ==> đã thực hiện
-        + Các View cập nhật chưa thực hiện ==> đã thực hiện
-            + Cập nhật họ tên ==> đã thực hiện
-            + Cập nhật SDT==> đã thực hiện
-            + Đổi mật khẩu==> đã thực hiện
-            + Khi bấm cập nhật không reset tên tại thời điểm bấm
-
+            + Khi bấm cập nhật không reset tên tại thời điểm bấm ==> chưa màn được
+Phúc TODO: liên kết mở và return xem danh sách phòng trọ lỗi
+Hiếu TODO: Mở View Dashboard chủ trọ -> Xem danh sách phòng => Xem chi tiết phòng ==> Bổ sung các chức năng cập nhật hóa đơn
+        ==> Xuất hóa đơn ==> View đã có
+Hiếu TODO: Tạo xử lý cho Room.deleteRoom( String idRoom) nha
+* Phúc TODO: Tạo view cho các:
+        + Admin View Danh sách chủ trọ
+        + Admin View Danh sách phòng trọ
+        + Admin View Danh sách người thuê trọ
+        + Admin View Danh sách hóa đơn trọ
+        + Tạo nút delete cho những tài khoản không được active
+* Phúc TODO: Tạo view cho Dashboard người thuê trọ
+Hiếu TODO: Room ==> cập nhật người thuê phòng ==> chưa cập nhật được người thuê
+        + Room ==> goToUpdateNguoiThue ==> RoomUpdateNguoithueView(idPhong)
+        + ==> GoToUpdateNguoiThue(CCCDValue.trim(),frame,id_room) ==
+        + GoToUpdateNguoiThue ?? ==> updateNguoiThueTroInRoom
+        + getIdNguoiThueFromCCCD ??
+        + //TODO: Hiếu tạo truy vấn cho update thông tin người thuê vào phòng trọ lên database
+Hiếu TODO: Đưa phương thức checkLogin vào Login.class ==> Thêm check user đã được kích hoạt chưa
+        + ==> nếu chưa thông báo user chưa được kích hoạt
 
