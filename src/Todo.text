@@ -9,20 +9,21 @@ Phúc TODO: - Thiết lập liên kết cho nút cập nhật ChutroInformationV
             + updatePhoneButton.addActionListener(e->{});  ==> Cập nhật Số điện thoại
             + changePasswordButton.addActionListener(e->{}); ==> Đỏi password
             + buittonback
-Hiếu # STRIKE TODO: - Hiếu chỉnh lại phương thức ( lỗi khi tạo tài khoản người thuê trọ thiếu cập nhật thông tin)
-        + Register.updateChutroInfo ==> thành update được cho cả người thuê lẫn chủ trọ
-        + Giải thích: Khi tạo tài khoản ==> cập nhật thông tin ở (UpdateChutroInforView)
-        --> tạo xong hết đổi tên class cho cleanca => đã xử lý
 Hiếu TODO: - Tạo Xử lý đổi mật khẩu cho chủ trọ và người thuê trọ (hiển thị trong ChutroInformationView) => Đợi anh Phúc tạo windows để cập
 Phúc TODO: - View Xem dánh sách hóa đơn chưa tạo
 Phúc + Hiếu: TODO: Tạo View cho Xuất hóa đơn cần lắm các phương thức truy xuất dữ liệu
 Hiếu TODO: - Xử lý truy vấn + logic các thông tin liên quan đến hóa đơn, Xuất hóa đơn
-
-
 ERROR TODO: Lõi View cập nhật thông tin phòng
             + RoomController.updateInforRoom(frame, idRoom, idChutro)
 Hiếu ERROR TODO: updateRoomPrice(String roomId, double newValue, String type) chưa được xử lý
     ==> RoomUpdateInforRoomView -> RoomUpdatePriceView -->updateButton --> updateRoomPrice-->
      --> RoomController.updateRoomPrice --> 4 nút cập nhật
 Hiếu ERROR TODO: Kiểm tra lại regiester user ==? => Anh Phúc kiểm tra lại nha, em thấy bên em bình thường
+Phúc TODO: View Chủ trọ dashboardView -> Xem thông tin chủ trọ ==> đã thực hiện
+        + Các View cập nhật chưa thực hiện ==> đã thực hiện
+            + Cập nhật họ tên ==> đã thực hiện
+            + Cập nhật SDT==> đã thực hiện
+            + Đổi mật khẩu==> đã thực hiện
+            + Khi bấm cập nhật không reset tên tại thời điểm bấm
+
 

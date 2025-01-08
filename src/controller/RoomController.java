@@ -1,8 +1,12 @@
 package controller;
 
 import backend.connectDatabase;
-//import frontend.view.RoomUpdateInforRoomView;
+//import frontend.view.rooms.RoomUpdateInforRoomView;
+import backend.model.Chutro;
 import frontend.view.*;
+import frontend.view.rooms.RoomUpdateInforRoomView;
+import frontend.view.rooms.RoomUpdateNguoithueView;
+import frontend.view.rooms.RoomView;
 
 import javax.swing.*;
 
@@ -141,7 +145,7 @@ public class RoomController {
     }
     // Lấy danh sách phòng dựa trên ID chủ trọ
     public static List<String[]> getRoomListByChutro(String idChutro) {
-        return DashboardChutroController.getRoomList(idChutro);
+        return Chutro.getRoomList(idChutro);
     }
 
     // Lấy RoomID dựa trên tên phòng và ID chủ trọ

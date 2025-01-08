@@ -344,9 +344,17 @@ ERROR TODO: Lõi View cập nhật thông tin phòng
 # ERROR STRIKE TODO: Tạo người thuê trọ không dẫn đến View nhập thông tin
 --> Cần dẫn đến View nhập thông tin trước khi gửi database lên SQL Sever => đã xử lý
 # STRIKE TODO: - Chutro.getUsernameFromIdChutro ==> Trích tên username từ id_chủ trọ để back to Dashboard chủ trọ => đã xử lý
+# Hiếu # STRIKE TODO: - Hiếu chỉnh lại phương thức ( lỗi khi tạo tài khoản người thuê trọ thiếu cập nhật thông tin)
+    + Register.updateChutroInfo ==> thành update được cho cả người thuê lẫn chủ trọ
+    + Giải thích: Khi tạo tài khoản ==> cập nhật thông tin ở (UpdateChutroInforView)
+        --> tạo xong hết đổi tên class cho cleanca => đã xử lý
 
+Phúc TODO: View Chủ trọ dashboardView -> Xem thông tin chủ trọ ->
+DashboardChutroController.go_to_show_information_churtro(id_chutro) ->
 
-
-
++ Các View cập nhật chưa thực hiện
++ Cập nhật họ tên
++ Cập nhật SDT
++ Đổi mật khẩu
 
 

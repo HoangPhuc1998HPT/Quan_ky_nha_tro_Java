@@ -8,6 +8,10 @@ import backend.model.Admin;
 import backend.model.Chutro;
 import backend.model.NguoiThueTro;
 import frontend.view.*;
+import frontend.view.admin.AdminDashboardView;
+import frontend.view.chutro.ChutroDashboardView;
+import frontend.view.login_register.RegisterView;
+import frontend.view.login_register.loginView;
 
 import javax.swing.*;
 

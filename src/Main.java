@@ -1,7 +1,4 @@
-import controller.LoginController;
-import frontend.view.homeloginView;
-
-import javax.swing.*;
+import frontend.view.login_register.homeloginView;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.

@@ -1,9 +1,8 @@
 package controller;
 
 import backend.Register;
-import frontend.view.loginView;
-import frontend.view.UpdateChutroInforView;
-import frontend.view.nguoiThueTroDashboardView;
+import frontend.view.login_register.loginView;
+import frontend.view.login_register.UpdateChutroInforView;
 
 import javax.swing.*;
 

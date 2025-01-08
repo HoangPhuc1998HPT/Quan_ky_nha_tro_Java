@@ -4,6 +4,8 @@ import backend.connectDatabase;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Chutro {
     private String idChutro;
@@ -158,5 +160,34 @@ public class Chutro {
             e.printStackTrace();
         }
         return false;
+    }
+    public static List<String[]> getRoomList(String id_chutro) {
+        List<String[]> roomList = new ArrayList<>();
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            // Truy vấn SQL
+            String sql = """
+            SELECT 
+                TTPhongtro.IDPhong,
+                TTPhongtro.TenPhong,
+                ISNULL(NguoiThueTro.Hoten, N'Không có') AS TenNguoiThue
+            FROM TTPhongtro
+            LEFT JOIN NguoiThueTro ON TTPhongtro.IDPhong = NguoiThueTro.IDnguoithue
+            WHERE TTPhongtro.IDChutro = ?
+        """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, id_chutro); // Gán giá trị IDChutro
+            ResultSet rs = pstmt.executeQuery();
+
+            // Lấy dữ liệu và thêm vào danh sách
+            while (rs.next()) {
+                String idPhong = rs.getString("IDPhong");
+                String tenPhong = rs.getString("TenPhong");
+                String tenNguoiThue = rs.getString("TenNguoiThue");
+                roomList.add(new String[]{idPhong, tenPhong, tenNguoiThue, "Xem Chi Tiết"});
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return roomList;
     }
 }
