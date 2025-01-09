@@ -88,6 +88,11 @@ public class ChutroDashboardView {
         logout.addActionListener(e-> LoginController.logout(frame));
         panel.add(logout, gbc);
 
+        JButton exist = new JButton("Thoát");
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        exist.addActionListener(e->frame.setVisible(false));
+        panel.add(exist,gbc);
 
         frame.setVisible(true);
 

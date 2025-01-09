@@ -360,3 +360,9 @@ DashboardChutroController.go_to_show_information_churtro(id_chutro) ->
 # Phúc TODO: View xóa phòng chưa có --> đã có
 # Phúc TODO: - View Xem dánh sách hóa đơn chưa tạo ==> đã tạo
 # Phúc TODO: liên kết mở và return xem danh sách phòng trọ lỗi -- Đã xử lý
+# Hiếu ERROR TODO: Kiểm tra lại regiester user ==? => Anh Phúc kiểm tra lại nha, em thấy bên em bình thường ==> OK
+# * Phúc TODO: Tạo view cho các:
+        + Admin View Danh sách chủ trọ == đã xử lý 
+        +
+        + 
+        +

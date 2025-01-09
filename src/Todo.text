@@ -16,18 +16,16 @@ ERROR TODO: Lõi View cập nhật thông tin phòng
 Hiếu ERROR TODO: updateRoomPrice(String roomId, double newValue, String type) chưa được xử lý
     ==> RoomUpdateInforRoomView -> RoomUpdatePriceView -->updateButton --> updateRoomPrice-->
      --> RoomController.updateRoomPrice --> 4 nút cập nhật
-Hiếu ERROR TODO: Kiểm tra lại regiester user ==? => Anh Phúc kiểm tra lại nha, em thấy bên em bình thường
 Phúc TODO: View Chủ trọ dashboardView -> Xem thông tin chủ trọ ==> đã thực hiện
             + Khi bấm cập nhật không reset tên tại thời điểm bấm ==> chưa màn được
 Hiếu TODO: Mở View Dashboard chủ trọ -> Xem danh sách phòng => Xem chi tiết phòng ==> Bổ sung các chức năng cập nhật hóa đơn
         ==> Xuất hóa đơn ==> View đã có
 Hiếu TODO: Tạo xử lý cho Room.deleteRoom( String idRoom) nha
 * Phúc TODO: Tạo view cho các:
-        + Admin View Danh sách chủ trọ
         + Admin View Danh sách phòng trọ
         + Admin View Danh sách người thuê trọ
         + Admin View Danh sách hóa đơn trọ
-        + Tạo nút delete cho những tài khoản không được active
+ Hiếu   + Tạo nút delete cho những tài khoản không được active ==> đã xong chờ Hiếu thêm backend
 * Phúc TODO: Tạo view cho Dashboard người thuê trọ
 Hiếu TODO: Room ==> cập nhật người thuê phòng ==> chưa cập nhật được người thuê
         + Room ==> goToUpdateNguoiThue ==> RoomUpdateNguoithueView(idPhong)
@@ -39,4 +37,4 @@ Hiếu TODO: Đưa phương thức checkLogin vào Login.class ==> Thêm check u
         + ==> nếu chưa thông báo user chưa được kích hoạt
 Hiếu TODO: TODO: Invoice list view đã tạo, Hiếu kiểm tra lại logic xem truy xuất dữ liệu cho Invoices.InvoiceListsView  nha
 
-
+Hiếu TODO: Thực hiện thao tác delete User trong table User: Admincontroller.deleteUser

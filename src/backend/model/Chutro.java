@@ -53,10 +53,26 @@ public class Chutro {
     }
 
     public static String getUsernameFromIdChutro(String idChutro) {
-        String username = "testchutro02" ; //"Hiếu lấy Username từ id chủ trọ ra nhe" ;
-        // TODO: Trích tên username từ id_chủ trọ để back to Dashboard chủ trọ
+        String username = null;
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+            SELECT u.Username 
+            FROM Chutro c
+            JOIN Users u ON c.UserID = u.UserID
+            WHERE c.IDChutro = ?
+        """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, idChutro);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                username = rs.getString("Username");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return username;
     }
+
 
     public String getFullName() {
         return fullName;
@@ -194,8 +210,61 @@ public class Chutro {
     public static String getNameChutroFromIdChutro(String idChutro){
         return "Văn A";
     }
+    // TODO: Xử lý lấy thông tin tên chủ trọ và tổng số phòng chủ trụ nắm giữ
     public static int getCountRoomFromIdChutro(String idChutro){
         return 0;
     }
+    // Hàm lấy danh sách tất cả chủ trọ từ cơ sở dữ liệu
+    public static List<Object[]> getAllChutroData() {
+        List<Object[]> chutroData = new ArrayList<>();
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            // Truy vấn SQL để lấy thông tin chủ trọ và số phòng quản lý
+            String sql = """
+                SELECT 
+                    ct.Hoten AS TenChutro, 
+                    ct.Phone AS SDT,
+                    ct.CCCD AS CCCD,
+                    COUNT(pt.IDPhong) AS SoPhongQuanLy
+                FROM Chutro ct
+                LEFT JOIN TTPhongtro pt ON ct.IDChutro = pt.IDChutro
+                GROUP BY ct.Hoten, ct.Phone, ct.CCCD
+            """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
 
+            // Thêm dữ liệu vào danh sách
+            while (rs.next()) {
+                chutroData.add(new Object[]{
+                        rs.getString("TenChutro"),       // Tên chủ trọ
+                        rs.getInt("SoPhongQuanLy"),     // Số phòng quản lý
+                        rs.getString("SDT"),            // Số điện thoại
+                        rs.getString("CCCD")            // CCCD
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return chutroData;
+    }
+    // Lấy username từ CCCD
+    public static String getUsernameByCCCD(String cccd) {
+        String username = null;
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+                SELECT u.Username 
+                FROM Chutro c
+                JOIN Users u ON c.UserID = u.UserID
+                WHERE c.CCCD = ?
+            """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, cccd);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                username = rs.getString("Username");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return username;
+    }
 }

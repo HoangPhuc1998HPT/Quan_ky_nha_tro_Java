@@ -31,4 +31,5 @@ public class AdminShowAllPhongTroView extends JFrame {
 
         setVisible(true);
     }
+
 }

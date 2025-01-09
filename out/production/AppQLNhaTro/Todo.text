@@ -6,18 +6,18 @@ Hiếu TODO; - Một tá def trong Room.java chưa được viết hàm
 Hiếu TODO: - Tạo Xử lý đổi mật khẩu cho chủ trọ và người thuê trọ (hiển thị trong ChutroInformationView)
         => Đợi anh Phúc tạo windows để cập
            ==> đã có View đổi mật khẩu cho chủ trọ
-
+        go_to_show_information_churtro(id_chutro) -> ChutroInformationView(id_chutro, chutro)
+        ->ChutroInformationView -> UpdatePasswordView(idChutro)
 Phúc + Hiếu: TODO: Tạo View cho Xuất hóa đơn cần lắm các phương thức truy xuất dữ liệu
+                    +View đã có => chờ backend
 Hiếu TODO: - Xử lý truy vấn + logic các thông tin liên quan đến hóa đơn, Xuất hóa đơn
 ERROR TODO: Lõi View cập nhật thông tin phòng
             + RoomController.updateInforRoom(frame, idRoom, idChutro)
 Hiếu ERROR TODO: updateRoomPrice(String roomId, double newValue, String type) chưa được xử lý
     ==> RoomUpdateInforRoomView -> RoomUpdatePriceView -->updateButton --> updateRoomPrice-->
      --> RoomController.updateRoomPrice --> 4 nút cập nhật
-Hiếu ERROR TODO: Kiểm tra lại regiester user ==? => Anh Phúc kiểm tra lại nha, em thấy bên em bình thường
 Phúc TODO: View Chủ trọ dashboardView -> Xem thông tin chủ trọ ==> đã thực hiện
             + Khi bấm cập nhật không reset tên tại thời điểm bấm ==> chưa màn được
-Phúc TODO: liên kết mở và return xem danh sách phòng trọ lỗi
 Hiếu TODO: Mở View Dashboard chủ trọ -> Xem danh sách phòng => Xem chi tiết phòng ==> Bổ sung các chức năng cập nhật hóa đơn
         ==> Xuất hóa đơn ==> View đã có
 Hiếu TODO: Tạo xử lý cho Room.deleteRoom( String idRoom) nha
@@ -38,4 +38,4 @@ Hiếu TODO: Đưa phương thức checkLogin vào Login.class ==> Thêm check u
         + ==> nếu chưa thông báo user chưa được kích hoạt
 Hiếu TODO: TODO: Invoice list view đã tạo, Hiếu kiểm tra lại logic xem truy xuất dữ liệu cho Invoices.InvoiceListsView  nha
 
-
+Hiếu TODO: Thực hiện thao tác delete User trong table User: Admincontroller.deleteUser

@@ -427,3 +427,16 @@ select* from NguoiThueTro
 select * from TTPhongtro	
 select* from Users
 select* from Admins
+-- ĐỘ là phải thêm 1 cột trong HoaDOn để biết là hóa đơn được thanh toán chưa
+
+SELECT 
+                    ROW_NUMBER() OVER (ORDER BY hd.NgayXuatHoaDon DESC) AS STT,
+                    pt.TenPhong,
+                    nt.Hoten AS TenNguoiThue,
+                    hd.TongChiPhi,
+                    hd.NgayXuatHoaDon,
+                    CASE WHEN hd.TongChiPhi > 0 THEN 'Chưa Thanh Toán' ELSE 'Đã Thanh Toán' END AS TinhTrang
+                FROM HoaDon hd
+                JOIN TTPhongtro pt ON hd.IDPhong = pt.IDPhong
+                LEFT JOIN NguoiThueTro nt ON pt.IDNguoiThue = nt.IDNguoiThue
+                WHERE pt.IDChutro = '9';

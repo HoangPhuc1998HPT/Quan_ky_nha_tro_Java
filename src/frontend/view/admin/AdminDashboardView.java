@@ -8,6 +8,8 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
+import static controller.AdminController.goToAdminShowAllChutroView;
+
 public class AdminDashboardView extends JFrame {
     public AdminDashboardView() {
         setTitle("Admin Dashboard");
@@ -33,19 +35,19 @@ public class AdminDashboardView extends JFrame {
         buttonPanel.setLayout(new GridLayout(2, 2, 10, 10)); // 2 hàng, 2 cột, khoảng cách 10px
 
         JButton btnShowChutro = new JButton("Danh sách chủ trọ");
-        btnShowChutro.addActionListener(e -> new AdminShowAllChutroView(null));
+        btnShowChutro.addActionListener(e ->goToAdminShowAllChutroView() );
         buttonPanel.add(btnShowChutro);
 
         JButton btnShowPhongTro = new JButton("Danh sách phòng trọ");
-        btnShowPhongTro.addActionListener(e -> new AdminShowAllPhongTroView(null));
+        //btnShowPhongTro.addActionListener(e -> new AdminShowAllPhongTroView());
         buttonPanel.add(btnShowPhongTro);
 
         JButton btnShowNguoiThueTro = new JButton("Danh sách người thuê trọ");
-        btnShowNguoiThueTro.addActionListener(e -> new AdminShowAllNguoiThueTroView(null));
+        //btnShowNguoiThueTro.addActionListener(e -> new AdminShowAllNguoiThueTroView(null));
         buttonPanel.add(btnShowNguoiThueTro);
 
         JButton btnShowHoadon = new JButton("Danh sách hóa đơn");
-        btnShowHoadon.addActionListener(e -> new AdminShowAllHoadonView(null));
+        //btnShowHoadon.addActionListener(e -> new AdminShowAllHoadonView(null));
         buttonPanel.add(btnShowHoadon);
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -54,7 +56,7 @@ public class AdminDashboardView extends JFrame {
 
         // Tiêu đề danh sách tài khoản chưa active
         JLabel inactiveUsersLabel = new JLabel("Danh sách tài khoản chưa kích hoạt:");
-        inactiveUsersLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        inactiveUsersLabel.setFont(new Font("Be VietNam Pro", Font.BOLD, 16));
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = 2;
@@ -69,7 +71,9 @@ public class AdminDashboardView extends JFrame {
             public boolean isCellEditable(int row, int column) {
                 return column == 3; // Chỉ cho phép chỉnh sửa cột Action
             }
+
         };
+        inactiveUsersTable.setRowHeight(40);
 
         // Sử dụng ButtonRenderer và ButtonEditor
         inactiveUsersTable.getColumnModel().getColumn(3).setCellRenderer(new ButtonRendererAdmin());

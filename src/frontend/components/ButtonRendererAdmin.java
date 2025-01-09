@@ -11,8 +11,12 @@ public class ButtonRendererAdmin extends JButton implements TableCellRenderer {
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        setText(value == null ? "Kích hoạt" : value.toString());
-        return this;
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        JButton btnActive = new JButton("Active");
+        JButton btnDelete = new JButton("Delete");
+        panel.add(btnActive);
+        panel.add(btnDelete);
+        return panel;
     }
 
 }

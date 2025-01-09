@@ -1,45 +1,57 @@
 package frontend.components;
 
 import controller.AdminController;
-import controller.InvoicesController;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ButtonEditorAdmin extends AbstractCellEditor implements TableCellEditor {
-    private final JButton button;
-    private String label;
-    private boolean isPushed;
-    private JTable table;
+    private JPanel panel;
+    private JButton btnActive;
+    private JButton btnDelete;
+    private JTable table; // Bảng hiện tại để truy cập dữ liệu hàng
 
     public ButtonEditorAdmin(JTable table) {
         this.table = table;
-        button = new JButton();
-        button.setOpaque(true);
+        panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-        button.addActionListener(e -> {
-            fireEditingStopped(); // Dừng chế độ chỉnh sửa
-            int row = table.getSelectedRow();
-            AdminController.activateUser(row, table);
+        // Nút Active
+        btnActive = new JButton("Active");
+        btnActive.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fireEditingStopped(); // Dừng chế độ chỉnh sửa
+                int row = table.getSelectedRow();
+                AdminController.activateUser(row, table);
+            }
         });
+
+        // Nút Delete
+        btnDelete = new JButton("Delete");
+        btnDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fireEditingStopped(); // Dừng chế độ chỉnh sửa
+                int row = table.getSelectedRow();
+                AdminController.deleteUser(row, table);
+            }
+        });
+
+        // Thêm hai nút vào panel
+        panel.add(btnActive);
+        panel.add(btnDelete);
     }
+
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
-        label = (value == null) ? "Kích hoạt" : value.toString();
-        button.setText(label);
-        isPushed = true;
-        return button;
+        return panel;
     }
 
     @Override
     public Object getCellEditorValue() {
-        return label;
-    }
-
-    @Override
-    public boolean stopCellEditing() {
-        isPushed = false;
-        return super.stopCellEditing();
+        return null; // Không cần giá trị trả về
     }
 }

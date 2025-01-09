@@ -2,12 +2,15 @@ package controller;
 
 
 import backend.connectDatabase;
-
+import backend.model.Chutro;
+import frontend.view.admin.AdminShowAllChutroView;
+import frontend.view.chutro.ChutroDashboardView;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 public class  AdminController {
 
@@ -54,5 +57,27 @@ public class  AdminController {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Lỗi khi cập nhật trạng thái tài khoản!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+
+
+    public static void deleteUser(int row, JTable table) {
+        // TODO: Thực hiện thao tác delete User trong table User
+
+    }
+    public static void goToAdminShowAllChutroView() {
+        List<Object[]> chutroData = Chutro.getAllChutroData();
+        new AdminShowAllChutroView(chutroData);
+    }
+
+    public static void goToChutroDashboardFromAdmin(String username) {
+        new ChutroDashboardView(username); // Mở Dashboard
+    }
+
+    public static void goBackToAdminDashboard(AdminShowAllChutroView adminShowAllChutroView) {
+    }
+
+    public static void disableChutro(String cccd) {
+        System.out.println("đã tạm ngưng" + cccd);
     }
 }
