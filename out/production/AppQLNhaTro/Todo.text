@@ -22,11 +22,10 @@ Hiếu TODO: Mở View Dashboard chủ trọ -> Xem danh sách phòng => Xem chi
         ==> Xuất hóa đơn ==> View đã có
 Hiếu TODO: Tạo xử lý cho Room.deleteRoom( String idRoom) nha
 * Phúc TODO: Tạo view cho các:
-        + Admin View Danh sách chủ trọ
         + Admin View Danh sách phòng trọ
         + Admin View Danh sách người thuê trọ
         + Admin View Danh sách hóa đơn trọ
-        + Tạo nút delete cho những tài khoản không được active
+ Hiếu   + Tạo nút delete cho những tài khoản không được active ==> đã xong chờ Hiếu thêm backend
 * Phúc TODO: Tạo view cho Dashboard người thuê trọ
 Hiếu TODO: Room ==> cập nhật người thuê phòng ==> chưa cập nhật được người thuê
         + Room ==> goToUpdateNguoiThue ==> RoomUpdateNguoithueView(idPhong)

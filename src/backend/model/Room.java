@@ -4,6 +4,8 @@ import backend.connectDatabase;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import static backend.model.NguoiThueTro.getIdNguoiThueFromCCCD;
 
@@ -106,6 +108,41 @@ public class Room {
     public static void updateNguoiThueTroInRoom(String idRoom, String CCCD) {
         //TODO: Hiếu tạo truy vấn cho update thông tin người thuê vào phòng trọ lên database
        String id_nguoithue = getIdNguoiThueFromCCCD(CCCD);
+    }
+
+
+    public static String getTenantRoomId(String tenantId) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "SELECT IDPhong FROM TTPhongtro WHERE IDNguoiThue = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, tenantId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("IDPhong");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static List<Object[]> getEmptyRooms() {
+        List<Object[]> emptyRooms = new ArrayList<>();
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "SELECT IDPhong, TenPhong, GiaPhong FROM TTPhongtro WHERE IDNguoiThue IS NULL";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                emptyRooms.add(new Object[]{
+                        rs.getString("IDPhong"),
+                        rs.getString("TenPhong"),
+                        rs.getDouble("GiaPhong")
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return emptyRooms;
     }
 
 }

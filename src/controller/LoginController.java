@@ -90,7 +90,7 @@ import java.sql.ResultSet;
                     case "nguoithuetro":
                         NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId(userId);
                         if (tenant != null) {
-                            new nguoiThueTroDashboardView();
+                            new NguoiThueTroDashboardView(userId);
                             frame.setVisible(false);
                             System.out.println(" nhờ mở new Dashboard NGười thuê trọ");
                             //TODO: Tạo dashboard Người thuê trọ rồi kích hoạt lại ==> giờ tắt xóa lỗi

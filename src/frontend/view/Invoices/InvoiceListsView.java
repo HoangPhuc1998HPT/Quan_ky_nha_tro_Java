@@ -17,7 +17,7 @@ public class InvoiceListsView {
     public InvoiceListsView(String idChutro, String landlordName, int roomCount) {
         // Tạo JFrame
         JFrame frame = new JFrame("Danh Sách Hóa Đơn");
-        frame.setSize(900, 800);
+        frame.setSize(1000, 850);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
@@ -135,8 +135,4 @@ public class InvoiceListsView {
         }
     }
 
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new InvoiceListsView("CT001", "Trần Văn A", 5));
-    }
 }
