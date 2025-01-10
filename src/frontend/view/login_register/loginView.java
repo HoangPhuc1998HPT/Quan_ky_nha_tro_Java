@@ -55,9 +55,6 @@ public class loginView {
         gbc.gridy = 2;
         panel.add(entryPassword, gbc);
 
-
-
-
         // Tạo nút Đăng nhập
         CustomButton buttonLogin = new CustomButton("Đăng nhập");
         gbc.gridx = 1;

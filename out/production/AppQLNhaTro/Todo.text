@@ -1,4 +1,7 @@
 Lỗi - Các mục chưa làm
+Hiếu TODO: - XỬ lý chức năng Delete trong Admin Dashboard luôn nha, delete user
+Hiếu TODO: - xử lý chức năng tạm ngưng hoạt động chủ trọ ở AdminShowAllChutroView.
+                + buttonSetVisibleFalse
 
 Hiếu TODO: - Chức năng tạo phòng trọ ==> chưa lưu được phòng tro khi tạo
 Hiếu TODO: - Chức năng Xem danh sách phòng ==> chưa hoạt động do Chức năng tạo phòng trọ chưa có
@@ -43,4 +46,15 @@ InvoiceFormView cần
 Hiếu: TODO: Tạo 1 hàm chạy số cho ký hiệu hóa đơn
         TODO: Tạo 1 hàm chạy số cho hóa đơn
 HIếu: TODO: Tạo đối tượng cho Invoice và InvoiceDetail
+Hiếu: TODO: Khi bấm thêm người thuê trọ vào phòng ==> Id người thuê trọ không được cập nhật vào Phòng
+        ==> Check CSDL TTPHongTro ==> Id người thuê không được thêm
+        ==> Truy update TTPhongTro thiếu
+Hiếu: TODO getIdNguoiThueFromCCCD chưa có backend
 
+TODO: Không thêm người thuê phòng vaào phòng được vì cập nhật không được id người thuê
+    ==> không phải lỗi do update người thuê
+    ==> đang kiểm tra khi bấm vào xem chi tiết cảu danh sách phòng trọ có lấy được id phòng kẹp theo không?
+
+
+# RoomController.goToRoomInforView(roomId); // Điều hướng đến RoomInforView với roomId ==> lõi
+    ===> Room.getRoomInForViewbyRoomId(roomId);

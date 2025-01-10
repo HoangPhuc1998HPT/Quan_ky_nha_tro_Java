@@ -138,6 +138,14 @@ FOREIGN KEY (IDPhong) REFERENCES TTPhongtro(IDPhong);
 
 alter table HoaDon add idCTHD INT;
 
+-- Thêm cột ThanhToan vào bảng HoaDon
+ALTER TABLE HoaDon ADD ThanhToan INT;
+
+-- Đặt giá trị mặc định cho cột ThanhToan nếu cần (0 = chưa thanh toán, 1 = đã thanh toán)
+ALTER TABLE HoaDon ADD CONSTRAINT DF_ThanhToan DEFAULT 0 FOR ThanhToan;
+
+-- Đảm bảo chỉ nhận giá trị 1 hoặc 0
+ALTER TABLE HoaDon ADD CONSTRAINT CK_ThanhToan CHECK (ThanhToan IN (0, 1));
 
 -- Bang chi tiet hoa don
 

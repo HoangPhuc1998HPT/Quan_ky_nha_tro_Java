@@ -55,9 +55,6 @@ public class RoomUpdateNguoithueView {
         gbc.fill = GridBagConstraints.NONE;
         panel.add(CCCDtext, gbc);
 
-        // lấy text nhập từ trường CCCDtext
-        String CCCDValue = CCCDtext.getText();
-
         // Nút xác nhận
         JButton confirmButton = new JButton("Xác nhận");
         confirmButton.setFont(new Font("Be Vietnam Pro", Font.PLAIN, 14));
@@ -66,7 +63,12 @@ public class RoomUpdateNguoithueView {
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.NONE;
-        confirmButton.addActionListener(e->GoToUpdateNguoiThue(CCCDValue.trim(),frame,id_room));
+
+        confirmButton.addActionListener(e -> {
+            String CCCDValue = CCCDtext.getText().trim(); // Lấy giá trị CCCD tại thời điểm nhấn nút
+            System.out.println("CCCD nhập vào: " + CCCDValue);
+            GoToUpdateNguoiThue(CCCDValue, frame, id_room);
+        });
         panel.add(confirmButton, gbc);
 
         // Nút quay lại
@@ -88,9 +90,4 @@ public class RoomUpdateNguoithueView {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            new RoomUpdateNguoithueView("CT002");
-        });
-    }
 }

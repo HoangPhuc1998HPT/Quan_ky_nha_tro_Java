@@ -6,6 +6,7 @@ import backend.model.Chutro;
 import backend.model.Room;
 import frontend.view.Invoices.InvoiceBefoeSentToNguoiThueView;
 import frontend.view.Invoices.InvoiceDetailUpdateView;
+import frontend.view.rooms.RoomInforView;
 import frontend.view.rooms.RoomUpdateInforRoomView;
 import frontend.view.rooms.RoomUpdateNguoithueView;
 import frontend.view.rooms.RoomView;
@@ -181,4 +182,8 @@ public class RoomController {
     }
 
 
+    public static void goToRoomInforView(String roomId) {
+        Room room = Room.getRoomInForViewbyRoomId(roomId);
+        new RoomInforView(room);
+    }
 }
