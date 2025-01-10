@@ -40,6 +40,7 @@ public class DashboardChutroController {
 
     public static void go_to_show_list_room(String id_chutro) {
         System.out.println(" đi đến xem danh sách phòng trọ");
+
         new ChutroRoomsTableView(id_chutro);
     }
 

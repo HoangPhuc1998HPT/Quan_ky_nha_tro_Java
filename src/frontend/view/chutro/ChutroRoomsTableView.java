@@ -30,7 +30,7 @@ public class ChutroRoomsTableView {
         frame.add(title, BorderLayout.NORTH);
 
         // Tạo bảng JTable
-        String[] columnNames = {"Tên Phòng", "Người Thuê", "Xem Chi Tiết"};
+        String[] columnNames = {"Tên Phòng", "Người Thuê", "Xem Chi Tiết", "ID Room (Ẩn)"}; // Thêm cột ẩn
         tableModel = new DefaultTableModel(columnNames, 0);
         roomTable = new JTable(tableModel) {
             @Override
@@ -38,6 +38,10 @@ public class ChutroRoomsTableView {
                 return column == 2; // Chỉ cột "Xem Chi Tiết" cho phép tương tác
             }
         };
+        // Ẩn cột ID Room
+        roomTable.getColumnModel().getColumn(3).setMinWidth(0);
+        roomTable.getColumnModel().getColumn(3).setMaxWidth(0);
+        roomTable.getColumnModel().getColumn(3).setWidth(0);
 
         // Tùy chỉnh giao diện bảng
         roomTable.setFont(new Font("Be Vietnam Pro", Font.PLAIN, 14));
@@ -45,12 +49,10 @@ public class ChutroRoomsTableView {
         roomTable.getTableHeader().setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
         roomTable.getTableHeader().setBackground(new Color(200, 200, 255));
 
-        // Lấy danh sách phòng từ Controller
+        // Tải dữ liệu phòng từ backend
         List<String[]> roomList = RoomController.getRoomListByChutro(idChutro);
-
         for (String[] room : roomList) {
-            // Chỉ thêm các cột Tên phòng, Người thuê, và nút Xem Chi Tiết vào bảng
-            tableModel.addRow(new String[]{room[1], room[2], "Xem Chi Tiết"});
+            tableModel.addRow(new String[]{room[1], room[2], "Xem Chi Tiết", room[0]}); // Cột 0 chứa ID Room (ẩn)
         }
 
         // Thêm nút "Xem Chi Tiết"
@@ -111,19 +113,14 @@ public class ChutroRoomsTableView {
 
         private void performAction() {
             int selectedRow = roomTable.getSelectedRow();
-            String roomName = tableModel.getValueAt(selectedRow, 0).toString();
-            System.out.println("Đi đến RoomView cho phòng: " + roomName);
-
-            // Lấy RoomID từ dữ liệu backend
-            String roomId = RoomController.getRoomIdByName(roomName, idChutro);
+            String roomId = tableModel.getValueAt(selectedRow, 3).toString(); // Lấy ID Room từ cột ẩn
+            System.out.println("Room ID: " + roomId); // Log để kiểm tra Room ID
 
             // Gọi RoomView qua Controller
             RoomController.openRoomView(roomId, idChutro);
         }
+
     }
 
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new ChutroRoomsTableView("09"));
-    }
 }
+
