@@ -157,7 +157,19 @@ public class ChutroCreateRoomsView {
         gbc.gridx = 1;
         gbc.gridy = 8;
         gbc.anchor = GridBagConstraints.CENTER; // Căn giữa ô nhập liệu
-        save_room.addActionListener(e->save_room_into_database(id_chutro));
+        save_room.addActionListener(e->{
+            String name = ten_phong.getText().trim();
+            String address = dia_chi.getText();
+            String roomPrice = gia_phong.getText();
+            double roomPriceDouble = Double.parseDouble(roomPrice);
+            String electricityPrice = gia_dien.getText();
+            double electricityPriceDouble = Double.parseDouble(electricityPrice);
+            String waterPrice = gia_nuoc.getText();
+            double waterPriceDouble = Double.parseDouble(waterPrice);
+            String garbagePrice = gia_rac.getText();
+            double garbagePriceDouble = Double.parseDouble(garbagePrice);
+
+            save_room_into_database(name, address, roomPriceDouble, electricityPriceDouble, waterPriceDouble, garbagePriceDouble, frame);});
         panel.add(save_room,gbc);
 
         // Nút quay lại

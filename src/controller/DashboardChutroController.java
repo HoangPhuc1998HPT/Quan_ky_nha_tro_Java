@@ -2,6 +2,7 @@ package controller;
 
 import backend.connectDatabase;
 import backend.model.Chutro;
+import backend.model.Room;
 import frontend.view.Invoices.InvoiceListsView;
 import frontend.view.chutro.ChutroCreateRoomsView;
 import frontend.view.chutro.ChutroDashboardView;
@@ -59,13 +60,19 @@ public class DashboardChutroController {
 //        frame.setVisible(false);
 //    }
 
-    public static void save_room_into_database(String id_chutro) {
+    public static void save_room_into_database(String name, String address, double roomPrice, double electricityPrice, double waterPrice, double garbagePrice, JFrame frame) {
 
         // Kiểm tra các thông tin đầy đủ ko thiếu dữ kiện
         // dẫn đến hàm lưu vào cơ sở dữ liệu, tại đó id_rooms được tạo và lưu thông tin vào các CSDL liên quan
         // cơ sở dữ liệu phòng trọ
         // id_rooms, id_chutro, các thông tin liên quan, vị trí id_nguoithuetro để trống
-        System.out.println("Đã lưu thông tin phòng trọ");
+        boolean newRoom = Room.addRoom(name, address, roomPrice, electricityPrice, waterPrice, garbagePrice);
+        if (newRoom) {
+            JOptionPane.showMessageDialog(frame, "Đã lưu thông tin phòng trọ!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            System.out.println("Đã lưu thông tin phòng trọ");
+        } else {
+            JOptionPane.showMessageDialog(frame, "Thêm phòng thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public static void   go_back_dashboardchutro(JFrame frame, String idChutro) {

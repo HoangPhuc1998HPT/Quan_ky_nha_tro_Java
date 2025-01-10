@@ -16,16 +16,23 @@ public class Room {
     private double roomPrice;
     private double electricityPrice;
     private double waterPrice;
+    private double garbagePrice;
+    private int currentElectricity;
+    private int currentWater;
+
 
 
     // Constructor
-    public Room(String idRoom, String name, String tenantName, double roomPrice, double electricityPrice, double waterPrice, double tienrac) {
+    public Room(String idRoom, String name, String tenantName, double roomPrice, double electricityPrice, double waterPrice, double garbagePrice) {
         this.idRoom = idRoom;
         this.name = name;
-        this.tenantName = tenantName;
+        this.tenantName = null;
         this.roomPrice = roomPrice;
         this.electricityPrice = electricityPrice;
         this.waterPrice = waterPrice;
+        this.garbagePrice = garbagePrice;
+        this.currentElectricity = 0;
+        this.currentWater = 0;
     }
     public static List<Object[]> getRoomInfoByTenantId(String userId) {
         List<Object[]> roomInfoList = new ArrayList<>();
@@ -88,6 +95,18 @@ public class Room {
         return waterPrice;
     }
 
+    public double getGarbagePrice() {
+        return garbagePrice;
+    }
+
+    public int getCurrentElectricity() {
+        return currentElectricity;
+    }
+
+    public int getCurrentWater() {
+        return currentWater;
+    }
+
 
 
     // Static method to fetch room details from database
@@ -132,6 +151,23 @@ public class Room {
             e.printStackTrace();
         }
         return null; // Trả về null nếu không có dữ liệu
+    }
+
+    public static boolean addRoom(String name, String address, double roomPrice, double electricityPrice, double waterPrice, double garbagePrice) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "INSERT INTO TTPhongtro (TenPhong, Address ,GiaPhong , Giadien, Gianuoc, Tienrac) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, name);
+            pstmt.setString(2, address);
+            pstmt.setDouble(3, roomPrice);
+            pstmt.setDouble(4, electricityPrice);
+            pstmt.setDouble(5, waterPrice);
+            pstmt.setDouble(6, garbagePrice);
+            return pstmt.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static boolean deleteRoom(String idRoom) {

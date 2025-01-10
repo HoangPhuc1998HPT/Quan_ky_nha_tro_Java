@@ -44,7 +44,7 @@ public class ChutroDashboardView {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
 
-        JLabel DashboarLabel = new JLabel("Chào đến với Dasboard Chủ trọ"); // Thêm tên chủ vào vị trí ai đó
+        JLabel DashboarLabel = new JLabel("Chào đến với Dasboard Chủ trọ: " + entryUsername); // Thêm tên chủ vào vị trí ai đó
         DashboarLabel.setFont(new Font("Be Vietnam Pro", Font.PLAIN,16));
         gbc.gridx = 0;
         gbc.gridy = 0;
