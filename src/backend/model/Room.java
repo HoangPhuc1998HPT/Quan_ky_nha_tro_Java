@@ -226,9 +226,35 @@ public class Room {
     }
 
     public static void updateNguoiThueTroInRoom(String idRoom, String CCCD) {
-        //TODO: Hiếu tạo truy vấn cho update thông tin người thuê vào phòng trọ lên database
-       String id_nguoithue = getIdNguoiThueFromCCCD(CCCD);
+        String idNguoiThue = getIdNguoiThueFromCCCD(CCCD);
+
+        if (idNguoiThue == null || idNguoiThue.isEmpty()) {
+            System.out.println("Không tìm thấy người thuê với CCCD: " + CCCD);
+            return; // Dừng nếu không tìm thấy người thuê
+        }
+
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+            UPDATE TTPhongtro
+            SET IDNguoiThue = ?
+            WHERE IDPhong = ?
+        """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, idNguoiThue);
+            pstmt.setString(2, idRoom);
+
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Cập nhật thành công. Đã thêm người thuê vào phòng: " + idRoom);
+            } else {
+                System.out.println("Không tìm thấy phòng với ID: " + idRoom);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+
 
 
     public static String getTenantRoomId(String tenantId) {

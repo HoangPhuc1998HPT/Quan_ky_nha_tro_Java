@@ -81,9 +81,52 @@ public class NguoiThueTro {
         }
         return null;
     }
-    public static String getIdNguoiThueFromCCCD(String CCCD){
-        // CCCD
-        String id_nguoithue = String.valueOf('1');
-        return id_nguoithue;
+
+    public static String getIdNguoiThueFromCCCD(String CCCD) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+            SELECT IDNguoiThue
+            FROM NguoiThueTro
+            WHERE CCCD = ?
+        """;
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, CCCD);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                String idNguoiThue = rs.getString("IDNguoiThue");
+                System.out.println("Tìm thấy IDNguoiThue: " + idNguoiThue);
+                return idNguoiThue;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Không tìm thấy IDNguoiThue với CCCD: " + CCCD);
+        return null; // Trả về null nếu không tìm thấy
     }
+
+
+
+    public static String getTenantRoomId(String tenantId) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            // Truy vấn kiểm tra id_nguoiThueTro có trong TTPhongtro hay không
+            String sql = """
+            SELECT IDPhong
+            FROM TTPhongtro
+            WHERE IDNguoiThue = ?
+        """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, tenantId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("IDPhong"); // Trả về ID phòng nếu tìm thấy
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null; // Trả về null nếu không có dữ liệu
+    }
+
 }
