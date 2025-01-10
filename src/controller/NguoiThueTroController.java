@@ -1,8 +1,11 @@
 package controller;
 
+import backend.model.Chutro;
 import backend.model.NguoiThueTro;
 import backend.model.Room;
 import backend.model.Invoices;
+import frontend.view.Invoices.InvoiceFormView;
+
 import javax.swing.*;
 import java.sql.SQLException;
 import java.util.List;
@@ -15,6 +18,41 @@ public class NguoiThueTroController {
         this.userId = userId;
         this.frame = frame;
     }
+
+    public static void goToOpenInvoiceView(String idNguoiThue, String idPhong, String idChutro, String invoiceId) {
+        try {
+            // Lấy thông tin người thuê trọ
+            NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId(idNguoiThue);
+            if (tenant == null) {
+                throw new IllegalArgumentException("Không tìm thấy thông tin người thuê trọ.");
+            }
+
+            // Lấy thông tin chủ trọ
+            Chutro landlord = Chutro.getChutroByUserId(idChutro);
+            if (landlord == null) {
+                throw new IllegalArgumentException("Không tìm thấy thông tin chủ trọ.");
+            }
+
+            // Lấy thông tin phòng
+            Room room = Room.getRoomDetails(idPhong);
+            if (room == null) {
+                throw new IllegalArgumentException("Không tìm thấy thông tin phòng.");
+            }
+
+            // Lấy thông tin hóa đơn
+            Invoices invoice = Invoices.getInvoiceDetails(invoiceId);
+            if (invoice == null) {
+                throw new IllegalArgumentException("Không tìm thấy thông tin hóa đơn.");
+            }
+
+            // Mở form hóa đơn
+            new InvoiceFormView(landlord, tenant, invoice, room);
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Lỗi: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
 
     public void showDashboard() throws SQLException {
         NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId(userId);

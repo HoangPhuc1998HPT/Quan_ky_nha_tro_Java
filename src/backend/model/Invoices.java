@@ -162,4 +162,40 @@ public class Invoices {
     public static double getUnpaidValue(String idChutro) {
         return 0;
     }
+
+    public static List<Object[]> getInvoicesByTenantId(String userId) {
+        List<Object[]> invoices = new ArrayList<>();
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+            SELECT hd.NgayXuatHoaDon, 
+                   hd.TongChiPhi, 
+                   CASE WHEN hd.TongChiPhi > 0 THEN 0 ELSE 1 END AS DaThanhToan, 
+                   hd.BillID
+            FROM HoaDon hd
+            JOIN TTPhongtro pt ON hd.IDPhong = pt.IDPhong
+            WHERE pt.IDNguoiThue = ?
+        """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                invoices.add(new Object[]{
+                        rs.getDate("NgayXuatHoaDon"), // Ngày Xuất Hóa Đơn
+                        rs.getDouble("TongChiPhi"),  // Tổng Giá Trị
+                        rs.getBoolean("DaThanhToan"), // Trạng Thái
+                        rs.getString("BillID")       // ID Hóa Đơn
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return invoices;
+    }
+
+
+    public static Invoices getInvoiceDetails(String invoiceId) {
+        //TODO: Get thông tin invoicID nhà HIếu
+        Invoices invoices = new Invoices();
+        return invoices;
+    }
 }

@@ -21,6 +21,21 @@ public class NguoiThueTro {
         this.cccd = cccd;
     }
 
+    public static String getIdNguoiThueFromUserID(String userId) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "SELECT IDNguoiThue FROM NguoiThueTro WHERE UserID = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("IDNguoiThue");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     // Getters
     public String getIdNguoiThue() {
         return idNguoiThue;

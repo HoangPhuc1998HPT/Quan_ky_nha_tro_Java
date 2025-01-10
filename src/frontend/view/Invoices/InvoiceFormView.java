@@ -1,5 +1,10 @@
 package frontend.view.Invoices;
 
+import backend.model.Chutro;
+import backend.model.Invoices;
+import backend.model.NguoiThueTro;
+import backend.model.Room;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
@@ -8,7 +13,7 @@ import java.awt.*;
 // Form này được tạo để hiển thị hóa đơn xem
 
 public class InvoiceFormView {
-    public InvoiceFormView() {
+    public InvoiceFormView(Chutro chutro, NguoiThueTro nguoithuetro, Invoices invoice, Room room) {
         // Tạo JFrame
         JFrame frame = new JFrame("HÓA ĐƠN GIÁ TRỊ GIA TĂNG");
         frame.setSize(850, 1000);
@@ -18,6 +23,7 @@ public class InvoiceFormView {
         // Panel chính
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        frame.add(mainPanel, BorderLayout.CENTER);
 
         // Tạo viền ngoài
         Border lineBorder = BorderFactory.createLineBorder(Color.BLACK, 1);
@@ -198,9 +204,41 @@ public class InvoiceFormView {
 
         // Thêm panel chính vào frame
         frame.add(mainPanel, BorderLayout.CENTER);
+        // Thông tin người bán
+        mainPanel.add(createSellerInfoPanel(chutro));
+
+        // Thông tin người mua
+        mainPanel.add(createBuyerInfoPanel(nguoithuetro));
+
+        // Thông tin hóa đơn
+        mainPanel.add(createInvoiceDetailsPanel(invoice, room));
 
         // Hiển thị JFrame
         frame.setVisible(true);
+    }
+    private JPanel createSellerInfoPanel(Chutro chutro) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(new JLabel("Tên người bán: " + chutro.getFullName()));
+        panel.add(new JLabel("Địa chỉ: " + chutro.getAddress()));
+        panel.add(new JLabel("Điện thoại: " + chutro.getPhone()));
+        return panel;
+    }
+    private JPanel createBuyerInfoPanel(NguoiThueTro tenant) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(new JLabel("Tên người mua: " + tenant.getFullName()));
+        panel.add(new JLabel("CCCD: " + tenant.getCCCD()));
+        panel.add(new JLabel("Điện thoại: " + tenant.getPhone()));
+        return panel;
+    }
+    private JPanel createInvoiceDetailsPanel(Invoices invoice, Room room) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(new JLabel("Phòng: " + room.getName()));
+        panel.add(new JLabel("Ngày xuất hóa đơn: " + invoice.getNgayXuatHoaDon()));
+        panel.add(new JLabel("Tổng giá trị: " + invoice.getTongChiPhi() + " VNĐ"));
+        return panel;
     }
 
     public static void main(String[] args) {

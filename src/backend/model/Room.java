@@ -27,6 +27,41 @@ public class Room {
         this.electricityPrice = electricityPrice;
         this.waterPrice = waterPrice;
     }
+    public static List<Object[]> getRoomInfoByTenantId(String userId) {
+        List<Object[]> roomInfoList = new ArrayList<>();
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+            SELECT TTPhongtro.TenPhong, 
+                   Chutro.HoTen AS TenChuTro, 
+                   Chutro.Phone AS SoDienThoai, 
+                   TTPhongtro.Address AS DiaChi, 
+                   TTPhongtro.NgayBatDauThue,
+                   TTPhongtro.IDPhong,
+                   Chutro.IDChutro
+            FROM TTPhongtro
+            JOIN Chutro ON TTPhongtro.IDChutro = Chutro.IDChutro
+            WHERE TTPhongtro.IDNguoiThue = ?
+        """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                roomInfoList.add(new Object[]{
+                        rs.getString("TenPhong"),         // Tên Phòng
+                        rs.getString("TenChuTro"),       // Tên Chủ Trọ
+                        rs.getString("SoDienThoai"),     // Số Điện Thoại
+                        rs.getString("DiaChi"),          // Địa Chỉ
+                        rs.getDate("NgayBatDauThue"),    // Ngày Bắt Đầu Thuê
+                        rs.getString("IDPhong"),         // ID Phòng
+                        rs.getString("IDChutro")         // ID Chủ Trọ
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return roomInfoList;
+    }
+
 
     // Getters
     public String getIdRoom() {
