@@ -366,3 +366,5 @@ DashboardChutroController.go_to_show_information_churtro(id_chutro) ->
         +
         + 
         +
+Phúc : Lỗi truy xuất dữ liểu ra
+-> Room.getEmptyRoomsForTenant(userId); -> đã xử lý

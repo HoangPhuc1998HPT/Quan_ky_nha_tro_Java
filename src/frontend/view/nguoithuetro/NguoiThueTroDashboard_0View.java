@@ -3,6 +3,9 @@ package frontend.view.nguoithuetro;
 
 import backend.model.NguoiThueTro;
 import backend.model.Room;
+import controller.RoomController;
+import frontend.components.ButtonEditorNguoiThueTro_0;
+import frontend.components.ButtonRendererNguoiThueTro_0;
 import frontend.view.login_register.loginView;
 import frontend.view.rooms.RoomInforView;
 
@@ -56,43 +59,41 @@ public class NguoiThueTroDashboard_0View extends JFrame {
         mainPanel.add(scrollPane);
 
         // Load dữ liệu phòng
-        DefaultTableModel tableModel = new DefaultTableModel(new String[]{"Tên Phòng", "Người liên hệ", "Số điện thoại", "Địa chỉ", "Xem thông tin"}, 0);
+        DefaultTableModel tableModel = new DefaultTableModel(new String[]{"Room ID (Ẩn)", "Tên Phòng", "Người liên hệ", "Số điện thoại", "Địa chỉ", "Xem thông tin"}, 0);
         List<Object[]> rooms = Room.getEmptyRoomsForTenant(userId);
         for (Object[] room : rooms) {
-            Object[] row = new Object[5];
-            //room[0] = roomId
-            row[0] = room[1]; // Tên Phòng
-            row[1] = room[3]; // Người liên hệ
-            row[2] = room[4]; // Số điện thoại
-            row[3] = room[2]; // Địa chỉ
-
-            JButton infoButton = new JButton("Xem");
-            infoButton.addActionListener(e -> {
-                String roomId = (String) room[0];
-                new RoomInforView(roomId);
+            tableModel.addRow(new Object[]{
+                    room[0],  // Room ID
+                    room[1],  // Tên Phòng
+                    room[4],  // Người liên hệ
+                    room[5],  // Số điện thoại
+                    room[3],  // Địa chỉ
+                    "Xem"     // Nút xem thông tin
             });
-            row[4] = infoButton;
-
-            tableModel.addRow(row);
         }
         roomTable.setModel(tableModel);
+
+        // Ẩn cột Room ID
+        roomTable.getColumnModel().getColumn(0).setMinWidth(0);
+        roomTable.getColumnModel().getColumn(0).setMaxWidth(0);
+        roomTable.getColumnModel().getColumn(0).setWidth(0);
+
+
+        // Áp dụng Renderer và Editor cho nút "Xem thông tin"
+        roomTable.getColumn("Xem thông tin").setCellRenderer(new ButtonRendererNguoiThueTro_0());
+        roomTable.getColumn("Xem thông tin").setCellEditor(new ButtonEditorNguoiThueTro_0(new JCheckBox(), userId));
 
         // Nút Đăng xuất
         JButton logoutBtn = new JButton("Đăng xuất");
         logoutBtn.setBounds(680, 400, 100, 30);
-        logoutBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-                new loginView();
-            }
-        });
+        logoutBtn.addActionListener(e -> dispose());
         mainPanel.add(logoutBtn);
 
         setVisible(true);
     }
-
     public static void main(String[] args) {
-        new NguoiThueTroDashboard_0View("user1");
+        new NguoiThueTroDashboard_0View("18");
     }
 }
+
+
