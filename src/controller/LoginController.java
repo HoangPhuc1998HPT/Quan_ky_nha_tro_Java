@@ -7,11 +7,12 @@ import backend.connectDatabase;
 import backend.model.Admin;
 import backend.model.Chutro;
 import backend.model.NguoiThueTro;
-import frontend.view.*;
 import frontend.view.admin.AdminDashboardView;
 import frontend.view.chutro.ChutroDashboardView;
 import frontend.view.login_register.RegisterView;
 import frontend.view.login_register.loginView;
+import frontend.view.nguoithuetro.NguoiThueTroDashboard_0View;
+import frontend.view.nguoithuetro.NguoiThueTroDashboard_0View;
 
 import javax.swing.*;
 
@@ -90,7 +91,7 @@ import java.sql.ResultSet;
                     case "nguoithuetro":
                         NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId(userId);
                         if (tenant != null) {
-                            new NguoiThueTroDashboardView(userId);
+                            new NguoiThueTroDashboard_0View(userId);
                             frame.setVisible(false);
                             System.out.println(" nhờ mở new Dashboard NGười thuê trọ");
                             //TODO: Tạo dashboard Người thuê trọ rồi kích hoạt lại ==> giờ tắt xóa lỗi

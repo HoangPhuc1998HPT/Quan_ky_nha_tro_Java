@@ -144,5 +144,33 @@ public class Room {
         }
         return emptyRooms;
     }
+    public static List<Object[]> getEmptyRoomsForTenant(String tenantId) {
+        List<Object[]> emptyRooms = new ArrayList<>();
+        //"Tên Phòng", "Người liên hệ", "Số điện thoại", "Địa chỉ", "Giá Phòng"
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+                SELECT TTPhongtro.IDPhong, TTPhongtro.TenPhong, TTPhongtro.GiaPhong, TTPhongtro.Address, Chutro.HoTen, Chutro.Phone
+                FROM TTPhongtro
+                JOIN Chutro ON TTPhongtro.IDChutro = Chutro.IDChutro
+                WHERE TTPhongtro.IDNguoiThue IS NULL
+                """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                emptyRooms.add(new Object[]{
+                        rs.getString("IDPhong"),    // ID Phòng
+                        rs.getString("TenPhong"),  // Tên Phòng
+                        rs.getDouble("GiaPhong"),  // Giá Phòng
+                        rs.getString("Address"),   // Địa chỉ
+                        rs.getString("HoTen"),     // Người liên hệ
+                        rs.getString("Phone")      // Số điện thoại
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return emptyRooms;
+    }
+
 
 }

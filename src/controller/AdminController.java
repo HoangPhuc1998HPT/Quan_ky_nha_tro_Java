@@ -74,7 +74,8 @@ public class  AdminController {
         new ChutroDashboardView(username); // Mở Dashboard
     }
 
-    public static void goBackToAdminDashboard(AdminShowAllChutroView adminShowAllChutroView) {
+    public static void goBackToAdminDashboard(JFrame frame) {
+        frame.setVisible(false);
     }
 
     public static void disableChutro(String cccd) {
