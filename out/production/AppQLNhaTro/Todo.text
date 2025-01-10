@@ -38,3 +38,9 @@ Hiếu TODO: Đưa phương thức checkLogin vào Login.class ==> Thêm check u
 Hiếu TODO: TODO: Invoice list view đã tạo, Hiếu kiểm tra lại logic xem truy xuất dữ liệu cho Invoices.InvoiceListsView  nha
 
 Hiếu TODO: Thực hiện thao tác delete User trong table User: Admincontroller.deleteUser
+------
+InvoiceFormView cần
+Hiếu: TODO: Tạo 1 hàm chạy số cho ký hiệu hóa đơn
+        TODO: Tạo 1 hàm chạy số cho hóa đơn
+HIếu: TODO: Tạo đối tượng cho Invoice và InvoiceDetail
+
