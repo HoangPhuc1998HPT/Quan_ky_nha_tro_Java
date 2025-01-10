@@ -1,9 +1,6 @@
 package frontend.view.Invoices;
 
-import backend.model.Chutro;
-import backend.model.Invoices;
-import backend.model.NguoiThueTro;
-import backend.model.Room;
+import backend.model.*;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -14,6 +11,12 @@ import java.awt.*;
 
 public class InvoiceFormView {
     public InvoiceFormView(Chutro chutro, NguoiThueTro nguoithuetro, Invoices invoice, Room room) {
+        // Detail thông tin đua vào
+        // Chutro chutro (IDchutro, userID,HOten, Phone, CCCD)
+        // nguoithuetro (idnguoithue, userID,hoten, phone, CCCD)
+        // invoice (ngày xuất hóa đơn) //TODO: CHờ hiếu
+        // room("IDPhong",TenPhong,TenNguoiThue,GiaPhong,Giadien,Gianuoc,Tienrac) // tiền rác lấy từ hóa đơn
+        //InvoiceDetail invoiceDetail = getInforInvoiceDetail(invoice.get(0));
         // Tạo JFrame
         JFrame frame = new JFrame("HÓA ĐƠN GIÁ TRỊ GIA TĂNG");
         frame.setSize(850, 1000);
@@ -45,14 +48,18 @@ public class InvoiceFormView {
         infoPanelTop.setBorder(BorderFactory.createEmptyBorder(0, 0, 0 , 10));
 
         infoPanelTop.add(new JLabel(""));
+        // TODO: Tạo 1 hàm chạy số ký hiệu hóa đơn
         infoPanelTop.add(new JLabel("Ký hiệu: 1C21TAA", SwingConstants.RIGHT));
         infoPanelTop.add(new JLabel(""));
+        // TODO: Tạo 1 hàm chạy số cho hóa đơn
         infoPanelTop.add(new JLabel("Số: 123", SwingConstants.RIGHT));
 
         mainPanel.add(infoPanelTop);
 
         JPanel rowDate = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-        rowDate.add(new JLabel("Ngày: 02/01/2021"));
+        //TODO: Trích xuất dữ liệu từ CTHoadon.ngaythutiendukien
+        //dateinvoice = invoiceDetail.get(x);
+        rowDate.add(new JLabel("Ngày: 02/01/2021")); // + dateinvoice
         mainPanel.add(rowDate);
 
         // Thông tin người bán
@@ -62,29 +69,29 @@ public class InvoiceFormView {
 
         // Hàng 1
         JPanel row1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
-        row1.add(new JLabel("Tên người bán:"));
-        row1.add(new JLabel("CÔNG TY TNHH A"));
+        row1.add(new JLabel("Tên người bán:" + chutro.getFullName()));
+        //row1.add(new JLabel("CÔNG TY TNHH A"));
         infoPanelSeller.add(row1);
 
         // Hàng 2
         JPanel row2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
         row2.add(new JLabel("Mã số thuế:"));
-        row2.add(new JLabel("123456789"));
+        row2.add(new JLabel("0304553197")); // mã số thuê UIT
         infoPanelSeller.add(row2);
 
         // Hàng 3
         JPanel row3 = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
         row3.add(new JLabel("Địa chỉ:"));
-        row3.add(new JLabel("45 phố X, quận Y, thành phố Hà Nội"));
+        row3.add(new JLabel(" Khu Phố 6, Phường Linh Trung, Thành phố Thủ Đức, TP Hồ Chí Minh"));
         infoPanelSeller.add(row3);
 
         // Hàng 4 - Điện thoại & Số tài khoản chung
         JPanel row4 = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
-        row4.add(new JLabel("Điện thoại:"));
-        row4.add(new JLabel("0123456789"));
+        row4.add(new JLabel("Điện thoại:" + chutro.getPhone()));
+        //row4.add(new JLabel("0123456789"));
         row4.add(Box.createHorizontalStrut(100)); // thêm khoảng trống
         row4.add(new JLabel("Số tài khoản:"));
-        row4.add(new JLabel("987654321"));
+        row4.add(new JLabel("314.100.01210304 - Vietcombank"));
         infoPanelSeller.add(row4);
         mainPanel.add(infoPanelSeller);
 
@@ -96,8 +103,8 @@ public class InvoiceFormView {
 
         // Hàng 1
         JPanel row_1 = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
-        row_1.add(new JLabel("Họ tên người mua:"));
-        row_1.add(new JLabel("Nguyễn"));
+        row_1.add(new JLabel("Họ tên người mua:" + nguoithuetro.getFullName()));
+       // row_1.add(new JLabel("Nguyễn"));
         infoPanelBuy.add(row_1);
 
         // Hàng 2
@@ -203,15 +210,15 @@ public class InvoiceFormView {
         mainPanel.add(invoiceNote);
 
         // Thêm panel chính vào frame
-        frame.add(mainPanel, BorderLayout.CENTER);
+        //frame.add(mainPanel, BorderLayout.CENTER);
         // Thông tin người bán
-        mainPanel.add(createSellerInfoPanel(chutro));
+        //mainPanel.add(createSellerInfoPanel(chutro));
 
         // Thông tin người mua
-        mainPanel.add(createBuyerInfoPanel(nguoithuetro));
+       // mainPanel.add(createBuyerInfoPanel(nguoithuetro));
 
         // Thông tin hóa đơn
-        mainPanel.add(createInvoiceDetailsPanel(invoice, room));
+        //mainPanel.add(createInvoiceDetailsPanel(invoice, room));
 
         // Hiển thị JFrame
         frame.setVisible(true);
@@ -220,7 +227,7 @@ public class InvoiceFormView {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel("Tên người bán: " + chutro.getFullName()));
-        panel.add(new JLabel("Địa chỉ: " + chutro.getAddress()));
+        //panel.add(new JLabel("Địa chỉ: " + chutro.getAddress()));
         panel.add(new JLabel("Điện thoại: " + chutro.getPhone()));
         return panel;
     }
@@ -236,12 +243,19 @@ public class InvoiceFormView {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel("Phòng: " + room.getName()));
-        panel.add(new JLabel("Ngày xuất hóa đơn: " + invoice.getNgayXuatHoaDon()));
-        panel.add(new JLabel("Tổng giá trị: " + invoice.getTongChiPhi() + " VNĐ"));
+        //panel.add(new JLabel("Ngày xuất hóa đơn: " + invoice.getNgayXuatHoaDon()));
+       // panel.add(new JLabel("Tổng giá trị: " + invoice.getTongChiPhi() + " VNĐ"));
         return panel;
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(InvoiceFormView::new);
+        NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId("01");
+        Chutro landlord = Chutro.getChutroByUserId("12");
+        Room room = Room.getRoomDetails("01");
+        Invoices invoice = Invoices.getInvoiceDetails("01");
+
+
+        new InvoiceFormView(landlord,tenant,invoice,room);
+
     }
 }

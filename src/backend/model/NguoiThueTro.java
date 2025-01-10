@@ -36,6 +36,7 @@ public class NguoiThueTro {
         return null;
     }
 
+
     // Getters
     public String getIdNguoiThue() {
         return idNguoiThue;

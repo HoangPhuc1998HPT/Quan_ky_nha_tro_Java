@@ -28,8 +28,8 @@ public class NguoiThueTroController {
             }
 
             // Lấy thông tin chủ trọ
-            Chutro landlord = Chutro.getChutroByUserId(idChutro);
-            if (landlord == null) {
+            Chutro chutro = Chutro.getChutroByUserId(idChutro);
+            if (chutro == null) {
                 throw new IllegalArgumentException("Không tìm thấy thông tin chủ trọ.");
             }
 
@@ -46,7 +46,7 @@ public class NguoiThueTroController {
             }
 
             // Mở form hóa đơn
-            new InvoiceFormView(landlord, tenant, invoice, room);
+            new InvoiceFormView(chutro, tenant, invoice, room);
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Lỗi: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);

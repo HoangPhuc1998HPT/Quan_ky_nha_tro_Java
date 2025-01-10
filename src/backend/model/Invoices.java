@@ -195,6 +195,8 @@ public class Invoices {
 
     public static Invoices getInvoiceDetails(String invoiceId) {
         //TODO: Get thông tin invoicID nhà HIếu
+        // Truy xuất tất cả thông tin cần để hiển thị lên HÓa đơn: InvoiceFormView.java
+
         Invoices invoices = new Invoices();
         return invoices;
     }

@@ -11,6 +11,8 @@ public class InvoiceDetail {
     private double electricPrice;
     private double waterPrice;
     //private double garbagePrice;
+    //TODO: Tạo lại đối tượng cho InvoiceDetail nha
+
 
     public InvoiceDetail(double rentPrice, double electricPrice, double waterPrice, double garbagePrice) {
         this.rentPrice = rentPrice;
