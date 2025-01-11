@@ -4,6 +4,8 @@ import backend.connectDatabase;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NguoiThueTro {
     private int idNguoiThue;
@@ -35,6 +37,28 @@ public class NguoiThueTro {
         }
         return 0;
     }
+
+    public static List<Object[]> getAllNguoiThueData() {
+        List<Object[]> data = new ArrayList<>();
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            // Sử dụng tên cột chính xác từ cơ sở dữ liệu
+            String sql = "SELECT IDNguoiThue, Hoten, Phone, CCCD FROM NguoiThueTro";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                data.add(new Object[]{
+                        rs.getInt("IDNguoiThue"),
+                        rs.getString("Hoten"), // Thay đổi từ FullName thành Hoten
+                        rs.getString("Phone"),
+                        rs.getString("CCCD")
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
 
 
     // Getters

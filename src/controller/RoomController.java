@@ -183,7 +183,7 @@ public class RoomController {
 
 
     public static void goToRoomInforView(int roomId) {
-//        Room room = Room.getRoomInForViewbyRoomId(roomId);
-//        new RoomInforView(room);
+     //   Room room = Room.getRoomInForViewbyRoomId(roomId);
+     //   new RoomInforView(room);
     }
 }

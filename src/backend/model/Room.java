@@ -69,6 +69,44 @@ public class Room {
         return roomInfoList;
     }
 
+    public static List<Object[]> getAllRoomData() {
+        List<Object[]> data = new ArrayList<>();
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "SELECT r.IDPhong, r.TenPhong, r.Address, r.GiaPhong, ct.HoTen AS TenChuTro, nt.HoTen AS TenNguoiThue " +
+                    "FROM TTPhongtro r " +
+                    "LEFT JOIN Chutro ct ON r.IDChutro = ct.IDChutro " +
+                    "LEFT JOIN NguoiThueTro nt ON r.IDNguoiThue = nt.IDNguoiThue";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                data.add(new Object[]{
+                        rs.getString("IDPhong"),
+                        rs.getString("TenPhong"),
+                        rs.getString("Address"),
+                        rs.getDouble("GiaPhong"),
+                        rs.getString("TenChuTro"),
+                        rs.getString("TenNguoiThue")
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
+
+    public static void disableRoom(String roomId) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "UPDATE TTPhongtro SET IsActive = 0 WHERE IDPhong = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, roomId);
+            pstmt.executeUpdate();
+            System.out.println("Đã tạm ngưng hoạt động phòng: " + roomId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     // Getters
     public int getIdRoom() {

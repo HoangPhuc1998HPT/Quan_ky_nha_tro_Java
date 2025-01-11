@@ -74,11 +74,23 @@ public class  AdminController {
         new ChutroDashboardView(username); // Mở Dashboard
     }
 
-    public static void goBackToAdminDashboard(JFrame frame) {
-        frame.setVisible(false);
-    }
+
 
     public static void disableChutro(String cccd) {
         System.out.println("đã tạm ngưng" + cccd);
     }
+
+
+    public static void disableNguoiThueTro(String cccd) {
+        // Logic vô hiệu hóa người thuê trọ dựa trên CCCD
+        JOptionPane.showMessageDialog(null, "Đã tạm ngưng hoạt động người thuê với CCCD: " + cccd);
+    }
+
+    public static void goBackToAdminDashboard(JFrame currentFrame) {
+        currentFrame.dispose();
+        // Logic để quay lại Dashboard
+        JOptionPane.showMessageDialog(null, "Quay lại Admin Dashboard");
+    }
+
+
 }
