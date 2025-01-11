@@ -8,7 +8,7 @@ import java.awt.*;
 public class DeleteRoomView {
     private JFrame frame;
 
-    public DeleteRoomView(String idRoom, JFrame parentFrame) {
+    public DeleteRoomView(int idRoom, JFrame parentFrame) {
         frame = new JFrame("Xóa phòng");
         frame.setSize(300, 150);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

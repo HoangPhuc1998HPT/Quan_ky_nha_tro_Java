@@ -8,7 +8,7 @@ import java.awt.*;
 public class UpdatePhoneView {
     private JFrame frame;
 
-    public UpdatePhoneView(String idChutro, String currentPhone) {
+    public UpdatePhoneView(int idChutro, String currentPhone) {
         frame = new JFrame("Cập Nhật Số Điện Thoại");
         frame.setSize(400, 200);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

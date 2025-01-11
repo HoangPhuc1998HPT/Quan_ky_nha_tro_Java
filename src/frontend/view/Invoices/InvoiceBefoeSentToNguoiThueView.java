@@ -11,7 +11,7 @@ import java.sql.SQLException;
 public class InvoiceBefoeSentToNguoiThueView {
     private JFrame frame;
 
-    public InvoiceBefoeSentToNguoiThueView(String idPhong) {
+    public InvoiceBefoeSentToNguoiThueView(int idPhong) {
         // Tạo JFrame
         frame = new JFrame("HÓA ĐƠN TRƯỚC KHI GỬI NGƯỜI THUÊ");
         frame.setSize(900, 700);
@@ -109,7 +109,7 @@ public class InvoiceBefoeSentToNguoiThueView {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new InvoiceBefoeSentToNguoiThueView("01"));
-    }
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(() -> new InvoiceBefoeSentToNguoiThueView("01"));
+//    }
 }

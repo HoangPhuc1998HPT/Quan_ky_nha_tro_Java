@@ -11,16 +11,16 @@ import java.util.List;
 
 public class InvoicesController {
     private InvoiceCreateNewInvoice view;
-    private String id_chutro;
-    private String id_phong;
+    private int id_chutro;
+    private int id_phong;
 
-    public InvoicesController(InvoiceCreateNewInvoice view, String id_chutro, String id_phong) {
+    public InvoicesController(InvoiceCreateNewInvoice view, int id_chutro, int id_phong) {
         this.view = view;
         this.id_chutro = id_chutro;
         this.id_phong = id_phong;
     }
 
-    public static List<Object[]> getInvoiceList(String idChutro) {
+    public static List<Object[]> getInvoiceList(int idChutro) {
         return Invoices.getInvoiceList(idChutro);
     }
 
@@ -34,7 +34,7 @@ public class InvoicesController {
         }
     }
 
-    public void loadThongTinHoadon( String id_phong) {
+    public void loadThongTinHoadon( int id_phong) {
         try {
             Object[] hoadonData = Invoices.getInvoiceData(id_phong);
             double giadien = Invoices.getGiaDien(id_phong);
@@ -62,7 +62,7 @@ public class InvoicesController {
         // TODO: Xử lý xuất hóa đơn logic
     }
 
-    public void goBackToRoomList(JFrame frame, String id_chutro) {
+    public void goBackToRoomList(JFrame frame, int id_chutro) {
         frame.dispose();
         // TODO: Điều hướng quay lại danh sách phòng
     }
@@ -70,7 +70,7 @@ public class InvoicesController {
     // Hàm xử lý cập nhật hóa đơn vào cơ sở dữ liệu
     public static void GoToUpdateDetailInvoice(
             String id_room,
-            String id_chuTro,
+            int id_chutro,
             String id_nguoiThueTro,
             double tienNha,
             double tienDien,
@@ -109,27 +109,27 @@ public class InvoicesController {
         }
     }
     // Đang hiệu chỉnh
-    public static int getTotalInvoices(String idChutro) {
+    public static int getTotalInvoices(int idChutro) {
         return Invoices.getTotalInvoices(idChutro);
     }
 
-    public static int getPaidInvoices(String idChutro) {
+    public static int getPaidInvoices(int idChutro) {
         return Invoices.getPaidInvoices(idChutro);
     }
 
-    public static int getUnpaidInvoices(String idChutro) {
+    public static int getUnpaidInvoices(int idChutro) {
         return Invoices.getUnpaidInvoices(idChutro);
     }
 
-    public static double getTotalValue(String idChutro) {
+    public static double getTotalValue(int idChutro) {
         return Invoices.getTotalValue(idChutro);
     }
 
-    public static double getUnpaidValue(String idChutro) {
+    public static double getUnpaidValue(int idChutro) {
         return Invoices.getUnpaidValue(idChutro);
     }
 
-    public static double getPaidRate(String idChutro) {
+    public static double getPaidRate(int idChutro) {
         int total = getTotalInvoices(idChutro);
         int paid = getPaidInvoices(idChutro);
         return total == 0 ? 0 : ((double) paid / total) * 100;

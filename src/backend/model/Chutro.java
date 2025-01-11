@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Chutro {
-    private String idChutro;
-    private String userId;
+    private int idChutro;
+    private int userId;
     private String fullName;
     private String phone;
     private String cccd;
 
     // Constructor
-    public Chutro(String idChutro, String userId, String fullName, String phone, String cccd) {
+    public Chutro(int idChutro, int userId, String fullName, String phone, String cccd) {
         this.idChutro = idChutro;
         this.userId = userId;
         this.fullName = fullName;
@@ -24,8 +24,8 @@ public class Chutro {
     }
 
     // Getters
-    public static String getIdChutroByUsername(String username) {
-        String idChutro = null;
+    public static int getIdChutroByUsername(String username) {
+        int idChutro = 0;
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             // Truy vấn để lấy UserID từ bảng Users
             String sqlGetUserId = "SELECT UserID FROM Users WHERE Username = ?";
@@ -34,16 +34,16 @@ public class Chutro {
             ResultSet rsUser = pstmtUser.executeQuery();
 
             if (rsUser.next()) {
-                String userId = rsUser.getString("UserID");
+                int userId = rsUser.getInt("UserID");
 
                 // Truy vấn để lấy IDChutro từ bảng Chutro
                 String sqlGetIdChutro = "SELECT IDChutro FROM Chutro WHERE UserID = ?";
                 PreparedStatement pstmtChutro = conn.prepareStatement(sqlGetIdChutro);
-                pstmtChutro.setString(1, userId);
+                pstmtChutro.setInt(1, userId);
                 ResultSet rsChutro = pstmtChutro.executeQuery();
 
                 if (rsChutro.next()) {
-                    idChutro = rsChutro.getString("IDChutro");
+                    idChutro = rsChutro.getInt("IDChutro");
                 }
             }
         } catch (Exception e) {
@@ -52,7 +52,7 @@ public class Chutro {
         return idChutro;
     }
 
-    public static String getUsernameFromIdChutro(String idChutro) {
+    public static String getUsernameFromIdChutro(int idChutro) {
         String username = null;
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = """
@@ -62,7 +62,7 @@ public class Chutro {
             WHERE c.IDChutro = ?
         """;
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, idChutro);
+            pstmt.setInt(1, idChutro);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 username = rs.getString("Username");
@@ -87,18 +87,18 @@ public class Chutro {
     }
 
     // Static methods for database operations
-    public static Chutro getChutroByUserId(String userId) {
+    public static Chutro getChutroByUserId(int userId) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             System.out.println("Đi tới CHutro.java ");
             String sql = "SELECT * FROM Chutro WHERE UserID = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, userId);
+            pstmt.setInt(1, userId);
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
                 return new Chutro(
-                        rs.getString("IDChutro"),
-                        rs.getString("UserID"),
+                        rs.getInt("IDChutro"),
+                        rs.getInt("UserID"),
                         rs.getString("Hoten"),
                         rs.getString("Phone"),
                         rs.getString("CCCD")
@@ -113,18 +113,18 @@ public class Chutro {
         return null;
     }
 
-    public static Chutro getChutrobyChutroID(String idChutro) {
+    public static Chutro getChutrobyChutroID(int idChutro) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             System.out.println("Đi tới CHutro.java ");
             String sql = "SELECT * FROM Chutro WHERE IDChutro = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, idChutro);
+            pstmt.setInt(1, idChutro);
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
                 return new Chutro(
-                        rs.getString("IDChutro"),
-                        rs.getString("UserID"),
+                        rs.getInt("IDChutro"),
+                        rs.getInt("UserID"),
                         rs.getString("Hoten"),
                         rs.getString("Phone"),
                         rs.getString("CCCD")
@@ -139,12 +139,12 @@ public class Chutro {
         return null;
     }
 
-    public static boolean updateHoTenChutro(String idChutro, String fullName) {
+    public static boolean updateHoTenChutro(int idChutro, String fullName) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "UPDATE Chutro SET Hoten = ? WHERE IDChutro = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, fullName);
-            pstmt.setString(2, idChutro);
+            pstmt.setInt(2, idChutro);
             return pstmt.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -152,12 +152,12 @@ public class Chutro {
         return false;
     }
 
-    public static boolean updateSDTChutro(String idChutro, String phone) {
+    public static boolean updateSDTChutro(int idChutro, String phone) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "UPDATE Chutro SET Phone = ? WHERE IDChutro = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, phone);
-            pstmt.setString(2, idChutro);
+            pstmt.setInt(2, idChutro);
             return pstmt.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -165,19 +165,19 @@ public class Chutro {
         return false;
     }
 
-    public static boolean updatePasswordChutro(String idChutro, String password) {
+    public static boolean updatePasswordChutro(int idChutro, String password) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "UPDATE Chutro SET Password = ? WHERE IDChutro = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, password);
-            pstmt.setString(2, idChutro);
+            pstmt.setInt(2, idChutro);
             return pstmt.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
-    public static List<String[]> getRoomList(String id_chutro) {
+    public static List<String[]> getRoomList(int id_chutro) {
         List<String[]> roomList = new ArrayList<>();
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             // Truy vấn SQL
@@ -191,7 +191,7 @@ public class Chutro {
             WHERE TTPhongtro.IDChutro = ?
         """;
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, id_chutro); // Gán giá trị IDChutro
+            pstmt.setInt(1, id_chutro); // Gán giá trị IDChutro
             ResultSet rs = pstmt.executeQuery();
 
             // Lấy dữ liệu và thêm vào danh sách
@@ -207,11 +207,11 @@ public class Chutro {
         return roomList;
     }
     // TODO: Xử lý lấy thông tin tên chủ trọ và tổng số phòng chủ trụ nắm giữ
-    public static String getNameChutroFromIdChutro(String idChutro){
+    public static String getNameChutroFromIdChutro(int idChutro){
         return "Văn A";
     }
     // TODO: Xử lý lấy thông tin tên chủ trọ và tổng số phòng chủ trụ nắm giữ
-    public static int getCountRoomFromIdChutro(String idChutro){
+    public static int getCountRoomFromIdChutro(int idChutro){
         return 0;
     }
     // Hàm lấy danh sách tất cả chủ trọ từ cơ sở dữ liệu

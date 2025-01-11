@@ -8,7 +8,7 @@ import static controller.DashboardChutroController.go_back_dashboardchutro;
 import static controller.DashboardChutroController.save_room_into_database;
 
 public class ChutroCreateRoomsView {
-    public ChutroCreateRoomsView(String id_chutro) {
+    public ChutroCreateRoomsView(int id_chutro) {
         JFrame frame = new JFrame("Tạo phòng trọ mới ");
         frame.setSize(800, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -169,14 +169,14 @@ public class ChutroCreateRoomsView {
             String garbagePrice = gia_rac.getText();
             double garbagePriceDouble = Double.parseDouble(garbagePrice);
 
-            save_room_into_database(name, address, roomPriceDouble, electricityPriceDouble, waterPriceDouble, garbagePriceDouble, frame);});
+            save_room_into_database(name, address, roomPriceDouble, electricityPriceDouble, waterPriceDouble, garbagePriceDouble, id_chutro, frame);});
         panel.add(save_room,gbc);
 
         // Nút quay lại
         JButton button_back = new JButton("Quay lại");
         gbc.gridx = 1;
         gbc.gridy = 9;
-        button_back.addActionListener(e -> go_back_dashboardchutro(frame,id_chutro ));
+        button_back.addActionListener(e -> go_back_dashboardchutro(frame, id_chutro ));
         gbc.anchor = GridBagConstraints.CENTER; // Căn giữa ô nhập liệu
         panel.add(button_back, gbc);
 

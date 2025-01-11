@@ -21,7 +21,7 @@ public class ChutroDashboardView {
 
         // lấy USER ID trước khi lấy đối tượng Chutro
 
-        String id_chutro = getIdChutroByUsername(entryUsername);
+        int id_chutro = getIdChutroByUsername(entryUsername);
         System.out.println(id_chutro);
 
 

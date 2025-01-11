@@ -12,11 +12,11 @@ import java.util.List;
 
 public class Invoices {
     // Hàm lấy thông tin hóa đơn mới nhất cho một phòng
-    public static Object[] getInvoiceData(String idPhong) throws SQLException {
+    public static Object[] getInvoiceData(int idPhong) throws SQLException {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "SELECT * FROM HoaDon WHERE IDPhong = ? ORDER BY NgayXuatHoaDon DESC LIMIT 1";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, idPhong);
+            pstmt.setInt(1, idPhong);
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
@@ -39,11 +39,11 @@ public class Invoices {
     }
 
     // Hàm lấy giá điện cho một phòng
-    public static double getGiaDien(String idPhong) {
+    public static double getGiaDien(int idPhong) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "SELECT Giadien FROM TTPhongtro WHERE IDPhong = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, idPhong);
+            pstmt.setInt(1, idPhong);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getDouble("Giadien");
@@ -55,11 +55,11 @@ public class Invoices {
     }
 
     // Hàm lấy giá nước cho một phòng
-    public static double getGiaNuoc(String idPhong) {
+    public static double getGiaNuoc(int idPhong) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "SELECT Gianuoc FROM TTPhongtro WHERE IDPhong = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, idPhong);
+            pstmt.setInt(1, idPhong);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getDouble("Gianuoc");
@@ -82,13 +82,13 @@ public class Invoices {
     }
 
     // Hàm tạo mới hóa đơn
-    public static boolean createInvoice(String idPhong, double tienNha, double tienDien, double tienNuoc, double tienRac,
+    public static boolean createInvoice(int idPhong, double tienNha, double tienDien, double tienNuoc, double tienRac,
                                         double chiPhiKhac, double giamGia, double tongChiPhi, Date ngayXuatHoaDon) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "INSERT INTO HoaDon (IDPhong, TienNha, TienDien, TienNuoc, TienRac, ChiPhiKhac, GiamGia, TongChiPhi, NgayXuatHoaDon) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, idPhong);
+            pstmt.setInt(1, idPhong);
             pstmt.setDouble(2, tienNha);
             pstmt.setDouble(3, tienDien);
             pstmt.setDouble(4, tienNuoc);
@@ -105,7 +105,7 @@ public class Invoices {
         return false;
     }
     // TODO: Invoice list view đã tạo, Hiếu kiểm tra lại logic xem truy xuất dữ liệu cho Invoices.InvoiceListsView  nha
-    public static List<Object[]> getInvoiceList(String idChutro) {
+    public static List<Object[]> getInvoiceList(int idChutro) {
         List<Object[]> invoices = new ArrayList<>();
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = """
@@ -122,7 +122,7 @@ public class Invoices {
                 WHERE pt.IDChutro = ?
             """;
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, idChutro);
+            pstmt.setInt(1, idChutro);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -141,29 +141,29 @@ public class Invoices {
         return invoices;
     }
 
-    public static int getTotalInvoices(String idChutro) {
+    public static int getTotalInvoices(int idChutro) {
 
         return 0;
     }
 
-    public static int getPaidInvoices(String idChutro) {
+    public static int getPaidInvoices(int idChutro) {
 
         return 0;
     }
 
-    public static int getUnpaidInvoices(String idChutro) {
+    public static int getUnpaidInvoices(int idChutro) {
         return 0;
     }
 
-    public static double getTotalValue(String idChutro) {
+    public static double getTotalValue(int idChutro) {
         return 0;
     }
 
-    public static double getUnpaidValue(String idChutro) {
+    public static double getUnpaidValue(int idChutro) {
         return 0;
     }
 
-    public static List<Object[]> getInvoicesByTenantId(String userId) {
+    public static List<Object[]> getInvoicesByTenantId(int userId) {
         List<Object[]> invoices = new ArrayList<>();
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = """
@@ -176,14 +176,14 @@ public class Invoices {
             WHERE pt.IDNguoiThue = ?
         """;
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, userId);
+            pstmt.setInt(1, userId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 invoices.add(new Object[]{
                         rs.getDate("NgayXuatHoaDon"), // Ngày Xuất Hóa Đơn
                         rs.getDouble("TongChiPhi"),  // Tổng Giá Trị
                         rs.getBoolean("DaThanhToan"), // Trạng Thái
-                        rs.getString("BillID")       // ID Hóa Đơn
+                        rs.getInt("BillID")       // ID Hóa Đơn
                 });
             }
         } catch (Exception e) {
@@ -193,7 +193,7 @@ public class Invoices {
     }
 
 
-    public static Invoices getInvoiceDetails(String invoiceId) {
+    public static Invoices getInvoiceDetails(int invoiceId) {
         //TODO: Get thông tin invoicID nhà HIếu
         // Truy xuất tất cả thông tin cần để hiển thị lên HÓa đơn: InvoiceFormView.java
 

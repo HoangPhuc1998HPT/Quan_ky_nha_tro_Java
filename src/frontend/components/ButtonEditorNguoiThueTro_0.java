@@ -10,9 +10,9 @@ public class ButtonEditorNguoiThueTro_0 extends DefaultCellEditor {
     private JButton button;
     private boolean clicked;
     private JTable table; // Tham chiếu đến bảng
-    private String userId;
+    private int userId;
 
-    public ButtonEditorNguoiThueTro_0(JCheckBox checkBox, String userId) {
+    public ButtonEditorNguoiThueTro_0(JCheckBox checkBox, int userId) {
         super(checkBox);
         this.userId = userId;
         button = new JButton();
@@ -46,7 +46,7 @@ public class ButtonEditorNguoiThueTro_0 extends DefaultCellEditor {
             int selectedRow = table.getSelectedRow(); // Lấy hàng được chọn
             if (selectedRow != -1) {
                 // Lấy Room ID từ cột ẩn (index 0)
-                String roomId = (String) table.getValueAt(selectedRow, 0);
+                int roomId = (int) table.getValueAt(selectedRow, 0);
                 System.out.println("Room ID: " + roomId); // In ra Room ID để kiểm tra
                 RoomController.goToRoomInforView(roomId); // Điều hướng đến RoomInforView với roomId
             }

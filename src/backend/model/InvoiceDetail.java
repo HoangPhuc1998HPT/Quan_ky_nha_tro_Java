@@ -75,11 +75,11 @@ public class InvoiceDetail {
         }
         return invoiceDetail;
     }
-    public static String getRoomName(String id_room) {
+    public static String getRoomName(int id_room) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "SELECT TenPhong FROM TTPhongtro WHERE IDPhong = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, id_room);
+            pstmt.setInt(1, id_room);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getString("TenPhong");
@@ -90,11 +90,11 @@ public class InvoiceDetail {
         return "Không xác định";
     }
 
-    public static String getTenantName(String id_room) {
+    public static String getTenantName(int id_room) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "SELECT nt.Hoten FROM TTPhongtro pt JOIN NguoiThueTro nt ON pt.IDPhong = nt.UserID WHERE pt.IDPhong = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, id_room);
+            pstmt.setInt(1, id_room);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getString("Hoten");
@@ -105,11 +105,11 @@ public class InvoiceDetail {
         return "Không có";
     }
 
-    public static String getStartDate(String id_room) {
+    public static String getStartDate(int id_room) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "SELECT Ngaybatdauthue FROM TTPhongtro WHERE IDPhong = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, id_room);
+            pstmt.setInt(1, id_room);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getString("Ngaybatdauthue");
@@ -120,11 +120,11 @@ public class InvoiceDetail {
         return "Chưa có dữ liệu";
     }
 
-    public static int getOldElectricReading(String id_room) {
+    public static int getOldElectricReading(int id_room) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "SELECT Sodienhientai FROM TTPhongtro WHERE IDPhong = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, id_room);
+            pstmt.setInt(1, id_room);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt("Sodienhientai");
@@ -135,11 +135,11 @@ public class InvoiceDetail {
         return 0; // Giá trị mặc định nếu không có dữ liệu
     }
 
-    public static int getOldWaterReading(String id_room) {
+    public static int getOldWaterReading(int id_room) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "SELECT Sonuochientai FROM TTPhongtro WHERE IDPhong = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, id_room);
+            pstmt.setInt(1, id_room);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt("Sonuochientai");
@@ -150,11 +150,11 @@ public class InvoiceDetail {
         return 0; // Giá trị mặc định nếu không có dữ liệu
     }
 
-    public static String getLastPaymentDate(String id_room) {
+    public static String getLastPaymentDate(int id_room) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "SELECT Ngaythutienthangtruoc FROM HoaDon WHERE IDPhong = ? ORDER BY Ngayxuathoadon DESC";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, id_room);
+            pstmt.setInt(1, id_room);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getString("Ngaythutienthangtruoc");

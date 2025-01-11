@@ -6,14 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class NguoiThueTro {
-    private String idNguoiThue;
-    private String userId;
+    private int idNguoiThue;
+    private int userId;
     private String fullName;
     private String phone;
     private String cccd;
 
     // Constructor
-    public NguoiThueTro(String idNguoiThue, String userId, String fullName, String phone, String cccd) {
+    public NguoiThueTro(int idNguoiThue, int userId, String fullName, String phone, String cccd) {
         this.idNguoiThue = idNguoiThue;
         this.userId = userId;
         this.fullName = fullName;
@@ -21,28 +21,28 @@ public class NguoiThueTro {
         this.cccd = cccd;
     }
 
-    public static String getIdNguoiThueFromUserID(String userId) {
+    public static int getIdNguoiThueFromUserID(int userId) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "SELECT IDNguoiThue FROM NguoiThueTro WHERE UserID = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, userId);
+            pstmt.setInt(1, userId);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                return rs.getString("IDNguoiThue");
+                return rs.getInt("IDNguoiThue");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
 
     // Getters
-    public String getIdNguoiThue() {
+    public int getIdNguoiThue() {
         return idNguoiThue;
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
@@ -60,17 +60,17 @@ public class NguoiThueTro {
 
 
     // Static methods for database operations
-    public static NguoiThueTro getNguoiThueTroByUserId(String userId) {
+    public static NguoiThueTro getNguoiThueTroByUserId(int userId) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "SELECT * FROM NguoiThueTro WHERE UserID = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, userId);
+            pstmt.setInt(1, userId);
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
                 return new NguoiThueTro(
-                        rs.getString("IDNguoiThue"),
-                        rs.getString("UserID"),
+                        rs.getInt("IDNguoiThue"),
+                        rs.getInt("UserID"),
                         rs.getString("Hoten"),
                         rs.getString("Phone"),
                         rs.getString("CCCD")
@@ -82,7 +82,7 @@ public class NguoiThueTro {
         return null;
     }
 
-    public static String getIdNguoiThueFromCCCD(String CCCD) {
+    public static int getIdNguoiThueFromCCCD(String CCCD) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = """
             SELECT IDNguoiThue
@@ -95,7 +95,7 @@ public class NguoiThueTro {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                String idNguoiThue = rs.getString("IDNguoiThue");
+                int idNguoiThue = rs.getInt("IDNguoiThue");
                 System.out.println("Tìm thấy IDNguoiThue: " + idNguoiThue);
                 return idNguoiThue;
             }
@@ -104,12 +104,12 @@ public class NguoiThueTro {
         }
 
         System.out.println("Không tìm thấy IDNguoiThue với CCCD: " + CCCD);
-        return null; // Trả về null nếu không tìm thấy
+        return 0; // Trả về null nếu không tìm thấy
     }
 
 
 
-    public static String getTenantRoomId(String tenantId) {
+    public static int getTenantRoomId(int tenantId) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             // Truy vấn kiểm tra id_nguoiThueTro có trong TTPhongtro hay không
             String sql = """
@@ -118,15 +118,15 @@ public class NguoiThueTro {
             WHERE IDNguoiThue = ?
         """;
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, tenantId);
+            pstmt.setInt(1, tenantId);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                return rs.getString("IDPhong"); // Trả về ID phòng nếu tìm thấy
+                return rs.getInt("IDPhong"); // Trả về ID phòng nếu tìm thấy
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null; // Trả về null nếu không có dữ liệu
+        return 0; // Trả về null nếu không có dữ liệu
     }
 
 }

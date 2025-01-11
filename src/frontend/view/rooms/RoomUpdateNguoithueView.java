@@ -8,13 +8,13 @@ import static controller.RoomController.GoToUpdateNguoiThue;
 
 public class RoomUpdateNguoithueView {
     private JFrame frame;
-    private String id_room;
-    private String id_chutro;
+    private int id_room;
+    private int id_chutro;
     private JPanel jPanel;
 
-    public RoomUpdateNguoithueView(String id_room) {
+    public RoomUpdateNguoithueView(int id_room) {
         this.id_room = id_room;
-        this.id_chutro = "DefaultID"; // Khởi tạo id_chutro với giá trị mặc định
+
 
         // Tạo giao diện thêm người thuê
         frame = new JFrame("Thêm người thuê trọ");

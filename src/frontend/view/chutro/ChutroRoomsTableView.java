@@ -16,7 +16,7 @@ public class ChutroRoomsTableView {
     private JTable roomTable;
     private DefaultTableModel tableModel;
 
-    public ChutroRoomsTableView(String idChutro) {
+    public ChutroRoomsTableView(int idChutro) {
         // Tạo JFrame chính
         frame = new JFrame("Danh sách phòng trọ");
         frame.setSize(800, 600);
@@ -79,9 +79,9 @@ public class ChutroRoomsTableView {
         private JButton button;
         private String label;
         private boolean clicked;
-        private String idChutro;
+        private int idChutro;
 
-        public ButtonEditor(JCheckBox checkBox, String idChutro) {
+        public ButtonEditor(JCheckBox checkBox, int idChutro) {
             super(checkBox);
             this.idChutro = idChutro;
             button = new JButton();
@@ -113,7 +113,8 @@ public class ChutroRoomsTableView {
 
         private void performAction() {
             int selectedRow = roomTable.getSelectedRow();
-            String roomId = tableModel.getValueAt(selectedRow, 3).toString(); // Lấy ID Room từ cột ẩn
+            Object roomIdObject = tableModel.getValueAt(selectedRow, 3); // Lấy ID Room từ cột ẩn
+            int roomId = Integer.parseInt(roomIdObject.toString());
             System.out.println("Room ID: " + roomId); // Log để kiểm tra Room ID
 
             // Gọi RoomView qua Controller

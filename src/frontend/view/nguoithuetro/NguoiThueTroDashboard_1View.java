@@ -16,12 +16,12 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class NguoiThueTroDashboard_1View extends JFrame {
-    private String userId;
+    private int userId;
     private JPanel mainPanel;
 
-    public NguoiThueTroDashboard_1View(String userId) {
+    public NguoiThueTroDashboard_1View(int userId) {
         this.userId = userId;
-        String id_nguoithuetro = NguoiThueTro.getIdNguoiThueFromUserID(userId);
+        int id_nguoithuetro = NguoiThueTro.getIdNguoiThueFromUserID(userId);
         setTitle("Người Thuê Trọ Đã Có Phòng");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 800, 600);
@@ -75,12 +75,12 @@ public class NguoiThueTroDashboard_1View extends JFrame {
 
             JButton viewButton = new JButton("Xem");
             viewButton.addActionListener(e -> {
-                String invoiceId = (String) invoice[3];
+                int invoiceId = (int) invoice[3];
                 NguoiThueTroController.goToOpenInvoiceView(
-                        String.valueOf(roomInfo.get(6)), // IDChutro
+                        Integer.parseInt(String.valueOf(roomInfo.get(6)) ), // IDChutro
                         id_nguoithuetro,
                         invoiceId,
-                        String.valueOf(roomInfo.get(5))  // IDPhong
+                        Integer.parseInt(String.valueOf(roomInfo.get(5)))  // IDPhong
                 );
             });
             row[3] = viewButton;
@@ -104,7 +104,7 @@ public class NguoiThueTroDashboard_1View extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new NguoiThueTroDashboard_1View("user1");
-    }
+//    public static void main(String[] args) {
+//        new NguoiThueTroDashboard_1View("user1");
+//    }
 }

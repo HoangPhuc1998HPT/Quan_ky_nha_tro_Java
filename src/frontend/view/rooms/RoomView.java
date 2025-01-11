@@ -9,7 +9,7 @@ import java.awt.*;
 public class RoomView {
     private JFrame frame;
 
-    public RoomView(String idRoom, String idChutro) {
+    public RoomView(int idRoom, int idChutro) {
         Room room = Room.getRoomDetails(idRoom); // Lấy thông tin phòng từ backend
 
         frame = new JFrame("Phòng trọ: " + (room != null ? room.getName() : "Không xác định"));
@@ -60,7 +60,7 @@ public class RoomView {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new RoomView("1","12");
-    }
+//    public static void main(String[] args) {
+//        new RoomView("1","12");
+//    }
 }

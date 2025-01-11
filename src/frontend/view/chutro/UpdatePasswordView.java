@@ -8,7 +8,7 @@ import java.awt.*;
 public class UpdatePasswordView {
     private JFrame frame;
 
-    public UpdatePasswordView(String idChutro) {
+    public UpdatePasswordView(int idChutro) {
         frame = new JFrame("Đổi Mật Khẩu");
         frame.setSize(400, 200);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

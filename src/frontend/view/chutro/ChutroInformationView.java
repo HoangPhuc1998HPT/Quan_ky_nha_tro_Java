@@ -8,7 +8,7 @@ import java.awt.*;
 public class ChutroInformationView {
     private JFrame frame;
    // private Chutro chutro;
-    public ChutroInformationView(String idChutro, Chutro chutro) {
+    public ChutroInformationView(int idChutro, Chutro chutro) {
         // Tạo JFrame
         frame = new JFrame("Thông Tin Chủ Trọ");
         frame.setSize(600, 400);

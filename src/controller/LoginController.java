@@ -58,8 +58,8 @@ import java.sql.ResultSet;
 
                 if (rs.next()) {
                     return new Chutro(
-                            rs.getString("IDChutro"),
-                            rs.getString("UserID"),
+                            rs.getInt("IDChutro"),
+                            rs.getInt("UserID"),
                             rs.getString("Hoten"),
                             rs.getString("Phone"),
                             rs.getString("CCCD")
@@ -77,7 +77,7 @@ import java.sql.ResultSet;
             System.out.println(result);
             if (result != null) {
                 System.out.println("Đăng nhập thành công. UserID: " + result.getUserId() + ", Role: " + result.getRole());
-                String userId = result.getUserId();
+                int userId = result.getUserId();
                 String role = result.getRole();
 
                 switch (role) {
@@ -96,8 +96,8 @@ import java.sql.ResultSet;
                         NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId(userId);
                         if (tenant != null) {
                             // Kiểm tra xem người thuê đã có phòng hay chưa
-                            String roomId = Room.getTenantRoomId(userId); // Gọi hàm kiểm tra phòng
-                            if (roomId == null || roomId.isEmpty()) {
+                            int roomId = Room.getTenantRoomId(userId); // Gọi hàm kiểm tra phòng
+                            if (roomId == 0) {
                                 // Chưa được thêm vào bất cứ phòng nào
                                 new NguoiThueTroDashboard_0View(userId);
                                 System.out.println("Chuyển đến Dashboard Người Thuê Trọ (chưa có phòng)");

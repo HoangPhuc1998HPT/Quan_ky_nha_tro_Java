@@ -11,15 +11,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class NguoiThueTroController {
-    private String userId;
+    private int userId;
     private JFrame frame;
 
-    public NguoiThueTroController(String userId, JFrame frame) {
+    public NguoiThueTroController(int userId, JFrame frame) {
         this.userId = userId;
         this.frame = frame;
     }
 
-    public static void goToOpenInvoiceView(String idNguoiThue, String idPhong, String idChutro, String invoiceId) {
+    public static void goToOpenInvoiceView(int idNguoiThue, int idPhong, int idChutro, int invoiceId) {
         try {
             // Lấy thông tin người thuê trọ
             NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId(idNguoiThue);
@@ -61,15 +61,15 @@ public class NguoiThueTroController {
             return;
         }
 
-        String roomId = Room.getTenantRoomId(tenant.getIdNguoiThue());
-        if (roomId != null) {
+        int roomId = Room.getTenantRoomId(tenant.getIdNguoiThue());
+        if (roomId != 0) {
             showRoomDetails(roomId);
         } else {
             showEmptyRooms();
         }
     }
 
-    private void showRoomDetails(String roomId) throws SQLException {
+    private void showRoomDetails(int roomId) throws SQLException {
         // Hiển thị nút "Xem thông tin phòng"
         JButton btnRoomInfo = new JButton("Xem thông tin phòng");
         //btnRoomInfo.addActionListener(e -> RoomController.showRoomInfo(frame, roomId));

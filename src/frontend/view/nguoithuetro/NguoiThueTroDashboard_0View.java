@@ -16,10 +16,10 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 public class NguoiThueTroDashboard_0View extends JFrame {
-    private String userId;
+    private int userId;
     private JPanel mainPanel;
 
-    public NguoiThueTroDashboard_0View(String userId) {
+    public NguoiThueTroDashboard_0View(int userId) {
         this.userId = userId;
         setTitle("Người Thuê Trọ Chưa Có Phòng");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,9 +91,9 @@ public class NguoiThueTroDashboard_0View extends JFrame {
 
         setVisible(true);
     }
-    public static void main(String[] args) {
-        new NguoiThueTroDashboard_0View("18");
-    }
+//    public static void main(String[] args) {
+//        new NguoiThueTroDashboard_0View("18");
+//    }
 }
 
 

@@ -10,9 +10,9 @@ import static controller.RoomController.GoToBackRoomViewFromUpdate;
 
 public class RoomUpdateInforRoomView {
     private JFrame frame;
-    private String id_chutro;
+    private int id_chutro;
 
-    public RoomUpdateInforRoomView(String roomId, String id_chutro) {
+    public RoomUpdateInforRoomView(int roomId, int id_chutro) {
         frame = new JFrame("Cập nhật thông tin phòng");
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -101,7 +101,7 @@ public class RoomUpdateInforRoomView {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new RoomUpdateInforRoomView("1", "12"));
-    }
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(() -> new RoomUpdateInforRoomView("1", "12"));
+//    }
 }

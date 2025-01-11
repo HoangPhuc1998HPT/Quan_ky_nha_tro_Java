@@ -10,7 +10,7 @@ import java.util.Locale;
 public class RoomUpdatePriceView {
     private JFrame frame;
 
-    public RoomUpdatePriceView(String roomId, String title, String label, String currentValue, String unit, String type) {
+    public RoomUpdatePriceView(int roomId, String title, String label, String currentValue, String unit, String type) {
         frame = new JFrame(title);
         frame.setSize(400, 400);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

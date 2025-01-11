@@ -15,7 +15,7 @@ public class InvoiceCreateNewInvoice {
     private JLabel totalLabel;
     private InvoicesController controller;
 
-    public InvoiceCreateNewInvoice(String id_chutro, String id_phong) {
+    public InvoiceCreateNewInvoice(int id_chutro, int id_phong) {
         // Khởi tạo Frame
         frame = new JFrame("Xuất hóa đơn");
         frame.setSize(800, 600);
@@ -98,7 +98,7 @@ public class InvoiceCreateNewInvoice {
     }
 
     // Main để test
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new InvoiceCreateNewInvoice("CT001", "R001"));
-    }
+//    public static void main(String[] args) {
+//        SwingUtilities.invokeLater(() -> new InvoiceCreateNewInvoice("CT001", "R001"));
+//    }
 }

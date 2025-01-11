@@ -42,7 +42,7 @@ public class RegisterController {
 
     public static void updateInfo(String fullName, String cccd, String phone, String username, String role, JFrame frame) {
 //        System.out.println(username);
-        String userID = Register.getUserIDFromUsers(username);
+        int userID = Register.getUserIDFromUsers(username);
 //        System.out.println("UserID: " + userID);
         switch (role) {
             case "chutro":

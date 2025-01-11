@@ -14,7 +14,7 @@ import java.util.List;
 import static controller.InvoicesController.*;
 
 public class InvoiceListsView {
-    public InvoiceListsView(String idChutro, String landlordName, int roomCount) {
+    public InvoiceListsView(int idChutro, String landlordName, int roomCount) {
         // Tạo JFrame
         JFrame frame = new JFrame("Danh Sách Hóa Đơn");
         frame.setSize(1000, 850);
@@ -120,7 +120,7 @@ public class InvoiceListsView {
         frame.setVisible(true);
     }
 
-    private void loadInvoiceData(DefaultTableModel tableModel, String idChutro) {
+    private void loadInvoiceData(DefaultTableModel tableModel, int idChutro) {
         tableModel.setRowCount(0); // Xóa dữ liệu cũ
         List<Object[]> invoices = InvoicesController.getInvoiceList(idChutro);
         for (Object[] invoice : invoices) {

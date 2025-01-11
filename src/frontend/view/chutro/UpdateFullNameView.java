@@ -8,7 +8,7 @@ import java.awt.*;
 public class UpdateFullNameView {
     private JFrame frame;
 
-    public UpdateFullNameView(String idChutro, String currentName) {
+    public UpdateFullNameView(int idChutro, String currentName) {
         frame = new JFrame("Cập Nhật Họ Tên");
         frame.setSize(400, 200);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -10,7 +10,7 @@ import java.util.List;
 import static backend.model.NguoiThueTro.getIdNguoiThueFromCCCD;
 
 public class Room {
-    private String idRoom;
+    private int idRoom;
     private String name;
     private String tenantName;
     private double roomPrice;
@@ -23,7 +23,7 @@ public class Room {
 
 
     // Constructor
-    public Room(String idRoom, String name, String tenantName, double roomPrice, double electricityPrice, double waterPrice, double garbagePrice) {
+    public Room(int idRoom, String name, String tenantName, double roomPrice, double electricityPrice, double waterPrice, double garbagePrice) {
         this.idRoom = idRoom;
         this.name = name;
         this.tenantName = null;
@@ -34,7 +34,7 @@ public class Room {
         this.currentElectricity = 0;
         this.currentWater = 0;
     }
-    public static List<Object[]> getRoomInfoByTenantId(String userId) {
+    public static List<Object[]> getRoomInfoByTenantId(int userId) {
         List<Object[]> roomInfoList = new ArrayList<>();
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = """
@@ -50,7 +50,7 @@ public class Room {
             WHERE TTPhongtro.IDNguoiThue = ?
         """;
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, userId);
+            pstmt.setInt(1, userId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 roomInfoList.add(new Object[]{
@@ -71,7 +71,7 @@ public class Room {
 
 
     // Getters
-    public String getIdRoom() {
+    public int getIdRoom() {
         return idRoom;
     }
 
@@ -110,7 +110,7 @@ public class Room {
 
 
     // Static method to fetch room details from database
-    public static Room getRoomDetails(String idRoom) {
+    public static Room getRoomDetails(int idRoom) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             // Câu truy vấn SQL
             String sql = """
@@ -131,13 +131,13 @@ public class Room {
 
             // Chuẩn bị câu lệnh PreparedStatement
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, idRoom);
+            pstmt.setInt(1, idRoom);
 
             // Thực thi truy vấn và xử lý kết quả
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return new Room(
-                            rs.getString("IDPhong"),            // ID phòng
+                            rs.getInt("IDPhong"),            // ID phòng
                             rs.getString("TenPhong"),           // Tên phòng
                             rs.getString("TenNguoiThue"),       // Tên người thuê
                             rs.getDouble("GiaPhong"),           // Giá phòng
@@ -153,9 +153,9 @@ public class Room {
         return null; // Trả về null nếu không có dữ liệu
     }
 
-    public static boolean addRoom(String name, String address, double roomPrice, double electricityPrice, double waterPrice, double garbagePrice) {
+    public static boolean addRoom(String name, String address, double roomPrice, double electricityPrice, double waterPrice, double garbagePrice, int id_chutro) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-            String sql = "INSERT INTO TTPhongtro (TenPhong, Address ,GiaPhong , Giadien, Gianuoc, Tienrac) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO TTPhongtro (TenPhong, Address ,GiaPhong , Giadien, Gianuoc, Tienrac, IDChutro) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, name);
             pstmt.setString(2, address);
@@ -163,6 +163,7 @@ public class Room {
             pstmt.setDouble(4, electricityPrice);
             pstmt.setDouble(5, waterPrice);
             pstmt.setDouble(6, garbagePrice);
+            pstmt.setInt(7, id_chutro);
             return pstmt.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -170,31 +171,31 @@ public class Room {
         return false;
     }
 
-    public static boolean deleteRoom(String idRoom) {
+    public static boolean deleteRoom(int idRoom) {
         // TODO: Hiếu kiểm tra Tạo truy vấn xóa phòng ==> Cơ chế tốt nhất là sau khi delete th không cho truy vấn id phòng đó nữa
         //..............
         return false;
     }
 
-    public static void updateNguoiThueTroInRoom(String idRoom, String CCCD) {
+    public static void updateNguoiThueTroInRoom(int idRoom, String CCCD) {
         //TODO: Hiếu tạo truy vấn cho update thông tin người thuê vào phòng trọ lên database
-       String id_nguoithue = getIdNguoiThueFromCCCD(CCCD);
+       int id_nguoithue = getIdNguoiThueFromCCCD(CCCD);
     }
 
 
-    public static String getTenantRoomId(String tenantId) {
+    public static int getTenantRoomId(int tenantId) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "SELECT IDPhong FROM TTPhongtro WHERE IDNguoiThue = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, tenantId);
+            pstmt.setInt(1, tenantId);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                return rs.getString("IDPhong");
+                return rs.getInt("IDPhong");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
     public static List<Object[]> getEmptyRooms() {
@@ -215,7 +216,7 @@ public class Room {
         }
         return emptyRooms;
     }
-    public static List<Object[]> getEmptyRoomsForTenant(String tenantId) {
+    public static List<Object[]> getEmptyRoomsForTenant(int tenantId) {
         List<Object[]> emptyRooms = new ArrayList<>();
         //"Tên Phòng", "Người liên hệ", "Số điện thoại", "Địa chỉ", "Giá Phòng"
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {

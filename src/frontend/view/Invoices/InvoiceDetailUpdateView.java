@@ -11,7 +11,7 @@ public class InvoiceDetailUpdateView {
 
     private JFrame frame;
 
-    public InvoiceDetailUpdateView(String id_chutro,String id_room, String roomName, String tenantName, String startDate, int oldElectric, int oldWater, String lastPaymentDate) {
+    public InvoiceDetailUpdateView(int id_chutro,int id_room, String roomName, String tenantName, String startDate, int oldElectric, int oldWater, String lastPaymentDate) {
         // Tạo JFrame
 
         frame = new JFrame("Cập nhật chi tiết hóa đơn");
@@ -224,7 +224,7 @@ public class InvoiceDetailUpdateView {
     }
 
     // Hàm giả lập để cập nhật hóa đơn
-    private void updateInvoiceDetails(String id_room, String roomName, int newElectric, int newWater, double discount, String invoiceDate) {
+    private void updateInvoiceDetails(int id_room, String roomName, int newElectric, int newWater, double discount, String invoiceDate) {
         System.out.println("Cập nhật hóa đơn cho phòng: " + roomName + " (ID: " + id_room + ")");
         System.out.println("Số điện mới: " + newElectric);
         System.out.println("Số nước mới: " + newWater);

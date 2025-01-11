@@ -56,5 +56,9 @@ TODO: Không thêm người thuê phòng vaào phòng được vì cập nhật 
     ==> đang kiểm tra khi bấm vào xem chi tiết cảu danh sách phòng trọ có lấy được id phòng kẹp theo không?
 
 
-# RoomController.goToRoomInforView(roomId); // Điều hướng đến RoomInforView với roomId ==> lõi
-    ===> Room.getRoomInForViewbyRoomId(roomId);
+Hiếu TODO:  RoomController.goToRoomInforView(roomId);
+        // Điều hướng đến RoomInforView với roomId ==> lõi
+        ===> Room.getRoomInForViewbyRoomId(roomId);
+        ==> fix lại lấy idroom ở vị trí cột ẩn ==> cập nhật database vẫn trông
+           ===> hiếu xem lại logic giúp
+TODO: CSDL lúc nảy có fix chổ hóa đơn ==> thêm cột có thanh toán chưa nhớ giữ lại

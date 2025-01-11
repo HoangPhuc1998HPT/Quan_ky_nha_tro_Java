@@ -41,7 +41,7 @@ public class Register {
         return false;
     }
 
-    public static String getUserIDFromUsers(String username) {
+    public static int getUserIDFromUsers(String username) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             System.out.println("Đang lấy userID");
             String sql = "SELECT UserID FROM Users WHERE Username = ?";
@@ -51,13 +51,13 @@ public class Register {
 
             if(rs.next()) {
                 System.out.println("RS: " + rs.getString("UserID"));
-                return rs.getString("UserID");
+                return rs.getInt("UserID");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return 0;
     }
 
     public static boolean cccdCheck(String cccd, String role) {
@@ -100,7 +100,7 @@ public class Register {
 
 
     // # STRIKE TODO: Fix Hiếu chỉnh lại phương thức thành update được cho cả người thuê lẫn chủ trọ ( khi register)
-    public static boolean updateChutroInfo(String userID, String fullName, String phone, String cccd) {
+    public static boolean updateChutroInfo(int userID, String fullName, String phone, String cccd) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
 //            String sql = "UPDATE Chutro SET Hoten = ?, Phone = ?, CCCD = ? WHERE Username = ?";
             if(!cccdCheck(cccd, "chutro") && !sdtCheck(phone, "chutro")) {
@@ -109,7 +109,7 @@ public class Register {
                 pstmt.setString(1, fullName);
                 pstmt.setString(2, phone);
                 pstmt.setString(3, cccd);
-                pstmt.setString(4, userID);
+                pstmt.setInt(4, userID);
                 return pstmt.executeUpdate() > 0;
             } else {
                 return false;
@@ -121,7 +121,7 @@ public class Register {
         return false;
     }
 
-    public static boolean updateNguoiTTInfo(String userID, String fullName, String phone, String cccd) {
+    public static boolean updateNguoiTTInfo(int userID, String fullName, String phone, String cccd) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
 //            String sql = "UPDATE Chutro SET Hoten = ?, Phone = ?, CCCD = ? WHERE Username = ?";
             if(!cccdCheck(cccd, "nguoithuetro") && !sdtCheck(phone, "nguoithuetro")) {
@@ -130,7 +130,7 @@ public class Register {
                 pstmt.setString(1, fullName);
                 pstmt.setString(2, phone);
                 pstmt.setString(3, cccd);
-                pstmt.setString(4, userID);
+                pstmt.setInt(4, userID);
                 pstmt.setString(5, null);
                 pstmt.setString(6, null);
                 return pstmt.executeUpdate() > 0;

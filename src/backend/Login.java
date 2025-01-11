@@ -17,7 +17,7 @@ public class Login {
             System.out.println(rs);
 
             if (rs.next()) {
-                String userId = rs.getString("UserID");
+                int userId = rs.getInt("UserID");
                 String role = rs.getString("Role");
                 System.out.println(userId);
                 System.out.println(role);
@@ -30,15 +30,15 @@ public class Login {
     }
 
     public static class LoginResult {
-        private final String userId;
+        private final int userId;
         private final String role;
 
-        public LoginResult(String userId, String role) {
+        public LoginResult(int userId, String role) {
             this.userId = userId;
             this.role = role;
         }
 
-        public String getUserId() {
+        public int getUserId() {
             return userId;
         }
 

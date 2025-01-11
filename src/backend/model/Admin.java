@@ -6,23 +6,23 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class Admin {
-    private String idAdmin;
-    private String userId;
+    private int idAdmin;
+    private int userId;
     private String fullName;
 
     // Constructor
-    public Admin(String idAdmin, String userId, String fullName) {
+    public Admin(int idAdmin, int userId, String fullName) {
         this.idAdmin = idAdmin;
         this.userId = userId;
         this.fullName = fullName;
     }
 
     // Getters
-    public String getIdAdmin() {
+    public int getIdAdmin() {
         return idAdmin;
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
@@ -32,17 +32,17 @@ public class Admin {
 
 
     // Static methods for database operations
-    public static Admin getAdminByUserId(String userId) {
+    public static Admin getAdminByUserId(int userId) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "SELECT * FROM Admins WHERE UserID = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, userId);
+            pstmt.setInt(1, userId);
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
                 return new Admin(
-                        rs.getString("AdminID"),
-                        rs.getString("UserID"),
+                        rs.getInt("AdminID"),
+                        rs.getInt("UserID"),
                         rs.getString("FullName")
                 );
             }
