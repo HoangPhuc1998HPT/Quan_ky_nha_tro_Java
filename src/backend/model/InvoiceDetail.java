@@ -137,7 +137,7 @@ public class InvoiceDetail {
 
 
     // Hàm lấy thông tin chi tiết hóa đơn từ database
-    // Hàm lấy thông tin chi tiết hóa đơn từ database
+
     public static InvoiceDetail getInvoiceDetail(int idRoom) {
         InvoiceDetail invoiceDetail = null;
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
@@ -154,7 +154,7 @@ public class InvoiceDetail {
                 double rentPrice = rs.getDouble("GiaPhong");
                 double electricPrice = rs.getDouble("Giadien");
                 double waterPrice = rs.getDouble("GIanuoc");
-                double garbagePrice = rs.getDouble("Giarac");
+                double garbagePrice = rs.getDouble("Giarac"); // Đảm bảo sử dụng cột Giarac
                 int oldElectric = rs.getInt("Sodienhientai");
                 int oldWater = rs.getInt("Sonuochientai");
 
@@ -178,6 +178,7 @@ public class InvoiceDetail {
         }
         return invoiceDetail;
     }
+
 
     // Hàm lấy tên phòng
     public static String getRoomName(int idRoom) {
