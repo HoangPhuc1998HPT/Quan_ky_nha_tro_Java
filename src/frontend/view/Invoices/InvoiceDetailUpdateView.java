@@ -1,10 +1,13 @@
 package frontend.view.Invoices;
 
+import backend.model.InvoiceDetail;
+
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static backend.model.InvoiceDetail.updateInvoiceDetail;
 import static controller.RoomController.GoToBackRoomView;
 
 public class InvoiceDetailUpdateView {
@@ -182,6 +185,7 @@ public class InvoiceDetailUpdateView {
         panel.add(discountUnitLabel, gbc);
 
         // Nút cập nhật
+        // Nút cập nhật
         JButton updateButton = new JButton("Cập nhật");
         updateButton.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
         gbc.gridx = 0;
@@ -190,22 +194,52 @@ public class InvoiceDetailUpdateView {
         gbc.anchor = GridBagConstraints.CENTER;
         updateButton.addActionListener(e -> {
             try {
+                // Lấy giá trị từ giao diện
                 int newElectric = Integer.parseInt(newElectricField.getText());
                 int newWater = Integer.parseInt(newWaterField.getText());
                 double discount = Double.parseDouble(discountField.getText());
                 String invoiceDate = dateField.getText();
-                //System.out.println("Số điện mới: " + newElectric);
-                //System.out.println("Số nước mới: " + newWater);
-                //System.out.println("Giảm giá: " + discount);
-                //System.out.println("Ngày xuất hóa đơn: " + invoiceDate);
 
-                // Gọi hàm Controller để lưu thông tin
-                updateInvoiceDetails(id_room, roomName, newElectric, newWater, discount, invoiceDate);
+                // Lấy thông tin chi tiết hóa đơn hiện tại
+                InvoiceDetail currentDetail = InvoiceDetail.getInvoiceDetail(id_room);
+
+                if (currentDetail == null) {
+                    JOptionPane.showMessageDialog(frame, "Không thể lấy thông tin hóa đơn hiện tại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                // Cập nhật thông tin hóa đơn mới
+                InvoiceDetail updatedDetail = new InvoiceDetail(
+                        0, // BillID sẽ được tự động sinh trong CSDL
+                        id_room,
+                        currentDetail.getOldElectricReading(),
+                        currentDetail.getOldWaterReading(),
+                        newElectric,
+                        newWater,
+                        currentDetail.getRentPrice(),
+                        currentDetail.getElectricPrice(),
+                        currentDetail.getWaterPrice(),
+                        currentDetail.getGarbagePrice(),
+                        discount,
+                        invoiceDate
+                );
+
+                // Gọi hàm cập nhật CSDL
+                boolean isSuccess = InvoiceDetail.updateInvoiceDetail(updatedDetail);
+                if (isSuccess) {
+                    JOptionPane.showMessageDialog(frame, "Cập nhật hóa đơn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Cập nhật hóa đơn thất bại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(frame, "Vui lòng nhập đúng định dạng số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(frame, "Đã xảy ra lỗi trong quá trình cập nhật.", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         });
         panel.add(updateButton, gbc);
+
 
         JButton backButton = new JButton("Quay lại");
         backButton.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
@@ -222,16 +256,4 @@ public class InvoiceDetailUpdateView {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-
-    // Hàm giả lập để cập nhật hóa đơn
-    private void updateInvoiceDetails(int id_room, String roomName, int newElectric, int newWater, double discount, String invoiceDate) {
-        System.out.println("Cập nhật hóa đơn cho phòng: " + roomName + " (ID: " + id_room + ")");
-        System.out.println("Số điện mới: " + newElectric);
-        System.out.println("Số nước mới: " + newWater);
-        System.out.println("Giảm giá: " + discount);
-        System.out.println("Ngày xuất hóa đơn: " + invoiceDate);
-        // TODO: Thêm logic cập nhật cơ sở dữ liệu ở đây
-    }
-
-
 }

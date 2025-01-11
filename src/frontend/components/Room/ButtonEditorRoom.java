@@ -1,8 +1,7 @@
 // ButtonEditorRoom.java
-package frontend.components;
+package frontend.components.Room;
 
 import javax.swing.*;
-import javax.swing.table.TableCellEditor;
 import java.awt.*;
 
 public class ButtonEditorRoom extends DefaultCellEditor {

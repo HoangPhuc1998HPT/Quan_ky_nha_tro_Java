@@ -2,8 +2,8 @@ package frontend.view.admin;
 
 
 import backend.model.NguoiThueTro;
-import frontend.components.ButtonEditorNguoiThueTro;
-import frontend.components.ButtonRendererNguoiThueTro;
+import frontend.components.NguoiThueTro.ButtonEditorNguoiThueTro;
+import frontend.components.NguoiThueTro.ButtonRendererNguoiThueTro;
 import controller.AdminController;
 
 import javax.swing.*;

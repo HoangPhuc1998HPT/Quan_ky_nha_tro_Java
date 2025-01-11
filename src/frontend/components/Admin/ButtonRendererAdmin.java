@@ -1,4 +1,4 @@
-package frontend.components;
+package frontend.components.Admin;
 
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;

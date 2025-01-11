@@ -60,7 +60,7 @@ public class RoomView {
         frame.setVisible(true);
     }
 
-//    public static void main(String[] args) {
-//        new RoomView("1","12");
-//    }
+    public static void main(String[] args) {
+        new RoomView(1,12);
+    }
 }

@@ -1,9 +1,8 @@
-package frontend.components;
+package frontend.components.NguoiThueTro;
 
 import controller.RoomController;
 
 import javax.swing.*;
-import javax.swing.table.TableCellEditor;
 import java.awt.*;
 
 public class ButtonEditorNguoiThueTro extends DefaultCellEditor {

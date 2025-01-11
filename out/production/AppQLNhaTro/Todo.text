@@ -62,3 +62,18 @@ Hiếu TODO:  RoomController.goToRoomInforView(roomId);
         ==> fix lại lấy idroom ở vị trí cột ẩn ==> cập nhật database vẫn trông
            ===> hiếu xem lại logic giúp
 TODO: CSDL lúc nảy có fix chổ hóa đơn ==> thêm cột có thanh toán chưa nhớ giữ lại
+// 11/01/2024
+// TODO: Warning Hiếu lưu ý bên dưới:
+
+Tạo phòng trọ ==> Không lưu được phòng
+Cập nhật người thuê ==> chưa được : RoomController.goToUpdateNguoiThue(frame, idRoom)
+Cập nhật thông tin phòng: updateRoomPrice(int roomId, double newValue, String type) _ cả 3 thông tin
+    RoomView
+   +  Cập nhật giá thuê
+   + Cập nhật giá điện
+   + Cập nhật giá nước
+   + Cập nhật giá rác
+
+==> Tất cả thông tin được update trong InvoiceDetailUpdateView được cập nhật vào Bảng CTHD
+==> Từ CTHD mới xử lý bằng hàm để nạp dữ liệu vào bảng Hóa Đơn
+===> TỪ bảng hóa đơn mới truy xuất dữ liệu để xuất ra hiển thị InVoiceFormView
