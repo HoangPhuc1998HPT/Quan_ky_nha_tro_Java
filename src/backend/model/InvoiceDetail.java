@@ -179,8 +179,6 @@ public class InvoiceDetail {
         return invoiceDetail;
     }
 
-
-
     // Hàm lấy tên phòng
     public static String getRoomName(int idRoom) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
