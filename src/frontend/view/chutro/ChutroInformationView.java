@@ -39,7 +39,10 @@ public class ChutroInformationView {
         frame.add(new JLabel(chutro.getFullName()), gbc);
         gbc.gridx = 2; // Nút cập nhật
         JButton updateNameButton = new JButton("Cập nhật");
-        updateNameButton.addActionListener(e->new UpdateFullNameView(idChutro, chutro.getFullName()));
+        updateNameButton.addActionListener(e-> {
+            new UpdateFullNameView(idChutro, chutro.getFullName());
+            frame.dispose();
+        });
         frame.add(updateNameButton, gbc);
 
 
@@ -84,5 +87,7 @@ public class ChutroInformationView {
         frame.setVisible(true);
     }
 
-
+    public JFrame getFrame() {
+        return frame;
+    }
 }

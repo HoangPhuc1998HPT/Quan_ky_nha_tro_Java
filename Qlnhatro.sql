@@ -118,7 +118,7 @@ DROP CONSTRAINT FK_TTPhongtro_IDnguoithue;
 
 
 
-- Tạo bảng hóa đơn
+-- Tạo bảng hóa đơn
 CREATE TABLE HoaDon (
     BillID INT PRIMARY KEY IDENTITY(1,1), -- Mã hóa đơn tự động tăng
     Tiennha DECIMAL(10,2),               -- Phí thuê nhà hàng tháng

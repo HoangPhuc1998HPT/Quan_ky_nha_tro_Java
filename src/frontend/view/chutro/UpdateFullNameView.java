@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class UpdateFullNameView {
     private JFrame frame;
+    public static String updateName;
 
     public UpdateFullNameView(int idChutro, String currentName) {
         frame = new JFrame("Cập Nhật Họ Tên");
@@ -38,6 +39,7 @@ public class UpdateFullNameView {
             } else {
                 boolean isUpdated = Chutro.updateHoTenChutro(idChutro, updatedName);
                 if (isUpdated) {
+                    updateName = updatedName;
                     JOptionPane.showMessageDialog(frame, "Cập nhật thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
                     frame.dispose();
                 } else {
@@ -49,5 +51,10 @@ public class UpdateFullNameView {
 
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+
+    public static String getUpdateName() {
+        return updateName;
     }
 }

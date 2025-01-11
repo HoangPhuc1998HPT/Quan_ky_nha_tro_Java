@@ -23,6 +23,13 @@ public class Chutro {
         this.cccd = cccd;
     }
 
+    public Chutro(int idChutro, String fullName, String phone, String cccd) {
+        this.idChutro = idChutro;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.cccd = cccd;
+    }
+
     // Getters
     public static int getIdChutroByUsername(String username) {
         int idChutro = 0;
@@ -84,6 +91,10 @@ public class Chutro {
 
     public String getCccd() {
         return cccd;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 
     // Static methods for database operations
@@ -187,7 +198,7 @@ public class Chutro {
                 TTPhongtro.TenPhong,
                 ISNULL(NguoiThueTro.Hoten, N'Không có') AS TenNguoiThue
             FROM TTPhongtro
-            LEFT JOIN NguoiThueTro ON TTPhongtro.IDPhong = NguoiThueTro.IDnguoithue
+            LEFT JOIN NguoiThueTro ON TTPhongtro.IDnguoithue = NguoiThueTro.IDnguoithue
             WHERE TTPhongtro.IDChutro = ?
         """;
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -225,13 +236,13 @@ public class Chutro {
     public static int getCountRoomFromIdChutro(int idChutro){
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = """
-                    SELECT COUNT (*) AS TONGSOPHONGTRO
+                    SELECT COUNT (*) AS SoPhongQuanLy
                     FROM TTPhongtro LEFT JOIN Chutro ON TTPhongtro.IDChutro = Chutro.IDChutro
                     """;
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                return rs.getInt("TONGSOPHONGTRO");
+                return rs.getInt("SoPhongQuanLy");
             }
         } catch (Exception e) {
             e.printStackTrace();
