@@ -248,14 +248,14 @@ public class InvoiceFormView {
         return panel;
     }
 
-//    public static void main(String[] args) {
-//        NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId("01");
-//        Chutro landlord = Chutro.getChutroByUserId("12");
-//        Room room = Room.getRoomDetails("01");
-//        Invoices invoice = Invoices.getInvoiceDetails("01");
-//
-//
-//        new InvoiceFormView(landlord,tenant,invoice,room);
-//
-//    }
+    public static void main(String[] args) {
+        NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId(Integer.parseInt("01"));
+        Chutro landlord = Chutro.getChutroByUserId(Integer.parseInt("12"));
+        Room room = Room.getRoomDetails(Integer.parseInt("01"));
+        Invoices invoice = Invoices.getInvoiceDetails(Integer.parseInt("01"));
+
+
+        new InvoiceFormView(landlord,tenant,invoice,room);
+
+    }
 }

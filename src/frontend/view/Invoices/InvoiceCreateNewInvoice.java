@@ -98,7 +98,7 @@ public class InvoiceCreateNewInvoice {
     }
 
     // Main để test
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> new InvoiceCreateNewInvoice("CT001", "R001"));
-//    }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new InvoiceCreateNewInvoice(9, 1));
+    }
 }

@@ -206,15 +206,40 @@ public class Chutro {
         }
         return roomList;
     }
-    // TODO: Xử lý lấy thông tin tên chủ trọ và tổng số phòng chủ trụ nắm giữ
+    // STRIKE TODO: Xử lý lấy thông tin tên chủ trọ và tổng số phòng chủ trụ nắm giữ
     public static String getNameChutroFromIdChutro(int idChutro){
-        return "Văn A";
+        try(Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "SELECT HoTen FROM Chutro WHERE IDChutro = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idChutro);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("HoTen");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
-    // TODO: Xử lý lấy thông tin tên chủ trọ và tổng số phòng chủ trụ nắm giữ
+    /// STRIKE TODO: Xử lý lấy thông tin tên chủ trọ và tổng số phòng chủ trụ nắm giữ
     public static int getCountRoomFromIdChutro(int idChutro){
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+                    SELECT COUNT (*) AS TONGSOPHONGTRO
+                    FROM TTPhongtro LEFT JOIN Chutro ON TTPhongtro.IDChutro = Chutro.IDChutro
+                    """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("TONGSOPHONGTRO");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return 0;
     }
     // Hàm lấy danh sách tất cả chủ trọ từ cơ sở dữ liệu
+
     public static List<Object[]> getAllChutroData() {
         List<Object[]> chutroData = new ArrayList<>();
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
