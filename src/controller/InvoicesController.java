@@ -20,19 +20,9 @@ public class InvoicesController {
         this.id_phong = id_phong;
     }
 
-    public static List<Object[]> getInvoiceList(int idChutro) {
-        return Invoices.getInvoiceList(idChutro);
-    }
 
-    public static void markInvoiceAsPaid(String idInvoice) {
-        try {
-            // Logic cập nhật trạng thái thanh toán
-            JOptionPane.showMessageDialog(null, "Đã cập nhật trạng thái thanh toán cho hóa đơn ID: " + idInvoice, "Thành công", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Không thể cập nhật trạng thái thanh toán!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
-    }
+
+
 
     public void loadThongTinHoadon( int id_phong) {
         try {

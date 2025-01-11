@@ -1,6 +1,7 @@
 package frontend.view.Invoices;
 
-import controller.InvoicesController;
+
+import backend.model.Invoices;
 import frontend.components.InvoiceButtonEditor;
 import frontend.components.InvoiceButtonRenderer;
 
@@ -17,7 +18,7 @@ public class InvoiceListsView {
     public InvoiceListsView(int idChutro, String landlordName, int roomCount) {
         // Tạo JFrame
         JFrame frame = new JFrame("Danh Sách Hóa Đơn");
-        frame.setSize(1000, 850);
+        frame.setSize(1100, 850);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
@@ -89,18 +90,27 @@ public class InvoiceListsView {
         mainPanel.add(tableScrollPane);
 
         // Load dữ liệu
-        loadInvoiceData(tableModel, idChutro);
+        Invoices.loadInvoiceData(tableModel, idChutro);
 
         // Thêm phần thống kê
         JPanel statisticsPanel = new JPanel(new GridLayout(6, 1, 10, 10));
         statisticsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        statisticsPanel.add(new JLabel("Tổng số hóa đơn: " + getTotalInvoices(idChutro)));
-        statisticsPanel.add(new JLabel("Tổng số hóa đơn đã thanh toán: " + getPaidInvoices(idChutro)));
-        statisticsPanel.add(new JLabel("Tổng số hóa đơn chưa thanh toán: " + getUnpaidInvoices(idChutro)));
-        statisticsPanel.add(new JLabel("Tổng giá trị các hóa đơn: " + String.format("%,.2f VNĐ", getTotalValue(idChutro))));
-        statisticsPanel.add(new JLabel("Tổng giá trị các hóa đơn chưa thanh toán: " + String.format("%,.2f VNĐ", getUnpaidValue(idChutro))));
-        statisticsPanel.add(new JLabel("Tỷ lệ hóa đơn đã thanh toán: " + String.format("%.2f%%", getPaidRate(idChutro))));
+        // Lấy thông tin từ InvoicesController
+        int totalInvoices = getTotalInvoices(idChutro);
+        int paidInvoices = getPaidInvoices(idChutro);
+        int unpaidInvoices = getUnpaidInvoices(idChutro);
+        double totalValue = getTotalValue(idChutro);
+        double unpaidValue = getUnpaidValue(idChutro);
+        double paidRate = getPaidRate(idChutro);
+
+        // Hiển thị thông tin
+        statisticsPanel.add(new JLabel("Tổng số hóa đơn: " + totalInvoices));
+        statisticsPanel.add(new JLabel("Tổng số hóa đơn đã thanh toán: " + paidInvoices));
+        statisticsPanel.add(new JLabel("Tổng số hóa đơn chưa thanh toán: " + unpaidInvoices));
+        statisticsPanel.add(new JLabel("Tổng giá trị các hóa đơn: " + String.format("%,.2f VNĐ", totalValue)));
+        statisticsPanel.add(new JLabel("Tổng giá trị các hóa đơn chưa thanh toán: " + String.format("%,.2f VNĐ", unpaidValue)));
+        statisticsPanel.add(new JLabel("Tỷ lệ hóa đơn đã thanh toán: " + String.format("%.2f%%", paidRate)));
 
         mainPanel.add(statisticsPanel);
 
@@ -120,19 +130,6 @@ public class InvoiceListsView {
         frame.setVisible(true);
     }
 
-    private void loadInvoiceData(DefaultTableModel tableModel, int idChutro) {
-        tableModel.setRowCount(0); // Xóa dữ liệu cũ
-        List<Object[]> invoices = InvoicesController.getInvoiceList(idChutro);
-        for (Object[] invoice : invoices) {
-            tableModel.addRow(new Object[]{
-                    invoice[0], // STT
-                    invoice[1], // Tên Phòng
-                    invoice[2], // Tên Người Thuê
-                    invoice[3], // Tổng Giá Trị
-                    invoice[4], // Ngày Xuất
-                    "Thanh Toán" // Nút mặc định cho cột "Tình Trạng"
-            });
-        }
-    }
+
 
 }

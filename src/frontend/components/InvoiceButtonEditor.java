@@ -1,5 +1,6 @@
 package frontend.components;
 
+import backend.model.Invoices;
 import controller.InvoicesController;
 
 import javax.swing.*;
@@ -34,7 +35,7 @@ public class InvoiceButtonEditor extends AbstractCellEditor implements TableCell
 
                 if (result == JOptionPane.YES_OPTION) {
                     // Gọi controller xử lý thanh toán
-                    InvoicesController.markInvoiceAsPaid(invoiceId);
+                    Invoices.markInvoiceAsPaid(invoiceId);
                     table.setValueAt("Đã Thanh Toán", row, table.getColumn("Tình Trạng").getModelIndex());
                     JOptionPane.showMessageDialog(button, "Hóa đơn đã được thanh toán.");
                 }

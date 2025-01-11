@@ -2,6 +2,8 @@ package backend.model;
 
 import backend.connectDatabase;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +13,128 @@ import java.util.Date;
 import java.util.List;
 
 public class Invoices {
+    private int billID;
+    private int idPhong;
+    private double tienNha;
+    private double tienDien;
+    private double tienNuoc;
+    private double tienRac;
+    private double chiPhiKhac;
+    private double giamGia;
+    private double tongChiPhi;
+    private Date ngayXuatHoaDon;
+    private int thanhToan;
+    // Constructor đầy đủ
+    public Invoices(int billID, int idPhong, double tienNha, double tienDien, double tienNuoc, double tienRac,
+                    double chiPhiKhac, double giamGia, double tongChiPhi, Date ngayXuatHoaDon, int thanhToan) {
+        this.billID = billID;
+        this.idPhong = idPhong;
+        this.tienNha = tienNha;
+        this.tienDien = tienDien;
+        this.tienNuoc = tienNuoc;
+        this.tienRac = tienRac;
+        this.chiPhiKhac = chiPhiKhac;
+        this.giamGia = giamGia;
+        this.tongChiPhi = tongChiPhi;
+        this.ngayXuatHoaDon = ngayXuatHoaDon;
+        this.thanhToan = thanhToan;
+    }
+
+    // Constructor rỗng
+    public Invoices() {}
+
+    // Getter và Setter
+    public int getBillID() {
+        return billID;
+    }
+
+    public void setBillID(int billID) {
+        this.billID = billID;
+    }
+
+    public int getIdPhong() {
+        return idPhong;
+    }
+
+    public void setIdPhong(int idPhong) {
+        this.idPhong = idPhong;
+    }
+
+    public double getTienNha() {
+        return tienNha;
+    }
+
+    public void setTienNha(double tienNha) {
+        this.tienNha = tienNha;
+    }
+
+    public double getTienDien() {
+        return tienDien;
+    }
+
+    public void setTienDien(double tienDien) {
+        this.tienDien = tienDien;
+    }
+
+    public double getTienNuoc() {
+        return tienNuoc;
+    }
+
+    public void setTienNuoc(double tienNuoc) {
+        this.tienNuoc = tienNuoc;
+    }
+
+    public double getTienRac() {
+        return tienRac;
+    }
+
+    public void setTienRac(double tienRac) {
+        this.tienRac = tienRac;
+    }
+
+    public double getChiPhiKhac() {
+        return chiPhiKhac;
+    }
+
+    public void setChiPhiKhac(double chiPhiKhac) {
+        this.chiPhiKhac = chiPhiKhac;
+    }
+
+    public double getGiamGia() {
+        return giamGia;
+    }
+
+    public void setGiamGia(double giamGia) {
+        this.giamGia = giamGia;
+    }
+
+    public double getTongChiPhi() {
+        return tongChiPhi;
+    }
+
+    public void setTongChiPhi(double tongChiPhi) {
+        this.tongChiPhi = tongChiPhi;
+    }
+
+    public Date getNgayXuatHoaDon() {
+        return ngayXuatHoaDon;
+    }
+
+    public void setNgayXuatHoaDon(Date ngayXuatHoaDon) {
+        this.ngayXuatHoaDon = ngayXuatHoaDon;
+    }
+
+    public int getThanhToan() {
+        return thanhToan;
+    }
+
+    public void setThanhToan(int thanhToan) {
+        this.thanhToan = thanhToan;
+    }
+
+
+
+
     // Hàm lấy thông tin hóa đơn mới nhất cho một phòng
     public static Object[] getInvoiceData(int idPhong) throws SQLException {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
@@ -81,22 +205,24 @@ public class Invoices {
         return tongChiPhi;
     }
 
-    // Hàm tạo mới hóa đơn
-    public static boolean createInvoice(int idPhong, double tienNha, double tienDien, double tienNuoc, double tienRac,
-                                        double chiPhiKhac, double giamGia, double tongChiPhi, Date ngayXuatHoaDon) {
+    // Hàm tạo hóa đơn mới
+    public static boolean createInvoice(Invoices invoice) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-            String sql = "INSERT INTO HoaDon (IDPhong, TienNha, TienDien, TienNuoc, TienRac, ChiPhiKhac, GiamGia, TongChiPhi, NgayXuatHoaDon) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = """
+                INSERT INTO HoaDon (IDPhong, TienNha, TienDien, TienNuoc, TienRac, ChiPhiKhac, GiamGia, TongChiPhi, NgayXuatHoaDon, ThanhToan)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """;
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, idPhong);
-            pstmt.setDouble(2, tienNha);
-            pstmt.setDouble(3, tienDien);
-            pstmt.setDouble(4, tienNuoc);
-            pstmt.setDouble(5, tienRac);
-            pstmt.setDouble(6, chiPhiKhac);
-            pstmt.setDouble(7, giamGia);
-            pstmt.setDouble(8, tongChiPhi);
-            pstmt.setDate(9, new java.sql.Date(ngayXuatHoaDon.getTime()));
+            pstmt.setInt(1, invoice.getIdPhong());
+            pstmt.setDouble(2, invoice.getTienNha());
+            pstmt.setDouble(3, invoice.getTienDien());
+            pstmt.setDouble(4, invoice.getTienNuoc());
+            pstmt.setDouble(5, invoice.getTienRac());
+            pstmt.setDouble(6, invoice.getChiPhiKhac());
+            pstmt.setDouble(7, invoice.getGiamGia());
+            pstmt.setDouble(8, invoice.getTongChiPhi());
+            pstmt.setDate(9, new java.sql.Date(invoice.getNgayXuatHoaDon().getTime()));
+            pstmt.setInt(10, invoice.getThanhToan());
 
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -104,7 +230,9 @@ public class Invoices {
         }
         return false;
     }
+
     // TODO: Invoice list view đã tạo, Hiếu kiểm tra lại logic xem truy xuất dữ liệu cho Invoices.InvoiceListsView  nha
+    // Hàm lấy danh sách hóa đơn theo ID chủ trọ
     public static List<Object[]> getInvoiceList(int idChutro) {
         List<Object[]> invoices = new ArrayList<>();
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
@@ -115,7 +243,7 @@ public class Invoices {
                     nt.Hoten AS TenNguoiThue,
                     hd.TongChiPhi,
                     hd.NgayXuatHoaDon,
-                    CASE WHEN hd.TongChiPhi > 0 THEN 'Chưa Thanh Toán' ELSE 'Đã Thanh Toán' END AS TinhTrang
+                    hd.ThanhToan
                 FROM HoaDon hd
                 JOIN TTPhongtro pt ON hd.IDPhong = pt.IDPhong
                 LEFT JOIN NguoiThueTro nt ON pt.IDNguoiThue = nt.IDNguoiThue
@@ -132,35 +260,123 @@ public class Invoices {
                         rs.getString("TenNguoiThue"),
                         rs.getDouble("TongChiPhi"),
                         rs.getDate("NgayXuatHoaDon"),
-                        rs.getString("TinhTrang")
+                        rs.getInt("ThanhToan") == 1 ? "Đã Thanh Toán" : "Chưa Thanh Toán"
                 });
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return invoices;
     }
 
+    // Tổng số hóa đơn
     public static int getTotalInvoices(int idChutro) {
-
-        return 0;
+        int total = 0;
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+                SELECT COUNT(*) AS Total
+                FROM HoaDon hd
+                JOIN TTPhongtro pt ON hd.IDPhong = pt.IDPhong
+                WHERE pt.IDChutro = ?
+            """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idChutro);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("Total");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
     }
 
+    // Tổng số hóa đơn đã thanh toán
     public static int getPaidInvoices(int idChutro) {
-
-        return 0;
+        int total = 0;
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+                SELECT COUNT(*) AS Paid
+                FROM HoaDon hd
+                JOIN TTPhongtro pt ON hd.IDPhong = pt.IDPhong
+                WHERE pt.IDChutro = ? AND hd.ThanhToan = 1
+            """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idChutro);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("Paid");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
     }
 
+    // Tổng số hóa đơn chưa thanh toán
     public static int getUnpaidInvoices(int idChutro) {
-        return 0;
+        int total = 0;
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+                SELECT COUNT(*) AS Unpaid
+                FROM HoaDon hd
+                JOIN TTPhongtro pt ON hd.IDPhong = pt.IDPhong
+                WHERE pt.IDChutro = ? AND hd.ThanhToan = 0
+            """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idChutro);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                total = rs.getInt("Unpaid");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
     }
 
+    // Tổng giá trị các hóa đơn
     public static double getTotalValue(int idChutro) {
-        return 0;
+        double totalValue = 0;
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+                SELECT SUM(hd.TongChiPhi) AS TotalValue
+                FROM HoaDon hd
+                JOIN TTPhongtro pt ON hd.IDPhong = pt.IDPhong
+                WHERE pt.IDChutro = ?
+            """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idChutro);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                totalValue = rs.getDouble("TotalValue");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return totalValue;
     }
 
+    // Tổng giá trị các hóa đơn chưa thanh toán
     public static double getUnpaidValue(int idChutro) {
-        return 0;
+        double unpaidValue = 0;
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+                SELECT SUM(hd.TongChiPhi) AS UnpaidValue
+                FROM HoaDon hd
+                JOIN TTPhongtro pt ON hd.IDPhong = pt.IDPhong
+                WHERE pt.IDChutro = ? AND hd.ThanhToan = 0
+            """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idChutro);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                unpaidValue = rs.getDouble("UnpaidValue");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return unpaidValue;
     }
 
     public static List<Object[]> getInvoicesByTenantId(int userId) {
@@ -192,12 +408,87 @@ public class Invoices {
         return invoices;
     }
 
+    public static void loadInvoiceData(DefaultTableModel tableModel, int idChutro) {
+        tableModel.setRowCount(0); // Xóa dữ liệu cũ
 
-    public static Invoices getInvoiceDetails(int invoiceId) {
-        //TODO: Get thông tin invoicID nhà HIếu
-        // Truy xuất tất cả thông tin cần để hiển thị lên HÓa đơn: InvoiceFormView.java
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+        SELECT ROW_NUMBER() OVER (ORDER BY hd.NgayXuatHoaDon DESC) AS STT,
+               pt.TenPhong,
+               COALESCE(nt.Hoten, 'Không có dữ liệu') AS TenNguoiThue,
+               COALESCE(hd.TongChiPhi, 0) AS TongChiPhi,
+               hd.NgayXuatHoaDon,
+               CASE WHEN hd.ThanhToan = 1 THEN 'Đã Thanh Toán' ELSE 'Chưa Thanh Toán' END AS TinhTrang
+        FROM HoaDon hd
+        JOIN TTPhongtro pt ON hd.IDPhong = pt.IDPhong
+        LEFT JOIN NguoiThueTro nt ON pt.IDNguoiThue = nt.IDNguoiThue
+        WHERE pt.IDChutro = ?
+        """;
 
-        Invoices invoices = new Invoices();
-        return invoices;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idChutro);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                tableModel.addRow(new Object[] {
+                        rs.getInt("STT"),
+                        rs.getString("TenPhong"),
+                        rs.getString("TenNguoiThue"),
+                        String.format("%,.2f VNĐ", rs.getDouble("TongChiPhi")),
+                        rs.getDate("NgayXuatHoaDon"),
+                        rs.getString("TinhTrang")
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Không thể tải dữ liệu hóa đơn.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // Hàm lấy thông tin hóa đơn theo ID
+    public static Invoices getInvoiceDetails(int billID) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "SELECT * FROM HoaDon WHERE BillID = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, billID);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return new Invoices(
+                        rs.getInt("BillID"),
+                        rs.getInt("IDPhong"),
+                        rs.getDouble("TienNha"),
+                        rs.getDouble("TienDien"),
+                        rs.getDouble("TienNuoc"),
+                        rs.getDouble("TienRac"),
+                        rs.getDouble("ChiPhiKhac"),
+                        rs.getDouble("GiamGia"),
+                        rs.getDouble("TongChiPhi"),
+                        rs.getDate("NgayXuatHoaDon"),
+                        rs.getInt("ThanhToan")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    // Hàm đánh dấu hóa đơn đã thanh toán
+    public static void markInvoiceAsPaid(String idInvoice) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            // Cập nhật cột ThanhToan trong bảng HoaDon
+            String sql = "UPDATE HoaDon SET ThanhToan = 1 WHERE BillID = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, idInvoice);
+
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(null, "Đã cập nhật trạng thái thanh toán cho hóa đơn ID: " + idInvoice, "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Không tìm thấy hóa đơn với ID: " + idInvoice, "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Không thể cập nhật trạng thái thanh toán!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }
 }
