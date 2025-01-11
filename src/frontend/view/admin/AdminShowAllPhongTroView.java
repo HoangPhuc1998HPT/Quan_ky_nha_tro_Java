@@ -1,8 +1,8 @@
 package frontend.view.admin;
 
 import backend.model.Room;
-import frontend.components.ButtonEditorRoom;
-import frontend.components.ButtonRendererRoom;
+import frontend.components.Room.ButtonEditorRoom;
+import frontend.components.Room.ButtonRendererRoom;
 import controller.AdminController;
 
 import javax.swing.*;

@@ -1,8 +1,7 @@
-package frontend.components;
+package frontend.components.Chutro;
 
 import backend.model.Chutro;
 import controller.AdminController;
-import frontend.view.chutro.ChutroDashboardView;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;

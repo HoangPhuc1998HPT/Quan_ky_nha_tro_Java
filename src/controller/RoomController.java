@@ -3,6 +3,7 @@ package controller;
 import backend.connectDatabase;
 //import frontend.view.rooms.RoomUpdateInforRoomView;
 import backend.model.Chutro;
+import backend.model.InvoiceDetail;
 import backend.model.Room;
 import frontend.view.Invoices.InvoiceBefoeSentToNguoiThueView;
 import frontend.view.Invoices.InvoiceDetailUpdateView;
@@ -36,24 +37,42 @@ public class RoomController {
         new RoomUpdateInforRoomView(idPhong,id_chutro);
     }
 
-    public static void goToUpdateHoaDon(JFrame frame, int id_room,int id_chutro) {
+    public static void goToUpdateHoaDon(JFrame frame, int idRoom, int idChutro) {
         try {
-            // Lấy thông tin từ database
-            String roomName = getRoomName(id_room); // Hàm để lấy tên phòng từ database
-            String tenantName = getTenantName(id_room); // Hàm để lấy tên người thuê từ database
-            String startDate = getStartDate(id_room); // Hàm để lấy ngày bắt đầu thuê từ database
-            int oldElectric = getOldElectricReading(id_room); // Hàm để lấy số điện cũ
-            int oldWater = getOldWaterReading(id_room); // Hàm để lấy số nước cũ
-            String lastPaymentDate = getLastPaymentDate(id_room); // Hàm để lấy ngày thu tiền nhà tháng trước
+            // Lấy thông tin từ cơ sở dữ liệu
+            Room room = Room.getRoomDetails(idRoom);
+            if (room == null) {
+                throw new Exception("Không tìm thấy thông tin phòng!");
+            }
+
+            String tenantName = InvoiceDetail.getTenantName((idRoom));
+            String startDate = InvoiceDetail.getStartDate(idRoom);
+            int oldElectric = InvoiceDetail.getOldElectricReading(idRoom);
+            int oldWater = InvoiceDetail.getOldWaterReading(idRoom);
+            String lastPaymentDate = InvoiceDetail.getLastPaymentDate(idRoom);
 
             // Ẩn frame hiện tại
             frame.setVisible(false);
 
             // Hiển thị giao diện cập nhật chi tiết hóa đơn
-            new InvoiceDetailUpdateView(id_chutro, id_room, roomName, tenantName, startDate, oldElectric, oldWater, lastPaymentDate);
+            new InvoiceDetailUpdateView(
+                    idChutro,
+                    idRoom,
+                    room.getName(),
+                    tenantName,
+                    startDate,
+                    oldElectric,
+                    oldWater,
+                    lastPaymentDate
+            );
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(frame, "Không thể tải dữ liệu phòng: " + id_room, "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(
+                    frame,
+                    "Không thể tải dữ liệu phòng: " + idRoom,
+                    "Lỗi",
+                    JOptionPane.ERROR_MESSAGE
+            );
             e.printStackTrace();
         }
     }

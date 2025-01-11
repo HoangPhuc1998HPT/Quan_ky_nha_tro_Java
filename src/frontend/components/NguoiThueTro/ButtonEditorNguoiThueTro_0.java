@@ -1,4 +1,4 @@
-package frontend.components;
+package frontend.components.NguoiThueTro;
 
 import controller.RoomController;
 

@@ -1,8 +1,8 @@
 package frontend.view.admin;
 
 import backend.model.Chutro;
-import frontend.components.ButtonEditorChutro;
-import frontend.components.ButtonRendererChutro;
+import frontend.components.Chutro.ButtonEditorChutro;
+import frontend.components.Chutro.ButtonRendererChutro;
 import controller.AdminController;
 
 import javax.swing.*;

@@ -30,7 +30,6 @@ public class DashboardChutroController {
         }
         new ChutroInformationView(id_chutro, chutro);
         // Xử lý backend tra về 1 mảng chưa full thông tin chủ tr
-        String chutroList = new String();
 
     }
 

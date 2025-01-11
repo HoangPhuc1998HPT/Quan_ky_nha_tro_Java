@@ -3,16 +3,11 @@ package frontend.view.nguoithuetro;
 
 import backend.model.NguoiThueTro;
 import backend.model.Room;
-import controller.RoomController;
-import frontend.components.ButtonEditorNguoiThueTro_0;
-import frontend.components.ButtonRendererNguoiThueTro_0;
-import frontend.view.login_register.loginView;
-import frontend.view.rooms.RoomInforView;
+import frontend.components.NguoiThueTro.ButtonEditorNguoiThueTro_0;
+import frontend.components.NguoiThueTro.ButtonRendererNguoiThueTro_0;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
 public class NguoiThueTroDashboard_0View extends JFrame {

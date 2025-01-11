@@ -1,8 +1,8 @@
 package frontend.view.admin;
 
 import controller.AdminController;
-import frontend.components.ButtonEditorAdmin;
-import frontend.components.ButtonRendererAdmin;
+import frontend.components.Admin.ButtonEditorAdmin;
+import frontend.components.Admin.ButtonRendererAdmin;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

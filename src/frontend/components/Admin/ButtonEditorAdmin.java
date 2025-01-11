@@ -1,4 +1,4 @@
-package frontend.components;
+package frontend.components.Admin;
 
 import controller.AdminController;
 
