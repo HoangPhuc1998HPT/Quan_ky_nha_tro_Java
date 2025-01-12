@@ -526,5 +526,101 @@ public class Invoices {
         return null; // Trả về null nếu không tìm thấy hóa đơn
     }
 
+    public static int getIdChutroFromIdhoadon(int idhoadon) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+            SELECT TTPhongtro.IDChutro 
+            FROM TTPhongtro
+            JOIN HoaDon ON TTPhongtro.IDPhong = HoaDon.IDPhong
+            WHERE HoaDon.BillID = ?
+        """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idhoadon);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("IDChutro");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0; // Trả về 0 nếu không tìm thấy
+    }
+
+    public static int getIdNguoiThueFromIdhoadon(int idhoadon) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+            SELECT TTPhongtro.IDNguoiThue 
+            FROM TTPhongtro
+            JOIN HoaDon ON TTPhongtro.IDPhong = HoaDon.IDPhong
+            WHERE HoaDon.BillID = ?
+        """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idhoadon);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("IDNguoiThue");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0; // Trả về 0 nếu không tìm thấy
+    }
+
+    public static int getIdRoomFromIdhoadon(int idhoadon) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+            SELECT IDPhong 
+            FROM HoaDon
+            WHERE BillID = ?
+        """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idhoadon);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("IDPhong");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0; // Trả về 0 nếu không tìm thấy
+    }
+
+    public static List<Object[]> getAllInvoices() {
+        List<Object[]> invoices = new ArrayList<>();
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+            SELECT 
+                hd.BillID, 
+                pt.TenPhong, 
+                nt.Hoten AS TenNguoiThue, 
+                hd.NgayXuatHoaDon, 
+                hd.TongChiPhi,
+                CASE 
+                    WHEN hd.ThanhToan = 1 THEN 'Đã Thanh Toán'
+                    ELSE 'Chưa Thanh Toán'
+                END AS TinhTrang -- Tạo cột tạm từ cột ThanhToan
+            FROM HoaDon hd
+            JOIN TTPhongtro pt ON hd.IDPhong = pt.IDPhong
+            LEFT JOIN NguoiThueTro nt ON pt.IDNguoiThue = nt.IDNguoiThue
+        """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                invoices.add(new Object[]{
+                        rs.getInt("BillID"),
+                        rs.getString("TenPhong"),
+                        rs.getString("TenNguoiThue"),
+                        rs.getDate("NgayXuatHoaDon"),
+                        rs.getDouble("TongChiPhi"),
+                        rs.getString("TinhTrang") // Dữ liệu từ cột tạm
+                });
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return invoices;
+    }
+
 
 }

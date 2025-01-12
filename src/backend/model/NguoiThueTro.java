@@ -59,6 +59,29 @@ public class NguoiThueTro {
         return data;
     }
 
+    public static NguoiThueTro getTenantById(int idNguoithuetro) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "SELECT * FROM NguoiThueTro WHERE IDNguoiThue = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idNguoithuetro);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Trả về đối tượng NguoiThueTro
+                return new NguoiThueTro(
+                        rs.getInt("IDNguoiThue"),  // ID người thuê
+                        rs.getInt("UserID"),      // ID người dùng
+                        rs.getString("Hoten"),       // Họ tên
+                        rs.getString("Phone"),       // Số điện thoại
+                        rs.getString("CCCD")         // CCCD
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null; // Trả về null nếu không tìm thấy
+    }
+
 
 
     // Getters
@@ -132,7 +155,7 @@ public class NguoiThueTro {
     }
 
 
-
+    // truy vấn này kiềm tra id người thuê trọ nằ trong TT Phòng
     public static int getTenantRoomId(int tenantId) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             // Truy vấn kiểm tra id_nguoiThueTro có trong TTPhongtro hay không

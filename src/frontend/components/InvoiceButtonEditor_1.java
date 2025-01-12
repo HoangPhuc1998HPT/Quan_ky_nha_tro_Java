@@ -1,5 +1,6 @@
 package frontend.components;
 
+import backend.model.Invoices;
 import controller.InvoicesController;
 
 import javax.swing.*;
@@ -16,15 +17,26 @@ public class InvoiceButtonEditor_1 extends AbstractCellEditor implements TableCe
         button.addActionListener(e -> {
             int row = table.getSelectedRow();
             if (row >= 0) {
-                int idhoadon = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
-                InvoicesController.openInvoiceDetails(
-                        AdminController.getChutroId(), // ID chủ trọ
-                        AdminController.getTenantIdByRoomId(idhoadon), // ID người thuê
-                        idhoadon,
-                        AdminController.getRoomIdByInvoiceId(idhoadon) // ID phòng
-                );
+                try {
+                    // Lấy ID hóa đơn từ bảng
+                    int idhoadon = Integer.parseInt(table.getModel().getValueAt(row, 0).toString());
+
+                    // Lấy thông tin liên quan qua AdminController
+                    int idChutro = Invoices.getIdChutroFromIdhoadon(idhoadon);
+                    int idNguoiThueTro = Invoices.getIdNguoiThueFromIdhoadon(idhoadon);
+                    int idRoom = Invoices.getIdRoomFromIdhoadon(idhoadon);
+
+                    // Mở chi tiết hóa đơn
+                    InvoicesController.openInvoiceDetails(idChutro, idNguoiThueTro, idhoadon, idRoom);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Có lỗi xảy ra khi xử lý hóa đơn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Vui lòng chọn một hóa đơn!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             }
         });
+
     }
 
     @Override

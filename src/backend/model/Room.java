@@ -108,6 +108,8 @@ public class Room {
     }
 
 
+
+
     // Getters
     public int getIdRoom() {
         return idRoom;
@@ -280,6 +282,45 @@ public class Room {
             e.printStackTrace();
         }
         return emptyRooms;
+    }
+
+    public static Room getRoomById(int roomid) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+            SELECT 
+                TTPhongtro.IDPhong, 
+                TTPhongtro.TenPhong, 
+                ISNULL(NguoiThueTro.Hoten, 'Không có') AS TenNguoiThue, 
+                TTPhongtro.GiaPhong, 
+                TTPhongtro.Giadien, 
+                TTPhongtro.Gianuoc, 
+                ISNULL(HoaDon.Tienrac, 0) AS Tienrac 
+            FROM TTPhongtro
+            LEFT JOIN NguoiThueTro ON TTPhongtro.IDNguoiThue = NguoiThueTro.IDNguoiThue
+            LEFT JOIN HoaDon ON TTPhongtro.IDPhong = HoaDon.IDPhong
+            WHERE TTPhongtro.IDPhong = ?
+            ORDER BY HoaDon.NgayXuatHoaDon DESC
+        """;
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, roomid);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new Room(
+                        rs.getInt("IDPhong"),            // ID phòng
+                        rs.getString("TenPhong"),        // Tên phòng
+                        rs.getString("TenNguoiThue"),    // Tên người thuê (nếu có)
+                        rs.getDouble("GiaPhong"),        // Giá phòng
+                        rs.getDouble("Giadien"),         // Giá điện
+                        rs.getDouble("Gianuoc"),         // Giá nước
+                        rs.getDouble("Tienrac")          // Tiền rác
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null; // Trả về null nếu không tìm thấy
     }
 
 

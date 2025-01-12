@@ -3,6 +3,7 @@ package frontend.view.admin;
 import controller.AdminController;
 import frontend.components.Admin.ButtonEditorAdmin;
 import frontend.components.Admin.ButtonRendererAdmin;
+import frontend.view.login_register.loginView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -47,7 +48,7 @@ public class AdminDashboardView extends JFrame {
         buttonPanel.add(btnShowNguoiThueTro);
 
         JButton btnShowHoadon = new JButton("Danh sách hóa đơn");
-        //btnShowHoadon.addActionListener(e -> new AdminShowAllHoadonView(null));
+        btnShowHoadon.addActionListener(e -> goToAdminShowAllHoadonView());
         buttonPanel.add(btnShowHoadon);
         gbc.gridx = 0;
         gbc.gridy = 1;
@@ -91,6 +92,25 @@ public class AdminDashboardView extends JFrame {
         gbc.weightx = 1.0; // Cho phép mở rộng ngang
         gbc.weighty = 1.0; // Cho phép mở rộng dọc
         add(scrollPane, gbc);
+
+        // Nút Đăng xuất ở góc phải dưới cùng
+        JButton logoutButton = new JButton("Đăng xuất");
+        logoutButton.addActionListener(e -> {
+            // Gọi hàm xử lý đăng xuất
+            dispose();
+            new loginView();
+            JOptionPane.showMessageDialog(null, "Bạn đã đăng xuất!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        });
+
+        // Thêm nút Đăng xuất
+        gbc.gridx = 1; // Góc phải
+        gbc.gridy = 4; // Dưới cùng
+        gbc.gridwidth = 1; // Chỉ chiếm 1 cột
+        gbc.fill = GridBagConstraints.NONE; // Không mở rộng
+        gbc.anchor = GridBagConstraints.SOUTHEAST; // Căn góc dưới phải
+        add(logoutButton, gbc);
+
+
 
         setLocationRelativeTo(null); // Căn giữa màn hình
         setVisible(true);

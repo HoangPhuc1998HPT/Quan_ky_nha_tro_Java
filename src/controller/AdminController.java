@@ -3,9 +3,11 @@ package controller;
 
 import backend.connectDatabase;
 import backend.model.Chutro;
+import backend.model.Invoices;
 import backend.model.NguoiThueTro;
 import backend.model.Room;
 import frontend.view.admin.AdminShowAllChutroView;
+import frontend.view.admin.AdminShowAllHoaDonView;
 import frontend.view.admin.AdminShowAllNguoiThueTroView;
 import frontend.view.admin.AdminShowAllPhongTroView;
 import frontend.view.chutro.ChutroDashboardView;
@@ -81,6 +83,14 @@ public class  AdminController {
         List<Object[]> nguoithueData = NguoiThueTro.getAllNguoiThueData();
         new AdminShowAllNguoiThueTroView(nguoithueData);
     }
+
+    public static void goToAdminShowAllHoadonView() {
+        // Lấy danh sách tất cả hóa đơn
+        List<Object[]> invoiceData = Invoices.getAllInvoices();
+        // Mở giao diện AdminShowAllHoaDonView
+        new AdminShowAllHoaDonView(invoiceData);
+    }
+
 
 
     public static void goToChutroDashboardFromAdmin(String username) {
