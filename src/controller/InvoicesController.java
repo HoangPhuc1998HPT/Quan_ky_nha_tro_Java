@@ -1,8 +1,12 @@
 package controller;
 
 import backend.connectDatabase;
+import backend.model.Chutro;
 import backend.model.Invoices;
+import backend.model.NguoiThueTro;
+import backend.model.Room;
 import frontend.view.Invoices.InvoiceCreateNewInvoice;
+import frontend.view.Invoices.InvoiceFormView;
 
 import javax.swing.*;
 import java.sql.Connection;
@@ -125,7 +129,29 @@ public class InvoicesController {
         return total == 0 ? 0 : ((double) paid / total) * 100;
     }
 
+    //TODO: phần bên dưới có thể có lỗi ==> đang lỗi trưa fix
 
+    public static void openInvoiceDetails(int id_chutro, int id_nguoithuetro, int idhoadon, int roomid) {
+        try {
+            // Lấy thông tin hóa đơn
+            Invoices invoice = Invoices.getInvoiceById(idhoadon);
+            // Lấy thông tin người thuê
+            NguoiThueTro nguoithuetro = NguoiThueTro.getTenantById(id_nguoithuetro);
+            // Lấy thông tin phòng
+            Room room = Room.getRoomById(roomid);
+            // Lấy thông tin chủ trọ
+            Chutro chutro = Chutro.getChutroById(id_chutro);
+
+            if (invoice != null && nguoithuetro != null && room != null && chutro != null) {
+                new InvoiceFormView(chutro, nguoithuetro, invoice, room);
+            } else {
+                JOptionPane.showMessageDialog(null, "Không thể tải đầy đủ thông tin hóa đơn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Đã xảy ra lỗi khi mở chi tiết hóa đơn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
 
     // hàm bên trên

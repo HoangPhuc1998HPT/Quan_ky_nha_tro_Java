@@ -491,4 +491,40 @@ public class Invoices {
             e.printStackTrace();
         }
     }
+    //TODO: phía dưới đang test có thể có lỗi
+    // Lấy thông tin cần thiết của hóa đơn từ idhoadon
+    public static Invoices getInvoiceById(int idhoadon) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+            SELECT hd.BillID, hd.IDPhong, hd.TienNha, hd.TienDien, hd.TienNuoc, hd.TienRac, 
+                   hd.ChiPhiKhac, hd.GiamGia, hd.TongChiPhi, hd.NgayXuatHoaDon, hd.ThanhToan
+            FROM HoaDon hd
+            WHERE hd.BillID = ?
+        """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idhoadon);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new Invoices(
+                        rs.getInt("BillID"),
+                        rs.getInt("IDPhong"),
+                        rs.getDouble("TienNha"),
+                        rs.getDouble("TienDien"),
+                        rs.getDouble("TienNuoc"),
+                        rs.getDouble("TienRac"),
+                        rs.getDouble("ChiPhiKhac"),
+                        rs.getDouble("GiamGia"),
+                        rs.getDouble("TongChiPhi"),
+                        rs.getDate("NgayXuatHoaDon"),
+                        rs.getInt("ThanhToan")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Trả về null nếu không tìm thấy hóa đơn
+    }
+
+
 }

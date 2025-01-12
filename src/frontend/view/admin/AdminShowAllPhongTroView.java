@@ -88,8 +88,5 @@ public class AdminShowAllPhongTroView extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        List<Object[]> roomData = Room.getAllRoomData();
-        SwingUtilities.invokeLater(() -> new AdminShowAllPhongTroView(roomData));
-    }
+
 }

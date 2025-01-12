@@ -1,33 +1,78 @@
 package frontend.view.admin;
 
+import backend.model.Invoices;
+import controller.AdminController;
+import frontend.components.InvoiceButtonEditor_1;
+import frontend.components.InvoiceButtonRenderer;
+import frontend.components.InvoiceButtonEditor;
+import frontend.components.InvoiceButtonRenderer_1;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
-public class AdminShowAllHoadonView extends JFrame {
-    private JTable table;
+public class AdminShowAllHoaDonView extends JFrame {
 
-    public AdminShowAllHoadonView(List<Object[]> data) {
+    public AdminShowAllHoaDonView(List<Object[]> invoiceData) {
         setTitle("Danh sách hóa đơn");
-        setSize(800, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(900, 700);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLayout(new GridBagLayout());
 
-        JLabel titleLabel = new JLabel("Danh sách hóa đơn", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        String[] columnNames = {"Tên phòng", "Họ tên chủ trọ", "Họ tên người thuê", "Số điện thoại", "Tổng chi phí", "Ngày xuất hóa đơn"};
-        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+        JLabel title = new JLabel("DANH SÁCH HÓA ĐƠN", SwingConstants.CENTER);
+        title.setFont(new Font("Be Vietnam Pro", Font.BOLD, 20));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        add(title, gbc);
 
-        for (Object[] row : data) {
+        String[] columnNames = {"ID Hóa Đơn (Ẩn)", "STT", "Tên phòng", "Tên người thuê", "Tổng chi phí", "Ngày xuất", "Tình trạng", "Chức năng"};
+        DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 7; // Chỉ cột "Chức năng" có thể chỉnh sửa
+            }
+        };
+
+        for (int i = 0; i < invoiceData.size(); i++) {
+            Object[] row = new Object[8];
+            row[0] = invoiceData.get(i)[0]; // ID Hóa đơn (ẩn)
+            row[1] = i + 1; // STT
+            row[2] = invoiceData.get(i)[1]; // Tên phòng
+            row[3] = invoiceData.get(i)[2]; // Tên người thuê
+            row[4] = String.format("%,.2f VNĐ", invoiceData.get(i)[3]); // Tổng chi phí
+            row[5] = invoiceData.get(i)[4]; // Ngày xuất
+            row[6] = invoiceData.get(i)[5]; // Tình trạng
+            row[7] = "Chi tiết"; // Button
             tableModel.addRow(row);
         }
 
-        table = new JTable(tableModel);
-        JScrollPane scrollPane = new JScrollPane(table);
+        JTable table = new JTable(tableModel);
+        table.getColumn("Chức năng").setCellRenderer(new InvoiceButtonRenderer_1());
+        table.getColumn("Chức năng").setCellEditor(new InvoiceButtonEditor_1(table));
+        table.removeColumn(table.getColumnModel().getColumn(0)); // Ẩn cột "ID Hóa Đơn"
 
-        add(titleLabel, BorderLayout.NORTH);
-        add(scrollPane, BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(table);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        add(scrollPane, gbc);
+
+        JButton buttonBackAdminDash = new JButton("Quay lại");
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        buttonBackAdminDash.addActionListener(e -> AdminController.goBackToAdminDashboard(this));
+        add(buttonBackAdminDash, gbc);
 
         setVisible(true);
     }

@@ -87,8 +87,4 @@ public class AdminShowAllNguoiThueTroView extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        List<Object[]> nguoithueData = NguoiThueTro.getAllNguoiThueData();
-        SwingUtilities.invokeLater(() -> new AdminShowAllNguoiThueTroView(nguoithueData));
-    }
 }

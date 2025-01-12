@@ -3,7 +3,11 @@ package controller;
 
 import backend.connectDatabase;
 import backend.model.Chutro;
+import backend.model.NguoiThueTro;
+import backend.model.Room;
 import frontend.view.admin.AdminShowAllChutroView;
+import frontend.view.admin.AdminShowAllNguoiThueTroView;
+import frontend.view.admin.AdminShowAllPhongTroView;
 import frontend.view.chutro.ChutroDashboardView;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -69,6 +73,15 @@ public class  AdminController {
         List<Object[]> chutroData = Chutro.getAllChutroData();
         new AdminShowAllChutroView(chutroData);
     }
+    public static void goToAdminShowAllPhongTroView(){
+        List<Object[]> roomData = Room.getAllRoomData();
+        new AdminShowAllPhongTroView(roomData);
+    }
+    public static void goToAdminShowAllNguoiThueTroView(){
+        List<Object[]> nguoithueData = NguoiThueTro.getAllNguoiThueData();
+        new AdminShowAllNguoiThueTroView(nguoithueData);
+    }
+
 
     public static void goToChutroDashboardFromAdmin(String username) {
         new ChutroDashboardView(username); // Mở Dashboard

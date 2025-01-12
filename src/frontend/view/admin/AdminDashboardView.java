@@ -8,7 +8,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
-import static controller.AdminController.goToAdminShowAllChutroView;
+import static controller.AdminController.*;
 
 public class AdminDashboardView extends JFrame {
     public AdminDashboardView() {
@@ -39,11 +39,11 @@ public class AdminDashboardView extends JFrame {
         buttonPanel.add(btnShowChutro);
 
         JButton btnShowPhongTro = new JButton("Danh sách phòng trọ");
-        //btnShowPhongTro.addActionListener(e -> new AdminShowAllPhongTroView());
+        btnShowPhongTro.addActionListener(e ->  goToAdminShowAllPhongTroView());
         buttonPanel.add(btnShowPhongTro);
 
         JButton btnShowNguoiThueTro = new JButton("Danh sách người thuê trọ");
-        //btnShowNguoiThueTro.addActionListener(e -> new AdminShowAllNguoiThueTroView(null));
+        btnShowNguoiThueTro.addActionListener(e -> goToAdminShowAllNguoiThueTroView());
         buttonPanel.add(btnShowNguoiThueTro);
 
         JButton btnShowHoadon = new JButton("Danh sách hóa đơn");
