@@ -195,7 +195,7 @@ public class Room {
 
     public static boolean addRoom(String name, String address, double roomPrice, double electricityPrice, double waterPrice, double garbagePrice, int id_chutro) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-            String sql = "INSERT INTO TTPhongtro (TenPhong, Address ,GiaPhong , Giadien, Gianuoc, Tienrac, IDChutro) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO TTPhongtro (TenPhong, Address ,GiaPhong , Giadien, Gianuoc, Giarac, IDChutro) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, name);
             pstmt.setString(2, address);

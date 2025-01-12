@@ -140,11 +140,51 @@ public class RoomController {
     }
 
     public static void updateRoomPrice(int roomId, double newValue, String type) {
-        // Cập nhật giá phòng vào database
-        System.out.println("Cập nhật " + type + " cho phòng " + roomId + " thành: " + newValue);
-        // TODO: Thêm logic cập nhật database
-        // TODO: Hiếu xử lý logic trong Class ROOM để add vào chổ này nha
+        // Kiểm tra đầu vào
+        if (newValue <= 0) {
+            System.out.println("Giá trị mới không hợp lệ: " + newValue);
+            return;
+        }
+
+        // Tên cột trong cơ sở dữ liệu dựa trên 'type'
+        String column;
+        switch (type) {
+            case "giá thuê phòng":
+                column = "GiaPhong";
+                break;
+            case "giá điện":
+                column = "Giadien";
+                break;
+            case "giá nước":
+                column = "Gianuoc";
+                break;
+            case "giá rác":
+                column = "Giarac";
+                break;
+            default:
+                System.out.println("Loại cập nhật không hợp lệ: " + type);
+                return;
+        }
+
+        // Cập nhật cơ sở dữ liệu
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "UPDATE TTPhongtro SET " + column + " = ? WHERE IDPhong = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setDouble(1, newValue);
+            pstmt.setInt(2, roomId);
+
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Đã cập nhật " + type + " cho phòng " + roomId + " thành: " + newValue);
+            } else {
+                System.out.println("Không tìm thấy phòng với ID: " + roomId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Lỗi khi cập nhật " + type + " cho phòng " + roomId);
+        }
     }
+
     public static void GoToBackRoomViewFromUpdate(JFrame frame, int id_room, int id_chutro) {
         frame.setVisible(false);
         new RoomView(id_room,id_chutro);
@@ -197,7 +237,7 @@ public class RoomController {
 
     public static void goToBackRoomView(JFrame frame, int idRoom, int idChutro) {
         frame.dispose();
-        new frontend.view.rooms.RoomView(idRoom, idChutro); // Điều hướng quay lại RoomView
+        //new frontend.view.rooms.RoomView(idRoom, idChutro); // Điều hướng quay lại RoomView
     }
 
 

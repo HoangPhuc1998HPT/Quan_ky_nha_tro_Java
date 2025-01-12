@@ -71,6 +71,7 @@ public class RoomUpdatePriceView {
                 }
             }
         });
+
         frame.add(updateButton, gbc);
 
         // Nút quay lại
