@@ -91,8 +91,5 @@ public class AdminShowAllChutroView extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        List<Object[]> chutroData = Chutro.getAllChutroData();
-        SwingUtilities.invokeLater(() -> new AdminShowAllChutroView(chutroData));
-    }
+
 }
