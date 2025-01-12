@@ -48,7 +48,7 @@ public class RoomUpdateInforRoomView {
 
         // Cấu trúc bảng
         String[] labels = {"Giá thuê phòng:", "Giá điện:", "Giá nước:", "Giá rác:"};
-        double[] values = {room.getRoomPrice(), room.getElectricityPrice(), room.getWaterPrice(), RoomController.getGarbageFee(roomId)};
+        double[] values = {room.getRoomPrice(), room.getElectricityPrice(), room.getWaterPrice(), room.getGarbagePrice()};
         String[] units = {"VNĐ/tháng", "VNĐ/kWh", "VNĐ/m³", "VNĐ/tháng"};
 
         for (int i = 0; i < labels.length; i++) {
@@ -83,6 +83,7 @@ public class RoomUpdateInforRoomView {
                     units[finalI],
                     labels[finalI].toLowerCase().replace(" ", "_")
             ));
+            frame.setVisible(false);
             gbc.gridx = 3;
             frame.add(updateButton, gbc);
         }

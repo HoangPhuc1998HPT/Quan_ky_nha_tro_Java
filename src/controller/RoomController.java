@@ -140,35 +140,38 @@ public class RoomController {
     }
 
     public static void updateRoomPrice(int roomId, double newValue, String type) {
-        // Kiểm tra đầu vào
         if (newValue <= 0) {
             System.out.println("Giá trị mới không hợp lệ: " + newValue);
             return;
         }
+        int id_chutro = Room.getIdChutrobyRoomId(roomId);
+        // Chuẩn hóa lowcase and _
+        type = type.toLowerCase().trim().replace(" ", "_");
+        System.out.println("Loại cập nhật nhận được (chuẩn hóa): " + type);
 
-        // Tên cột trong cơ sở dữ liệu dựa trên 'type'
         String column;
         switch (type) {
-            case "giá thuê phòng":
+            case "giá_thuê_phòng:":
                 column = "GiaPhong";
                 break;
-            case "giá điện":
+            case "giá_điện:":
                 column = "Giadien";
                 break;
-            case "giá nước":
+            case "giá_nước:":
                 column = "Gianuoc";
                 break;
-            case "giá rác":
-                column = "Giarac";
+            case "giá_rác:":
+                column = "Giarac"; // Đúng với cột trong cơ sở dữ liệu
                 break;
             default:
                 System.out.println("Loại cập nhật không hợp lệ: " + type);
                 return;
         }
 
-        // Cập nhật cơ sở dữ liệu
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            System.out.println("Kết nối thành công: " + (conn != null));
             String sql = "UPDATE TTPhongtro SET " + column + " = ? WHERE IDPhong = ?";
+            System.out.println("SQL: " + sql);
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setDouble(1, newValue);
             pstmt.setInt(2, roomId);
@@ -176,6 +179,7 @@ public class RoomController {
             int rowsUpdated = pstmt.executeUpdate();
             if (rowsUpdated > 0) {
                 System.out.println("Đã cập nhật " + type + " cho phòng " + roomId + " thành: " + newValue);
+                new RoomUpdateInforRoomView(roomId,id_chutro);
             } else {
                 System.out.println("Không tìm thấy phòng với ID: " + roomId);
             }

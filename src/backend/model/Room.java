@@ -107,6 +107,26 @@ public class Room {
         }
     }
 
+    public static int getIdChutrobyRoomId(int roomId) {
+        int idChutro = -1; // Giá trị mặc định nếu không tìm thấy
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            // Truy vấn SQL để lấy ID chủ trọ dựa trên ID phòng
+            String sql = "SELECT IDChutro FROM TTPhongtro WHERE IDPhong = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, roomId); // Gán giá trị roomId vào truy vấn
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                idChutro = rs.getInt("IDChutro"); // Lấy ID chủ trọ
+            } else {
+                System.out.println("Không tìm thấy ID chủ trọ cho ID phòng: " + roomId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Lỗi khi lấy ID chủ trọ cho phòng: " + roomId);
+        }
+        return idChutro;
+    }
 
 
 
@@ -161,7 +181,7 @@ public class Room {
                 TTPhongtro.GiaPhong,
                 TTPhongtro.Giadien,
                 TTPhongtro.Gianuoc,
-                ISNULL(HoaDon.Tienrac, 0) AS Tienrac
+                ISNULL(TTphongtro.Giarac, 0) AS Tienrac
             FROM TTPhongtro
             LEFT JOIN NguoiThueTro ON TTPhongtro.IDPhong = NguoiThueTro.IDnguoithue
             LEFT JOIN HoaDon ON TTPhongtro.IDPhong = HoaDon.BillID
