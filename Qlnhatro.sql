@@ -81,7 +81,7 @@ CREATE TABLE TTPhongtro (
     Sodienhientai INT,
     Sonuochientai INT
 );
-
+ALter table TTPhongtro add Giarac DECIMAL(10,2);
 ALter table TTPhongtro add Tinhtrang NVARCHAR(50);
 ALter table TTPhongtro add IDChutro INT;
 ALTER TABLE TTPhongtro ADD CONSTRAINT FK_TTPhongtro_IDChutro
@@ -448,3 +448,5 @@ SELECT
                 JOIN TTPhongtro pt ON hd.IDPhong = pt.IDPhong
                 LEFT JOIN NguoiThueTro nt ON pt.IDNguoiThue = nt.IDNguoiThue
                 WHERE pt.IDChutro = '9';
+
+SELECT * FROM TTPhongtro WHERE IDPhong =3;

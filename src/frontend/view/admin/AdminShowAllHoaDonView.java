@@ -10,7 +10,10 @@ import frontend.components.InvoiceButtonRenderer_1;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.text.NumberFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
 
 public class AdminShowAllHoaDonView extends JFrame {
 
@@ -39,13 +42,19 @@ public class AdminShowAllHoaDonView extends JFrame {
             }
         };
 
+        NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+
         for (int i = 0; i < invoiceData.size(); i++) {
             Object[] row = new Object[8];
             row[0] = invoiceData.get(i)[0]; // ID Hóa đơn (ẩn)
             row[1] = i + 1; // STT
             row[2] = invoiceData.get(i)[1]; // Tên phòng
             row[3] = invoiceData.get(i)[2]; // Tên người thuê
-            row[4] = String.format("%,.2f VNĐ", invoiceData.get(i)[3]); // Tổng chi phí
+            row[4] = invoiceData.get(i)[4] instanceof java.sql.Date
+                    ? ((java.sql.Date) invoiceData.get(i)[4]).toLocalDate().format(dateFormatter)
+                    : "N/A"; // Ngày xuất
             row[5] = invoiceData.get(i)[4]; // Ngày xuất
             row[6] = invoiceData.get(i)[5]; // Tình trạng
             row[7] = "Chi tiết"; // Button

@@ -373,6 +373,85 @@ Phúc : Lỗi truy xuất dữ liểu ra
 Kiểm tra Xem danh sách hóa đơn trong quyền chủ trọ
 ==> DashboardChutroController.go_to_show_list_invoices(id_chutro)
 ==> InvoiceListsView(idChutro, nameChutro, roomCount)
+// Lỗi chưa xu lkys
+
+
+Lỗi - Các mục chưa làm
+Hiếu TODO: - XỬ lý chức năng Delete trong Admin Dashboard luôn nha, delete user
+Hiếu TODO: - xử lý chức năng tạm ngưng hoạt động chủ trọ ở AdminShowAllChutroView.
++ buttonSetVisibleFalse
+
+Hiếu TODO: - Chức năng tạo phòng trọ ==> chưa lưu được phòng tro khi tạo
+Hiếu TODO: - Chức năng Xem danh sách phòng ==> chưa hoạt động do Chức năng tạo phòng trọ chưa có
+Hiếu TODO; - Một tá def trong Room.java chưa được viết hàm
+Hiếu TODO: - Tạo Xử lý đổi mật khẩu cho chủ trọ và người thuê trọ (hiển thị trong ChutroInformationView)
+=> Đợi anh Phúc tạo windows để cập
+==> đã có View đổi mật khẩu cho chủ trọ
+go_to_show_information_churtro(id_chutro) -> ChutroInformationView(id_chutro, chutro)
+->ChutroInformationView -> UpdatePasswordView(idChutro)
+Phúc + Hiếu: TODO: Tạo View cho Xuất hóa đơn cần lắm các phương thức truy xuất dữ liệu
++View đã có => chờ backend
+Hiếu TODO: - Xử lý truy vấn + logic các thông tin liên quan đến hóa đơn, Xuất hóa đơn
+ERROR TODO: Lõi View cập nhật thông tin phòng
++ RoomController.updateInforRoom(frame, idRoom, idChutro)
+Hiếu ERROR TODO: updateRoomPrice(String roomId, double newValue, String type) chưa được xử lý
+==> RoomUpdateInforRoomView -> RoomUpdatePriceView -->updateButton --> updateRoomPrice-->
+--> RoomController.updateRoomPrice --> 4 nút cập nhật
+Phúc TODO: View Chủ trọ dashboardView -> Xem thông tin chủ trọ ==> đã thực hiện
++ Khi bấm cập nhật không reset tên tại thời điểm bấm ==> chưa màn được
+Hiếu TODO: Mở View Dashboard chủ trọ -> Xem danh sách phòng => Xem chi tiết phòng ==> Bổ sung các chức năng cập nhật hóa đơn
+==> Xuất hóa đơn ==> View đã có
+Hiếu TODO: Tạo xử lý cho Room.deleteRoom( String idRoom) nha
+* Phúc TODO: Tạo view cho các:
+  + Admin View Danh sách phòng trọ
+  + Admin View Danh sách người thuê trọ
+  + Admin View Danh sách hóa đơn trọ
+  Hiếu   + Tạo nút delete cho những tài khoản không được active ==> đã xong chờ Hiếu thêm backend
+* Phúc TODO: Tạo view cho Dashboard người thuê trọ
+  Hiếu TODO: Room ==> cập nhật người thuê phòng ==> chưa cập nhật được người thuê
+  + Room ==> goToUpdateNguoiThue ==> RoomUpdateNguoithueView(idPhong)
+  + ==> GoToUpdateNguoiThue(CCCDValue.trim(),frame,id_room) ==
+  + GoToUpdateNguoiThue ?? ==> updateNguoiThueTroInRoom
+  + getIdNguoiThueFromCCCD ??
+  + //TODO: Hiếu tạo truy vấn cho update thông tin người thuê vào phòng trọ lên database
+  Hiếu TODO: Đưa phương thức checkLogin vào Login.class ==> Thêm check user đã được kích hoạt chưa
+  + ==> nếu chưa thông báo user chưa được kích hoạt
+  Hiếu TODO: TODO: Invoice list view đã tạo, Hiếu kiểm tra lại logic xem truy xuất dữ liệu cho Invoices.InvoiceListsView  nha
+
+Hiếu TODO: Thực hiện thao tác delete User trong table User: Admincontroller.deleteUser
+------
+InvoiceFormView cần
+Hiếu: TODO: Tạo 1 hàm chạy số cho ký hiệu hóa đơn
+TODO: Tạo 1 hàm chạy số cho hóa đơn
+HIếu: TODO: Tạo đối tượng cho Invoice và InvoiceDetail
+Hiếu: TODO: Khi bấm thêm người thuê trọ vào phòng ==> Id người thuê trọ không được cập nhật vào Phòng
+==> Check CSDL TTPHongTro ==> Id người thuê không được thêm
+==> Truy update TTPhongTro thiếu
+Hiếu: TODO getIdNguoiThueFromCCCD chưa có backend
+
+TODO: Không thêm người thuê phòng vaào phòng được vì cập nhật không được id người thuê
+==> không phải lỗi do update người thuê
+==> đang kiểm tra khi bấm vào xem chi tiết cảu danh sách phòng trọ có lấy được id phòng kẹp theo không?
+
+
+Hiếu TODO:  RoomController.goToRoomInforView(roomId);
+// Điều hướng đến RoomInforView với roomId ==> lõi
+===> Room.getRoomInForViewbyRoomId(roomId);
+==> fix lại lấy idroom ở vị trí cột ẩn ==> cập nhật database vẫn trông
+===> hiếu xem lại logic giúp
+TODO: CSDL lúc nảy có fix chổ hóa đơn ==> thêm cột có thanh toán chưa nhớ giữ lại
+// 11/01/2024
+// TODO: Warning Hiếu lưu ý bên dưới:
+
+
+
+
+Phúc fixx
+
+
+// TODO: cần fix InvoiceButtonEditor_1
+: openInvoiceDetails
+
 
 
 
