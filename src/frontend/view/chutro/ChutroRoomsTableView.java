@@ -1,5 +1,6 @@
 package frontend.view.chutro;
 
+import backend.model.Chutro;
 import controller.RoomController;
 import frontend.components.CustomButton;
 
@@ -24,7 +25,8 @@ public class ChutroRoomsTableView {
         frame.setLayout(new BorderLayout());
 
         // Tiêu đề bảng
-        JLabel title = new JLabel("Danh sách các phòng thuộc chủ trọ: " + idChutro);
+        String chuTroFullName = Chutro.getNameChutroFromIdChutro(idChutro);
+        JLabel title = new JLabel("Danh sách các phòng thuộc chủ trọ: " + chuTroFullName);
         title.setFont(new Font("Be Vietnam Pro", Font.BOLD, 18));
         title.setHorizontalAlignment(SwingConstants.CENTER);
         frame.add(title, BorderLayout.NORTH);

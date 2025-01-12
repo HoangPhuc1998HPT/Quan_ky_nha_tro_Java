@@ -62,14 +62,15 @@ public class Register {
 
     public static boolean cccdCheck(String cccd, String role) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-            String sql = "SELECT CCCD FROM ? WHERE CCCD = ?";
-            PreparedStatement ps = conn.prepareStatement(sql);
+            String tableName;
             if(role == "chutro") {
-                ps.setString(1, "Chutro");
+                tableName = "Chutro";
             } else {
-                ps.setString(1, "NguoiThueTro");
+                tableName = "NguoiThueTro";
             }
-            ps.setString(2, cccd);
+            String sql = "SELECT CCCD FROM "+ tableName + " WHERE CCCD = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, cccd);
             ResultSet rs = ps.executeQuery();
             return rs.next();
 
@@ -81,17 +82,17 @@ public class Register {
 
     public static boolean sdtCheck(String phone, String role) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-            String sql = "SELECT CCCD FROM ? WHERE CCCD = ?";
-            PreparedStatement ps = conn.prepareStatement(sql);
+            String tableName;
             if(role == "chutro") {
-                ps.setString(1, "Chutro");
+                tableName = "Chutro";
             } else {
-                ps.setString(1, "NguoiThueTro");
+                tableName = "NguoiThueTro";
             }
-            ps.setString(2, phone);
+            String sql = "SELECT Phone FROM "+ tableName + " WHERE Phone = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, phone);
             ResultSet rs = ps.executeQuery();
             return rs.next();
-
         } catch (Exception e) {
             e.printStackTrace();
         }

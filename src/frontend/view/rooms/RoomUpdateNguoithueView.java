@@ -3,8 +3,7 @@ package frontend.view.rooms;
 import javax.swing.*;
 import java.awt.*;
 
-import static controller.RoomController.GoToBackRoomView;
-import static controller.RoomController.GoToUpdateNguoiThue;
+import static controller.RoomController.*;
 
 public class RoomUpdateNguoithueView {
     private JFrame frame;
@@ -67,7 +66,7 @@ public class RoomUpdateNguoithueView {
         confirmButton.addActionListener(e -> {
             String CCCDValue = CCCDtext.getText().trim(); // Lấy giá trị CCCD tại thời điểm nhấn nút
             System.out.println("CCCD nhập vào: " + CCCDValue);
-            GoToUpdateNguoiThue(CCCDValue, frame, id_room);
+            UpdateNguoiThue(CCCDValue, frame, id_room);
         });
         panel.add(confirmButton, gbc);
 

@@ -101,12 +101,17 @@ public class RoomController {
         return roomData;
     }
 
-    public static void GoToUpdateNguoiThue(String cccdValue, JFrame frame, int idPhong) {
+    public static void UpdateNguoiThue(String cccdValue, JFrame frame, int idPhong) {
         // Khởi tạo đối tượng NguoiThueTro và gọi phương thức UpdateNguoiThue
         //System.out.println(" đã gọi controller GoToUpdateNguoiThue");
         //NguoiThueTro ngThueTro = new NguoiThueTro();guoiThueTro.UpdateNguoiThueInRoom(cccdValue, idPhong, frame);
         // Update xong gửi thông báo về ==> Đã thêm người thuê trọ "name" vào"
-        updateNguoiThueTroInRoom(idPhong, cccdValue);
+        boolean result = updateNguoiThueTroInRoom(idPhong, cccdValue);
+        if (result) {
+            JOptionPane.showMessageDialog(frame, "Đã lưu thông tin người thuê trọ thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(frame, "Không có người thuê trọ với CCCD này", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
         frame.setVisible(false);
     }
 

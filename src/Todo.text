@@ -14,8 +14,8 @@
     - Xem thông tin chủ trọ
         OK + Cập nhật họ tên
         OK + Cập nhật sđt ==> -> có thời gian nên flow lại giao diện cho mượt
-        + Cập nhật mật khẩu ==> fail
-    -  OK Tạo phòng trọ ==>
+        OK + Cập nhật mật khẩu
+    -  OK Tạo phòng trọ ==>  DONE
     - Xem danh sách phòng trọ
         +  Cập nhật người thuê bằng CCCD == > chưa được
         +  Cập nhật thông tin phòng:
@@ -23,7 +23,7 @@
             * OK Capajp nhật giá điện
             * OK Cập nhật giá nước
             * OK Cập nhật gi rác
-            * Nút quay lại ==> Lỗi khi bấm cập nhật nhiều lần ==> Mở quá nheieuf RoomView
+            * OK Nút quay lại ==> Lỗi khi bấm cập nhật nhiều lần ==> Mở quá nheieuf RoomView
         + Cập nhật hóa đơn ===> cập nhật thất bại
         + Xuất hóa đơn ==> nhằm View ==> chưa load ra dữ liệu
         + Nút gửi hóa đơn chưa có công dụng
@@ -40,6 +40,6 @@
             + Thông tin phòng ==> chưa có gì
             + Danh sách hóa đơn ==> trống lỏng
     RegisterView
-        -OK  Tạo tài khoản
-        - Cập nhật họ tên người thuê trọ ==> báo lỗi đỏ lè
+        - OK  Tạo tài khoản
+        - OK Cập nhật họ tên người thuê trọ ==> báo lỗi đỏ lè
 

@@ -108,6 +108,24 @@ public class User {
         return null;
     }
 
+    public static int getUserIdByUsername(String username) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "SELECT UserID FROM Users WHERE Username = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("UserID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+
+
     // Method to update user status
     public static boolean updateUserStatus(int userId, boolean isActive) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {

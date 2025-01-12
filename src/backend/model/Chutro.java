@@ -80,6 +80,27 @@ public class Chutro {
         return username;
     }
 
+    public static String getFullNameByUsername(String username) {
+        String fullName = null;
+        int userID = User.getUserIdByUsername(username);
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+            SELECT HoTen
+            FROM Chutro c
+            WHERE c.UserID = ?
+        """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userID);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("HoTen");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return fullName;
+    }
+
 
     public String getFullName() {
         return fullName;
@@ -178,7 +199,14 @@ public class Chutro {
 
     public static boolean updatePasswordChutro(int idChutro, String password) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-            String sql = "UPDATE Chutro SET Password = ? WHERE IDChutro = ?";
+            String sql = """  
+                UPDATE Users
+                SET Users.Password = ?
+                FROM Users
+                INNER JOIN Chutro
+                ON Users.UserID = Chutro.UserID
+                WHERE Chutro.IDChutro = ?
+            """;
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, password);
             pstmt.setInt(2, idChutro);

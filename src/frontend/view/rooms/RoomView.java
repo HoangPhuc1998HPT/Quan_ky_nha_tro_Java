@@ -53,7 +53,7 @@ public class RoomView {
         frame.add(btnDeleteRoom, gbc);
 
         JButton btnBack = new JButton("Quay lại");
-        btnBack.addActionListener(e -> RoomController.goToBackRoomView(frame, idRoom, idChutro));
+        btnBack.addActionListener(e -> frame.dispose());
         gbc.gridy = 6;
         frame.add(btnBack, gbc);
 

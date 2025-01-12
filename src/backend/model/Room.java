@@ -237,9 +237,27 @@ public class Room {
         return false;
     }
 
-    public static void updateNguoiThueTroInRoom(int idRoom, String CCCD) {
-        //TODO: Hiếu tạo truy vấn cho update thông tin người thuê vào phòng trọ lên database
-       int id_nguoithue = getIdNguoiThueFromCCCD(CCCD);
+    public static boolean updateNguoiThueTroInRoom(int idRoom, String CCCD) {
+        // TODO: Hiếu tạo truy vấn cho update thông tin người thuê vào phòng trọ lên database => Done
+
+        int id_nguoithue = getIdNguoiThueFromCCCD(CCCD);
+        System.out.println("ID Nguoi thue: " + id_nguoithue);
+        if (id_nguoithue == 0) {
+            return false;
+        }
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+           String sql = """
+                   UPDATE TTPhongtro SET IDnguoithue = ? WHERE IDPhong = ?
+                   """;
+           PreparedStatement pstm = conn.prepareStatement(sql);
+           pstm.setInt(1, id_nguoithue);
+           pstm.setInt(2, idRoom);
+           ResultSet rs = pstm.executeQuery();
+           return rs.next();
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+       return false;
     }
 
 
