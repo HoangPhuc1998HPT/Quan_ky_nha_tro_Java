@@ -38,7 +38,7 @@ public class UpdatePasswordView {
             } else {
                 boolean isUpdated = Chutro.updatePasswordChutro(idChutro, newPassword);
                 if (isUpdated) {
-                    JOptionPane.showMessageDialog(frame, "Đổi mật khẩu thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Đổi mật khẩu thành công! Vui lòng mở bảng thông tin để kiểm tra", "Thành công", JOptionPane.INFORMATION_MESSAGE);
                     frame.dispose();
                 } else {
                     JOptionPane.showMessageDialog(frame, "Đổi mật khẩu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);

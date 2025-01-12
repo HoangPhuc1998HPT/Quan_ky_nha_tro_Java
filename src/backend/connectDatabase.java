@@ -18,14 +18,14 @@ public class connectDatabase {
                 try {
                     Class.forName(DRIVER);
                     Connection connection = DriverManager.getConnection(currentURL);
-                    System.out.println("Kết nối với server " + currentURL + " thành công!");
+//                    System.out.println("Kết nối với server " + currentURL + " thành công!");
                     return connection;
                 } catch (ClassNotFoundException e) {
                     System.out.println("Không tìm thấy Driver!");
                     e.printStackTrace();
                     return null;
                 } catch (SQLException e) {
-                    System.out.printf("Kết nối với server %s thất bại: %s\n", currentURL, e.getMessage());
+//                    System.out.printf("Kết nối với server %s thất bại: %s\n", currentURL, e.getMessage());
                 }
             }
             System.out.println("Không thể kết nối với bất kỳ server nào.");

@@ -126,8 +126,19 @@ import java.sql.ResultSet;
                         JOptionPane.showMessageDialog(frame, "Vai trò không xác định!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                System.out.println("Đăng nhập thất bại.");
-                JOptionPane.showMessageDialog(frame, "Đăng nhập thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                boolean usernameCheck = Login.usernameCheck(username);
+                boolean passwordCheck = Login.passwordCheck(password);
+                boolean isActive = Login.isActive(username, password);
+                if (usernameCheck) {
+                    JOptionPane.showMessageDialog(frame, "User này chưa tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                } else if (passwordCheck) {
+                    JOptionPane.showMessageDialog(frame, "Mật khẩu không đúng! Vui lòng kiểm tra lại mật khẩu", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                } else if (isActive) {
+                    JOptionPane.showMessageDialog(frame, "Tài khoản chưa được kích hoạt! Vui lòng liên hệ Admin để được kích hoạt.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    System.out.println("Đăng nhập thất bại.");
+                    JOptionPane.showMessageDialog(frame, "Đăng nhập thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
 }

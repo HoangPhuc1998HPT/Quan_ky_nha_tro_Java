@@ -40,7 +40,7 @@ public class UpdateFullNameView {
                 boolean isUpdated = Chutro.updateHoTenChutro(idChutro, updatedName);
                 if (isUpdated) {
                     updateName = updatedName;
-                    JOptionPane.showMessageDialog(frame, "Cập nhật thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Cập nhật thành công! Vui lòng mở bảng thông tin để kiểm tra", "Thành công", JOptionPane.INFORMATION_MESSAGE);
                     frame.dispose();
                 } else {
                     JOptionPane.showMessageDialog(frame, "Cập nhật thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
