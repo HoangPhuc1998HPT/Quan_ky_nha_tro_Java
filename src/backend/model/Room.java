@@ -252,8 +252,7 @@ public class Room {
            PreparedStatement pstm = conn.prepareStatement(sql);
            pstm.setInt(1, id_nguoithue);
            pstm.setInt(2, idRoom);
-           ResultSet rs = pstm.executeQuery();
-           return rs.next();
+           return pstm.executeUpdate() > 0;
        } catch (Exception e) {
            e.printStackTrace();
        }
@@ -275,6 +274,8 @@ public class Room {
         }
         return 0;
     }
+
+
 
     public static List<Object[]> getEmptyRooms() {
         List<Object[]> emptyRooms = new ArrayList<>();

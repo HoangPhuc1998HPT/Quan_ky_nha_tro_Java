@@ -1,5 +1,6 @@
 package frontend.view.rooms;
 
+import backend.model.NguoiThueTro;
 import backend.model.Room;
 import controller.RoomController;
 
@@ -11,6 +12,7 @@ public class RoomView {
 
     public RoomView(int idRoom, int idChutro) {
         Room room = Room.getRoomDetails(idRoom); // Lấy thông tin phòng từ backend
+
 
         frame = new JFrame("Phòng trọ: " + (room != null ? room.getName() : "Không xác định"));
         frame.setSize(400, 650);
