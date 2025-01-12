@@ -1,144 +1,45 @@
-Lỗi - Các mục chưa làm
-Hiếu TODO: - XỬ lý chức năng Delete trong Admin Dashboard luôn nha, delete user
-Hiếu TODO: - xử lý chức năng tạm ngưng hoạt động chủ trọ ở AdminShowAllChutroView.
-                + buttonSetVisibleFalse
+// 12-01-2024
+// TODO: Lỗi logic
+    Admindashboard
+    - Danh sách hóa đơn
+        + Tổng chi phí không xuất ra màn hiình (N/A)
+        + Chức năng chi tiết không thể tải chi tiết hóa đơn
+    - Danh sách phòng trọ
+        OK + Chức năng xem chi tiết không hoạt động - không hiển thị chi tiết phòng trọ
+        OK + Chức năng tạm ngưng hoạt động phòng - không hoạt động
+    - Danh sách người thuê trọ
+        + Chức năng xem chi tiết người thuê trọ không hoạt động
+        + Chức năng tạm ngưng hoạt động người thuê không hoạt đôộng
+    ChutrodashboardView
+    - Xem thông tin chủ trọ
+        OK + Cập nhật họ tên
+        OK + Cập nhật sđt ==> -> có thời gian nên flow lại giao diện cho mượt
+        OK + Cập nhật mật khẩu
+    -  OK Tạo phòng trọ ==>
+    - Xem danh sách phòng trọ
+        +  Cập nhật người thuê bằng CCCD == > chưa được
+        +  Cập nhật thông tin phòng:
+            * OK Cập nhật giá thuê phòng
+            * OK Capajp nhật giá điện
+            * OK Cập nhật giá nước
+            * OK Cập nhật gi rác
+            * Nút quay lại ==> Lỗi khi bấm cập nhật nhiều lần ==> Mở quá nheieuf RoomView
+        + Cập nhật hóa đơn ===> cập nhật thất bại
+        + Xuất hóa đơn ==> nhằm View ==> chưa load ra dữ liệu
+        + Nút gửi hóa đơn chưa có công dụng
+        + Nút xóa phòng chưa hoạt động
+        + Xem danh sách hóa đơn
+             +> cho load lại view khi nhân nút tình trạng
+             + Tên người thuê lỗi font ===> Hiệu chỉnh tất cả về Be VietNamPro
+    NguoithuetroDashboardView
+        - NguoithuetroDashboard_0View
+            + Chức năng Xem thông tin phòng tróng không hoạt động
+            + Lỗi font chữ vị trí địa chỉ
+        - NguoithuetroDashboard_1View
+            + Chưa xử lý backend cho check để chuyển vào chức năng này khi id người thuê đã thuộc 1 phòng
+            + Thông tin phòng ==> chưa có gì
+            + Danh sách hóa đơn ==> trống lỏng
+    RegisterView
+        - OK  Tạo tài khoản
+        - OK Cập nhật họ tên người thuê trọ ==> báo lỗi đỏ lè
 
-Hiếu TODO: - Chức năng tạo phòng trọ ==> chưa lưu được phòng tro khi tạo
-Hiếu TODO: - Chức năng Xem danh sách phòng ==> chưa hoạt động do Chức năng tạo phòng trọ chưa có
-Hiếu TODO; - Một tá def trong Room.java chưa được viết hàm
-Hiếu TODO: - Tạo Xử lý đổi mật khẩu cho chủ trọ và người thuê trọ (hiển thị trong ChutroInformationView)
-        => Đợi anh Phúc tạo windows để cập
-           ==> đã có View đổi mật khẩu cho chủ trọ
-        go_to_show_information_churtro(id_chutro) -> ChutroInformationView(id_chutro, chutro)
-        ->ChutroInformationView -> UpdatePasswordView(idChutro)
-Phúc + Hiếu: TODO: Tạo View cho Xuất hóa đơn cần lắm các phương thức truy xuất dữ liệu
-                    +View đã có => chờ backend
-Hiếu TODO: - Xử lý truy vấn + logic các thông tin liên quan đến hóa đơn, Xuất hóa đơn
-ERROR TODO: Lõi View cập nhật thông tin phòng
-            + RoomController.updateInforRoom(frame, idRoom, idChutro)
-Hiếu ERROR TODO: updateRoomPrice(String roomId, double newValue, String type) chưa được xử lý
-    ==> RoomUpdateInforRoomView -> RoomUpdatePriceView -->updateButton --> updateRoomPrice-->
-     --> RoomController.updateRoomPrice --> 4 nút cập nhật
-Phúc TODO: View Chủ trọ dashboardView -> Xem thông tin chủ trọ ==> đã thực hiện
-            + Khi bấm cập nhật không reset tên tại thời điểm bấm ==> chưa màn được
-Hiếu TODO: Mở View Dashboard chủ trọ -> Xem danh sách phòng => Xem chi tiết phòng ==> Bổ sung các chức năng cập nhật hóa đơn
-        ==> Xuất hóa đơn ==> View đã có
-Hiếu TODO: Tạo xử lý cho Room.deleteRoom( String idRoom) nha
-* Phúc TODO: Tạo view cho các:
-        + Admin View Danh sách phòng trọ
-        + Admin View Danh sách người thuê trọ
-        + Admin View Danh sách hóa đơn trọ
- Hiếu   + Tạo nút delete cho những tài khoản không được active ==> đã xong chờ Hiếu thêm backend
-* Phúc TODO: Tạo view cho Dashboard người thuê trọ
-Hiếu TODO: Room ==> cập nhật người thuê phòng ==> chưa cập nhật được người thuê
-        + Room ==> goToUpdateNguoiThue ==> RoomUpdateNguoithueView(idPhong)
-        + ==> GoToUpdateNguoiThue(CCCDValue.trim(),frame,id_room) ==
-        + GoToUpdateNguoiThue ?? ==> updateNguoiThueTroInRoom
-        + getIdNguoiThueFromCCCD ??
-        + //TODO: Hiếu tạo truy vấn cho update thông tin người thuê vào phòng trọ lên database
-Hiếu TODO: Đưa phương thức checkLogin vào Login.class ==> Thêm check user đã được kích hoạt chưa
-        + ==> nếu chưa thông báo user chưa được kích hoạt
-Hiếu TODO: TODO: Invoice list view đã tạo, Hiếu kiểm tra lại logic xem truy xuất dữ liệu cho Invoices.InvoiceListsView  nha
-
-Hiếu TODO: Thực hiện thao tác delete User trong table User: Admincontroller.deleteUser
-------
-InvoiceFormView cần
-Hiếu: TODO: Tạo 1 hàm chạy số cho ký hiệu hóa đơn
-        TODO: Tạo 1 hàm chạy số cho hóa đơn
-HIếu: TODO: Tạo đối tượng cho Invoice và InvoiceDetail
-Hiếu: TODO: Khi bấm thêm người thuê trọ vào phòng ==> Id người thuê trọ không được cập nhật vào Phòng
-        ==> Check CSDL TTPHongTro ==> Id người thuê không được thêm
-        ==> Truy update TTPhongTro thiếu
-Hiếu: TODO getIdNguoiThueFromCCCD chưa có backend
-
-TODO: Không thêm người thuê phòng vaào phòng được vì cập nhật không được id người thuê
-    ==> không phải lỗi do update người thuê
-    ==> đang kiểm tra khi bấm vào xem chi tiết cảu danh sách phòng trọ có lấy được id phòng kẹp theo không?
-
-
-Hiếu TODO:  RoomController.goToRoomInforView(roomId);
-        // Điều hướng đến RoomInforView với roomId ==> lõi
-        ===> Room.getRoomInForViewbyRoomId(roomId);
-        ==> fix lại lấy idroom ở vị trí cột ẩn ==> cập nhật database vẫn trông
-           ===> hiếu xem lại logic giúp
-TODO: CSDL lúc nảy có fix chổ hóa đơn ==> thêm cột có thanh toán chưa nhớ giữ lại
-// 11/01/2024
-// TODO: Warning Hiếu lưu ý bên dưới:
-
-
-
-
-Phúc fixx
-
-
-// TODO: cần fix InvoiceButtonEditor_1
-        : openInvoiceDetails
-
-
-Tạo phòng trọ ==> Không lưu được phòng
-Cập nhật người thuê ==> chưa được : RoomController.goToUpdateNguoiThue(frame, idRoom)
-Cập nhật thông tin phòng: updateRoomPrice(int roomId, double newValue, String type) _ cả 3 thông tin
-    RoomView
-   +  Cập nhật giá thuê
-   + Cập nhật giá điện
-   + Cập nhật giá nước
-   + Cập nhật giá rác
-
-==> Tất cả thông tin được update trong InvoiceDetailUpdateView được cập nhật vào Bảng CTHD
-==> Từ CTHD mới xử lý bằng hàm để nạp dữ liệu vào bảng Hóa Đơn
-===> TỪ bảng hóa đơn mới truy xuất dữ liệu để xuất ra hiển thị InVoiceFormView
-
-
-// lưu tạm ==> thay đổi class connect thêm 1 database
-package backend;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
-public class connectDatabase {
-
-    public static class DatabaseConnection {
-
-        // Thông tin kết nối
-        private static final String Phuc_URL = "jdbc:sqlserver://DESKTOP-C7M760B\\SQLEXPRESS;databaseName=QLThueNhaTro_java;integratedSecurity=true;encrypt=false";
-        private static final String Hieu_URL = "jdbc:sqlserver://HIEUTRAN\\SQLEXPRESS;databaseName=QLThueNhaTro_java;integratedSecurity=true;encrypt=false";
-        private static final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-        private static final int MAX_RETRY_ATTEMPTS = 3;  // Number of connection retries
-
-        public static Connection getConnection() {
-            Connection connection = null;
-            String currentURL = Phuc_URL; // Start with the first URL
-            int attemptCount = 0;
-
-            while (attemptCount < MAX_RETRY_ATTEMPTS) {
-                try {
-                    Class.forName(DRIVER);
-                    if (connection == null) {
-                        connection = DriverManager.getConnection(currentURL);
-//                        System.out.println("Kết nối với " + (currentURL.equals(Phuc_URL) ? "Phuc's" : "Hieu's") + " server thành công!");
-                        return connection; // Return immediately on successful connection
-                    }
-
-                } catch (ClassNotFoundException e) {
-                    System.out.println("Không tìm thấy Driver!");
-                    e.printStackTrace();
-                    return null; // Exit early on driver error
-                } catch (SQLException e) {
-//                    System.out.printf("Kết nối với %s thất bại (lần %d): %s\n", (currentURL.equals(Phuc_URL) ? "Phuc's" : "Hieu's"), attemptCount + 1, e.getMessage());
-                    attemptCount++;
-
-                    // Switch to the other URL after the first attempt fails
-                    if (attemptCount == 1) {
-                        currentURL = (currentURL.equals(Phuc_URL) ? Hieu_URL : Phuc_URL);
-//                        System.out.println("Đang chuyển sang kết nối với " + (currentURL.equals(Phuc_URL) ? "Phuc's" : "Hieu's") + " server...");
-
-                    }
-                }
-            }
-
-            System.out.println("Không thể kết nối với bất kỳ server nào sau " + MAX_RETRY_ATTEMPTS + " lần thử.");
-            return null;
-        }
-    }
-}
