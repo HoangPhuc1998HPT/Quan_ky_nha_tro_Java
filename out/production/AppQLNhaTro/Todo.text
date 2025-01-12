@@ -65,6 +65,16 @@ TODO: CSDL lúc nảy có fix chổ hóa đơn ==> thêm cột có thanh toán c
 // 11/01/2024
 // TODO: Warning Hiếu lưu ý bên dưới:
 
+
+
+
+Phúc fixx
+
+
+// TODO: cần fix InvoiceButtonEditor_1
+        : openInvoiceDetails
+
+
 Tạo phòng trọ ==> Không lưu được phòng
 Cập nhật người thuê ==> chưa được : RoomController.goToUpdateNguoiThue(frame, idRoom)
 Cập nhật thông tin phòng: updateRoomPrice(int roomId, double newValue, String type) _ cả 3 thông tin
