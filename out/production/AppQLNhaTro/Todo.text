@@ -6,10 +6,10 @@
         + Tổng chi phí không xuất ra màn hiình (N/A)
         + Chức năng chi tiết không thể tải chi tiết hóa đơn
     - Danh sách phòng trọ
-    OK  + Chức năng xem chi tiết không hoạt động - không hiển thị chi tiết phòng trọ
+       OK + Chức năng xem chi tiết không hoạt động - không hiển thị chi tiết phòng trọ
         + Chức năng tạm ngưng hoạt động phòng - không hoạt động
     - Danh sách người thuê trọ
-        + Chức năng xem chi tiết người thuê trọ không hoạt động
+       OK + Chức năng xem chi tiết người thuê trọ không hoạt động
        OK + Chức năng tạm ngưng hoạt động người thuê không hoạt đôộng
     ChutrodashboardView
     - Xem thông tin chủ trọ
