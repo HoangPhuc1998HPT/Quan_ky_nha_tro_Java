@@ -210,7 +210,6 @@ public class InvoiceDetailUpdateView {
 
                 // Cập nhật thông tin hóa đơn mới
                 InvoiceDetail updatedDetail = new InvoiceDetail(
-                        0, // BillID sẽ được tự động sinh trong CSDL
                         id_room,
                         currentDetail.getOldElectricReading(),
                         currentDetail.getOldWaterReading(),
@@ -223,9 +222,8 @@ public class InvoiceDetailUpdateView {
                         discount,
                         invoiceDate
                 );
-
                 // Gọi hàm cập nhật CSDL
-                boolean isSuccess = InvoiceDetail.updateInvoiceDetail(updatedDetail);
+                boolean isSuccess = InvoiceDetail.updateInvoiceDetail(updatedDetail,lastPaymentDate);
                 if (isSuccess) {
                     JOptionPane.showMessageDialog(frame, "Cập nhật hóa đơn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 } else {

@@ -5,9 +5,11 @@ import backend.connectDatabase;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 public class InvoiceDetail {
-    private int billID;
     private int idRoom;
     private int oldElectricReading;
     private int oldWaterReading;
@@ -21,9 +23,8 @@ public class InvoiceDetail {
     private String invoiceDate;
 
     // Constructor đầy đủ
-    public InvoiceDetail(int billID, int idRoom, int oldElectricReading, int oldWaterReading, int newElectricReading, int newWaterReading,
+    public InvoiceDetail(int idRoom, int oldElectricReading, int oldWaterReading, int newElectricReading, int newWaterReading,
                          double rentPrice, double electricPrice, double waterPrice, double garbagePrice, double discount, String invoiceDate) {
-        this.billID = billID;
         this.idRoom = idRoom;
         this.oldElectricReading = oldElectricReading;
         this.oldWaterReading = oldWaterReading;
@@ -38,13 +39,6 @@ public class InvoiceDetail {
     }
 
     // Getter và Setter
-    public int getBillID() {
-        return billID;
-    }
-
-    public void setBillID(int billID) {
-        this.billID = billID;
-    }
 
     public int getIdRoom() {
         return idRoom;
@@ -142,35 +136,46 @@ public class InvoiceDetail {
         InvoiceDetail invoiceDetail = null;
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = """
-            SELECT GiaPhong, Giadien, GIanuoc, Giarac, Sodienhientai, Sonuochientai 
-            FROM TTPhongtro 
-            WHERE IDPhong = ?
+            SELECT 
+                cthd.SodienUsed, cthd.SonuocUsed, cthd.DaysInMonth, cthd.Tiennha, 
+                cthd.Tienrac, cthd.Chiphiphatsinh, cthd.Giamgia, cthd.Ghichu,
+                cthd.sodienthangtruoc, cthd.sonuocthangtruoc, cthd.ngaythutiendukien,
+                cthd.IDPhong, pt.GiaPhong, pt.Giadien, pt.GIanuoc, pt.Giarac
+            FROM CTHoaDon cthd
+            JOIN TTPhongtro pt ON cthd.IDPhong = pt.IDPhong
+            WHERE cthd.IDPhong = ?
+            ORDER BY cthd.ngaythutiendukien DESC
+            LIMIT 1
         """;
+
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, idRoom);
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                double rentPrice = rs.getDouble("GiaPhong");
+                // Trích xuất dữ liệu từ bảng CTHoaDon
+                int oldElectric = rs.getInt("sodienthangtruoc");
+                int oldWater = rs.getInt("sonuocthangtruoc");
+                double rentPrice = rs.getDouble("Tiennha");
                 double electricPrice = rs.getDouble("Giadien");
                 double waterPrice = rs.getDouble("GIanuoc");
-                double garbagePrice = rs.getDouble("Giarac"); // Đảm bảo sử dụng cột Giarac
-                int oldElectric = rs.getInt("Sodienhientai");
-                int oldWater = rs.getInt("Sonuochientai");
+                double garbagePrice = rs.getDouble("Tienrac");
+                double discount = rs.getDouble("Giamgia");
+                String invoiceDate = rs.getString("ngaythutiendukien");
 
+                // Tạo đối tượng InvoiceDetail với thông tin đầy đủ
                 invoiceDetail = new InvoiceDetail(
-                        0, // BillID sẽ được tự động sinh
                         idRoom,
                         oldElectric,
                         oldWater,
-                        0, // NewElectricReading - chưa có
-                        0, // NewWaterReading - chưa có
+                        0, // NewElectricReading - mặc định
+                        0, // NewWaterReading - mặc định
                         rentPrice,
                         electricPrice,
                         waterPrice,
                         garbagePrice,
-                        0, // Discount - mặc định
-                        null // InvoiceDate - chưa có
+                        discount,
+                        invoiceDate
                 );
             }
         } catch (Exception e) {
@@ -178,6 +183,7 @@ public class InvoiceDetail {
         }
         return invoiceDetail;
     }
+
 
 
     // Hàm lấy tên phòng
@@ -288,25 +294,35 @@ public class InvoiceDetail {
     // 11-01-2025
 
     // Hàm cập nhật hóa đơn mới vào bảng CTHoaDon
-    public static boolean updateInvoiceDetail(InvoiceDetail detail) {
+    // Hàm cập nhật hóa đơn mới vào bảng CTHoaDon
+    public static boolean updateInvoiceDetail(InvoiceDetail detail, String lastInvoiceDate) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = """
-                INSERT INTO CTHoaDon (BillID, SodienUsed, SonuocUsed, Tiennha, Tiennuoc, Tienrac, Chiphiphatsinh, GhiChu, sodienthangtruoc, sonuocthangtruoc, ngaythutiendukien, IDPhong)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """;
+            INSERT INTO CTHoaDon (SodienUsed, SonuocUsed, DaysInMonth, Tiennha, Tienrac, Chiphiphatsinh, Giamgia, Ghichu, sodienthangtruoc, sonuocthangtruoc, ngaythutiendukien, IDPhong)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """;
+
+            // Tính toán DaysInMonth
+            int daysInMonth = 0;
+            if (lastInvoiceDate != null && !lastInvoiceDate.isEmpty()) {
+                LocalDate currentInvoiceDate = LocalDate.parse(detail.getInvoiceDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                LocalDate previousInvoiceDate = LocalDate.parse(lastInvoiceDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                daysInMonth = (int) ChronoUnit.DAYS.between(previousInvoiceDate, currentInvoiceDate);
+            }
+
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, detail.getBillID());
-            pstmt.setInt(2, detail.getNewElectricReading() - detail.getOldElectricReading());
-            pstmt.setInt(3, detail.getNewWaterReading() - detail.getOldWaterReading());
-            pstmt.setDouble(4, detail.getRentPrice());
-            pstmt.setDouble(5, detail.getElectricPrice() * (detail.getNewElectricReading() - detail.getOldElectricReading()));
-            pstmt.setDouble(6, detail.getWaterPrice() * (detail.getNewWaterReading() - detail.getOldWaterReading()));
-            pstmt.setDouble(7, detail.getDiscount());
-            pstmt.setString(8, "Cập nhật hóa đơn từ hệ thống");
-            pstmt.setInt(9, detail.getOldElectricReading());
-            pstmt.setInt(10, detail.getOldWaterReading());
-            pstmt.setString(11, detail.getInvoiceDate());
-            pstmt.setInt(12, detail.getIdRoom());
+            pstmt.setInt(1, detail.getNewElectricReading() - detail.getOldElectricReading()); // SodienUsed
+            pstmt.setInt(2, detail.getNewWaterReading() - detail.getOldWaterReading()); // SonuocUsed
+            pstmt.setInt(3, daysInMonth); // DaysInMonth
+            pstmt.setDouble(4, detail.getRentPrice()); // Tiennha
+            pstmt.setDouble(5, detail.getGarbagePrice()); // Tienrac
+            pstmt.setDouble(6, detail.getDiscount()); // Chiphiphatsinh
+            pstmt.setDouble(7, detail.getDiscount()); // Giamgia
+            pstmt.setString(8, "Cập nhật hóa đơn từ hệ thống"); // Ghichu
+            pstmt.setInt(9, detail.getOldElectricReading()); // sodienthangtruoc
+            pstmt.setInt(10, detail.getOldWaterReading()); // sonuocthangtruoc
+            pstmt.setString(11, detail.getInvoiceDate()); // ngaythutiendukien
+            pstmt.setInt(12, detail.getIdRoom()); // IDPhong
 
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
@@ -315,6 +331,7 @@ public class InvoiceDetail {
         }
         return false;
     }
+
 
 
 

@@ -6,7 +6,7 @@
         + Tổng chi phí không xuất ra màn hiình (N/A)
         + Chức năng chi tiết không thể tải chi tiết hóa đơn
     - Danh sách phòng trọ
-       OK  + Chức năng xem chi tiết không hoạt động - không hiển thị chi tiết phòng trọ
+    OK  + Chức năng xem chi tiết không hoạt động - không hiển thị chi tiết phòng trọ
         + Chức năng tạm ngưng hoạt động phòng - không hoạt động
     - Danh sách người thuê trọ
         + Chức năng xem chi tiết người thuê trọ không hoạt động
@@ -38,12 +38,14 @@
              + Tên người thuê lỗi font ===> Hiệu chỉnh tất cả về Be VietNamPro
     NguoithuetroDashboardView
         - NguoithuetroDashboard_0View
-            + Chức năng Xem thông tin phòng tróng không hoạt động
+            OK + Chức năng Xem thông tin phòng tróng không hoạt động
             + Lỗi font chữ vị trí địa chỉ
+            + Đăng xuất
         - NguoithuetroDashboard_1View
             + Chưa xử lý backend cho check để chuyển vào chức năng này khi id người thuê đã thuộc 1 phòng
             + Thông tin phòng ==> chưa có gì
             + Danh sách hóa đơn ==> trống lỏng
+            + Đăng xuất
     RegisterView
         - OK  Tạo tài khoản
         - OK Cập nhật họ tên người thuê trọ ==> báo lỗi đỏ lè
