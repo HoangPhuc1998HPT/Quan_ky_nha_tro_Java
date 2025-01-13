@@ -2,12 +2,10 @@ package controller;
 
 import backend.connectDatabase;
 //import frontend.view.rooms.RoomUpdateInforRoomView;
-import backend.model.Chutro;
-import backend.model.InvoiceDetail;
-import backend.model.NguoiThueTro;
-import backend.model.Room;
+import backend.model.*;
 import frontend.view.Invoices.InvoiceBefoeSentToNguoiThueView;
 import frontend.view.Invoices.InvoiceDetailUpdateView;
+import frontend.view.Invoices.InvoiceFormView;
 import frontend.view.nguoithuetro.NguoiThueTroDashboard_0View;
 import frontend.view.nguoithuetro.NguoiThueTroDashboard_1View;
 import frontend.view.rooms.RoomInforView;
@@ -94,9 +92,13 @@ public class RoomController {
 
 
     // TODO: đang lỗi ở đây nè
-    public static void goToXuatHoaDon(JFrame frame, int idPhong) {
+    public static void goToXuatHoaDon(JFrame frame, int idPhong, int idChutro) {
+        Chutro chutro = Chutro.getChutrobyChutroID(idChutro);
+        NguoiThueTro nguoiThueTro = NguoiThueTro.getTenantByRoomId(idPhong);
+        InvoiceDetail invoiceDetail = InvoiceDetail.getInvoiceDetailByIdRoom(idPhong); //limit 1 nếu không được đổi sang TOP1
+        Room room = Room.getRoomById(idPhong);
 
-        new InvoiceBefoeSentToNguoiThueView(idPhong);
+        new InvoiceFormView(chutro,  nguoiThueTro,  invoiceDetail,  room);
         JOptionPane.showMessageDialog(frame, "Xuất hóa đơn cho phòng " + idPhong);
     }
 

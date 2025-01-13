@@ -184,6 +184,9 @@ alter table CTHoadon add IDPhong INT;
 ALTER TABLE CTHoadon ADD CONSTRAINT FK_CTHoadon_IDPhong
 FOREIGN KEY (IDPhong) REFERENCES TTPhongtro(IDPhong);
 
+ALTER TABLE CTHoadon ADD CONSTRAINT FK_CTHoadon_Hoadon
+FOREIGN KEY (IDCTHD) REFERENCES TTPhongtro(IDPhong);
+
 alter table CTHoadon add Ghichu NVARCHAR(250);
 
 ALTER TABLE CTHoadon
@@ -439,9 +442,11 @@ WHERE idPhong = 1;
 
 select * from Chutro
 select * from HoaDon	
-select * from CTHoadon
-select* from NguoiThueTro
 select * from TTPhongtro	
+select * from CTHoadon
+
+select* from NguoiThueTro
+
 select* from Users
 select* from Admins
 -- ĐỘ là phải thêm 1 cột trong HoaDOn để biết là hóa đơn được thanh toán chưa
@@ -471,3 +476,17 @@ SELECT hd.NgayXuatHoaDon,
 FROM HoaDon hd
 JOIN TTPhongtro pt ON hd.IDPhong = pt.IDPhong
 WHERE pt.IDNguoiThue = 2;
+
+SELECT TOP 1
+    ISNULL(pt.Sodienhientai, 0) AS sodienthangtruoc,
+    ISNULL(pt.Sonuochientai, 0) AS sonuocthangtruoc,
+    pt.GiaPhong AS tiennha,
+    pt.Giadien AS giadien,
+    pt.Gianuoc AS gianuoc,
+    pt.Giarac AS tienrac,
+    ISNULL(chd.Giamgia, 0) AS giamgia,
+    ISNULL(chd.Ngaythutiendukien, GETDATE()) AS ngayhoadon
+FROM TTPhongtro pt
+LEFT JOIN CTHoaDon chd ON pt.IDPhong = chd.IDPhong
+WHERE pt.IDPhong = 3
+ORDER BY chd.Ngaythutiendukien DESC;

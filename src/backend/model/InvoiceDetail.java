@@ -10,8 +10,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
+import static javax.swing.UIManager.getInt;
+
 public class InvoiceDetail {
     private int idRoom;
+    private int idCTHD;
     private int oldElectricReading;
     private int oldWaterReading;
     private int useElectricReading;
@@ -24,9 +27,10 @@ public class InvoiceDetail {
     private String invoiceDate;
 
     // Constructor đầy đủ
-    public InvoiceDetail(int idRoom, int oldElectricReading, int oldWaterReading, int newElectricReading, int newWaterReading,
+    public InvoiceDetail(int idRoom,int idCTHD, int oldElectricReading, int oldWaterReading, int newElectricReading, int newWaterReading,
                          double rentPrice, double electricPrice, double waterPrice, double garbagePrice, double discount, String invoiceDate) {
         this.idRoom = idRoom;
+        this.idCTHD = idCTHD;
         this.oldElectricReading = oldElectricReading;
         this.oldWaterReading = oldWaterReading;
         this.useElectricReading = newElectricReading;
@@ -47,6 +51,14 @@ public class InvoiceDetail {
 
     public void setIdRoom(int idRoom) {
         this.idRoom = idRoom;
+    }
+    // Getter và Setter cho idCTD
+    public int getidCTHD() {
+        return idCTHD;
+    }
+
+    public void setIdCTD(int idCTD) {
+        this.idCTHD = idCTD;
     }
 
     public int getOldElectricReading() {
@@ -138,6 +150,7 @@ public class InvoiceDetail {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = """
             SELECT 
+                chd.idCTHD,
                 ISNULL(pt.Sodienhientai,0) AS sodienthangtruoc, 
                 ISNULL(pt.Sonuochientai,0) AS sonuocthangtruoc, 
                 pt.GiaPhong AS Tiennha, 
@@ -145,6 +158,7 @@ public class InvoiceDetail {
                 pt.GIanuoc AS GIanuoc, 
                 pt.Giarac AS Tienrac
             FROM TTPhongtro pt
+            LEFT JOIN CTHoaDon chd ON pt.IDPhong = chd.IDPhong
             WHERE pt.IDPhong = ?
         """;
 
@@ -154,6 +168,7 @@ public class InvoiceDetail {
 
             if (rs.next()) {
                 // Trích xuất dữ liệu từ bảng TTPhongtro
+                int idCTHD = rs.getInt("idCTHD");
                 int oldElectric = rs.getInt("sodienthangtruoc");
                 int oldWater = rs.getInt("sonuocthangtruoc");
                 double rentPrice = rs.getDouble("Tiennha");
@@ -164,6 +179,7 @@ public class InvoiceDetail {
                 // Tạo đối tượng InvoiceDetail với thông tin đầy đủ
                 invoiceDetail = new InvoiceDetail(
                         idRoom,
+                        idCTHD,
                         oldElectric,
                         oldWater,
                         0, // NewElectricReading - mặc định
@@ -370,6 +386,54 @@ public class InvoiceDetail {
         }
 
         return false;
+    }
+
+
+    public static InvoiceDetail getInvoiceDetailByIdRoom(int idPhong) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            // Truy vấn SQL để lấy thông tin chi tiết hóa đơn từ CTHoaDon hoặc TTPhongtro
+            String sql = """
+            SELECT TOP 1
+                chd.idCTHD,
+                ISNULL(pt.Sodienhientai, 0) AS sodienthangtruoc,
+                ISNULL(pt.Sonuochientai, 0) AS sonuocthangtruoc,
+                pt.GiaPhong AS tiennha,
+                pt.Giadien AS giadien,
+                pt.Gianuoc AS gianuoc,
+                pt.Giarac AS tienrac,
+                ISNULL(chd.Giamgia, 0) AS giamgia,
+                ISNULL(chd.Ngaythutiendukien, GETDATE()) AS ngayhoadon
+            FROM TTPhongtro pt
+            LEFT JOIN CTHoaDon chd ON pt.IDPhong = chd.IDPhong
+            WHERE pt.IDPhong = ?
+            ORDER BY chd.Ngaythutiendukien DESC
+        """;
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idPhong);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Tạo đối tượng InvoiceDetail từ kết quả truy vấn
+                return new InvoiceDetail(
+                        idPhong,
+                        rs.getInt("idCTHD"),// ID phòng
+                        rs.getInt("sodienthangtruoc"),          // Số điện cũ
+                        rs.getInt("sonuocthangtruoc"),          // Số nước cũ
+                        0,                                      // Số điện mới (mặc định)
+                        0,                                      // Số nước mới (mặc định)
+                        rs.getDouble("tiennha"),                // Tiền nhà
+                        rs.getDouble("giadien"),                // Giá điện
+                        rs.getDouble("gianuoc"),                // Giá nước
+                        rs.getDouble("tienrac"),                // Giá rác
+                        rs.getDouble("giamgia"),                // Giảm giá
+                        rs.getString("ngayhoadon")              // Ngày hóa đơn
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null; // Trả về null nếu không tìm thấy dữ liệu
     }
 
 

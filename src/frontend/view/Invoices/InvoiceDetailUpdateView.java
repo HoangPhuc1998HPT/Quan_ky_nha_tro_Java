@@ -15,9 +15,10 @@ import static controller.RoomController.GoToBackRoomView;
 public class InvoiceDetailUpdateView {
 
     private JFrame frame;
-
+    private int idCTHD;
     public InvoiceDetailUpdateView(int id_chutro,int id_room, String roomName, String tenantName, String startDate, int oldElectric, int oldWater, String lastPaymentDate) {
         // Tạo JFrame
+        this.idCTHD = idCTHD;
 
         frame = new JFrame("Cập nhật chi tiết hóa đơn");
         frame.setSize(800, 600);
@@ -220,6 +221,7 @@ public class InvoiceDetailUpdateView {
                 // Cập nhật thông tin hóa đơn mới
                 InvoiceDetail updatedDetail = new InvoiceDetail(
                         id_room,
+                        idCTHD,
                         currentDetail.getOldElectricReading(),
                         currentDetail.getOldWaterReading(),
                         newElectric - currentDetail.getOldElectricReading(),
@@ -234,6 +236,7 @@ public class InvoiceDetailUpdateView {
                 // check
                 System.out.println("Chi tiết hóa đơn cập nhật:");
                 System.out.println("ID Phòng: " + updatedDetail.getIdRoom());
+                System.out.println("ID Phòng: " + updatedDetail.getidCTHD());
                 System.out.println("Số điện cũ: " + updatedDetail.getOldElectricReading());
                 System.out.println("Số điện mới: " + updatedDetail.getUseElectricReading());
                 System.out.println("Số nước cũ: " + updatedDetail.getOldWaterReading());

@@ -45,7 +45,7 @@ public class RoomView {
         frame.add(btnUpdateInvoice, gbc);
 
         JButton btnExportInvoice = new JButton("Xuất hóa đơn");
-        btnExportInvoice.addActionListener(e -> RoomController.goToXuatHoaDon(frame, idRoom));
+        btnExportInvoice.addActionListener(e -> RoomController.goToXuatHoaDon(frame, idRoom, idChutro));
         gbc.gridy = 4;
         frame.add(btnExportInvoice, gbc);
 
