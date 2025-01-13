@@ -1,6 +1,7 @@
 // 12-01-2024
 // TODO: Lỗi logic
     Admindashboard
+        + Delete User chưa active chưa được
     - Danh sách hóa đơn
         + Tổng chi phí không xuất ra màn hiình (N/A)
         + Chức năng chi tiết không thể tải chi tiết hóa đơn
@@ -17,6 +18,7 @@
         OK + Cập nhật mật khẩu
     -  OK Tạo phòng trọ ==>  DONE
     - Xem danh sách phòng trọ
+        + Hiển thị tên người thuê: Null
         +  Cập nhật người thuê bằng CCCD == > chưa được
         +  Cập nhật thông tin phòng:
             * OK Cập nhật giá thuê phòng

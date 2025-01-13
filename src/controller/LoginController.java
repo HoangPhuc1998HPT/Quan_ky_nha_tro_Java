@@ -118,8 +118,7 @@ import java.sql.ResultSet;
                         if (admin != null) {
                             new AdminDashboardView(); // chưa c
                             frame.setVisible(false);
-                            System.out.println(" nhờ mở new Dashboard ADmin");
-                            // STRIKE TODO: Tạo dashboard Admin rồi kích hoạt lại ==> giờ tắt xóa lỗi
+                            System.out.println("mở new Dashboard Admin");
                         }
                         break;
                     default:
@@ -134,7 +133,7 @@ import java.sql.ResultSet;
                 } else if (passwordCheck) {
                     JOptionPane.showMessageDialog(frame, "Mật khẩu không đúng! Vui lòng kiểm tra lại mật khẩu", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 } else if (isActive) {
-                    JOptionPane.showMessageDialog(frame, "Tài khoản chưa được kích hoạt! Vui lòng liên hệ Admin để được kích hoạt.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Tài khoản chưa được kích hoạt! Vui lòng liên hệ Admin : 0325575333 để được kích hoạt.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 } else {
                     System.out.println("Đăng nhập thất bại.");
                     JOptionPane.showMessageDialog(frame, "Đăng nhập thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
