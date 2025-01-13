@@ -142,8 +142,22 @@ public class  AdminController {
 
 
     public static void disableNguoiThueTro(String cccd) {
-        // Logic vô hiệu hóa người thuê trọ dựa trên CCCD
-        JOptionPane.showMessageDialog(null, "Đã tạm ngưng hoạt động người thuê với CCCD: " + cccd);
+        int userID = NguoiThueTro.getUserIDFromCCCD(cccd);
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "UPDATE Users SET is_active = 0 WHERE UserID = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, userID);
+            int result = ps.executeUpdate();
+            System.out.println("Result = " + result);
+            if(result > 0) {
+                JOptionPane.showMessageDialog(null, "Đã tạm ngưng tài khoản với CCCD " + cccd + " thành công! Vui lòng mở lại Admin Dashboard để kiểm tra thông tin!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Xảy ra lỗi khi tạm ngưng tài khoản!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("đã tạm ngưng" + cccd);
     }
 
     public static void goBackToAdminDashboard(JFrame currentFrame) {
