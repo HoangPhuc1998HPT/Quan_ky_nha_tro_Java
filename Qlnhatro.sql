@@ -1,4 +1,6 @@
 ﻿create database QLThueNhaTro_java;
+DROP DATABASE QLThueNhaTro_java;
+
 use QLThueNhaTro_java;
 -- Tạo table user
 Create table Users (
@@ -490,3 +492,7 @@ FROM TTPhongtro pt
 LEFT JOIN CTHoaDon chd ON pt.IDPhong = chd.IDPhong
 WHERE pt.IDPhong = 3
 ORDER BY chd.Ngaythutiendukien DESC;
+
+UPDATE HoaDon
+SET idCTHD = 6
+WHERE BillID = 1;
