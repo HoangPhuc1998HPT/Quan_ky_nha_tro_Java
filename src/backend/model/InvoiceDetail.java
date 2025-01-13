@@ -400,7 +400,7 @@ public class InvoiceDetail {
                 pt.GiaPhong AS tiennha,
                 pt.Giadien AS giadien,
                 pt.Gianuoc AS gianuoc,
-                pt.Giarac AS tienrac,
+                pt.Giarac AS Tienrac,
                 ISNULL(chd.Giamgia, 0) AS giamgia,
                 ISNULL(chd.Ngaythutiendukien, GETDATE()) AS ngayhoadon
             FROM TTPhongtro pt
@@ -425,7 +425,7 @@ public class InvoiceDetail {
                         rs.getDouble("tiennha"),                // Tiền nhà
                         rs.getDouble("giadien"),                // Giá điện
                         rs.getDouble("gianuoc"),                // Giá nước
-                        rs.getDouble("tienrac"),                // Giá rác
+                        rs.getDouble("Tienrac"),                // Giá rác
                         rs.getDouble("giamgia"),                // Giảm giá
                         rs.getString("ngayhoadon")              // Ngày hóa đơn
                 );

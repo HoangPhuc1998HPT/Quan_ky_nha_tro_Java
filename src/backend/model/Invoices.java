@@ -154,7 +154,7 @@ public class Invoices {
                         rs.getDate("NgayXuatHoaDon"),
                         rs.getDouble("TienNha"),
                         rs.getDouble("ChiPhiKhac"),
-                        rs.getDouble("TienRac"),
+                        rs.getDouble("Tienrac"),
                         rs.getDouble("GiamGia"),
                         rs.getDouble("TongChiPhi")
                 };
@@ -462,7 +462,7 @@ public class Invoices {
                         rs.getDouble("TienNha"),
                         rs.getDouble("TienDien"),
                         rs.getDouble("TienNuoc"),
-                        rs.getDouble("TienRac"),
+                        rs.getDouble("Tienrac"),
                         rs.getDouble("ChiPhiKhac"),
                         rs.getDouble("GiamGia"),
                         rs.getDouble("TongChiPhi"),
@@ -499,7 +499,7 @@ public class Invoices {
     public static Invoices getInvoiceById(int idhoadon) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = """
-            SELECT hd.BillID, hd.IDPhong, hd.TienNha, hd.TienDien, hd.TienNuoc, hd.TienRac, 
+            SELECT hd.BillID, hd.IDPhong, hd.TienNha, hd.TienDien, hd.TienNuoc, hd.Tienrac, 
                    hd.ChiPhiKhac, hd.GiamGia, hd.TongChiPhi, hd.NgayXuatHoaDon, hd.ThanhToan
             FROM HoaDon hd
             WHERE hd.BillID = ?
@@ -515,7 +515,7 @@ public class Invoices {
                         rs.getDouble("TienNha"),
                         rs.getDouble("TienDien"),
                         rs.getDouble("TienNuoc"),
-                        rs.getDouble("TienRac"),
+                        rs.getDouble("tienrac"),
                         rs.getDouble("ChiPhiKhac"),
                         rs.getDouble("GiamGia"),
                         rs.getDouble("TongChiPhi"),
@@ -526,6 +526,7 @@ public class Invoices {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return null; // Trả về null nếu không tìm thấy hóa đơn
     }
 
@@ -628,10 +629,11 @@ public class Invoices {
     public static int getIdHoadonFromidCTHD(int idCTHD) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = """
-            SELECT BillID 
-            FROM HoaDon
-            WHERE idCHTD = ?
+        SELECT hd.BillID 
+        FROM HoaDon hd
+        WHERE idCTHD = ?
         """;
+
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, idCTHD);
             ResultSet rs = pstmt.executeQuery();

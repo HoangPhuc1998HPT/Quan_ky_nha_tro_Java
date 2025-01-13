@@ -211,7 +211,7 @@ public class InvoiceDetailUpdateView {
                 //   double rentPrice = rs.getDouble("Tiennha");
                 //   double electricPrice = rs.getDouble("Giadien");
                 //   double waterPrice = rs.getDouble("GIanuoc");
-                //   double garbagePrice = rs.getDouble("Tienrac");
+                //   double garbagePrice = rs.getDouble("Giarac");
 
                 if (currentDetail == null) {
                     JOptionPane.showMessageDialog(frame, "Không thể lấy thông tin hóa đơn hiện tại.", "Lỗi", JOptionPane.ERROR_MESSAGE);

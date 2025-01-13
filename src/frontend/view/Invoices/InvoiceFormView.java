@@ -21,7 +21,13 @@ public class InvoiceFormView {
         //InvoiceDetail invoiceDetail = getInforInvoiceDetail(invoice.get(0));
         // Tạo JFrame
         int idhoadon = Invoices.getIdHoadonFromidCTHD(invoiceDetail.getidCTHD());
+
+        System.out.println("id CTHD " + idhoadon);
+
         Invoices invoice = Invoices.getInvoiceById(idhoadon);
+
+        System.out.println("id CTHD " + invoice);
+
         JFrame frame = new JFrame("HÓA ĐƠN GIÁ TRỊ GIA TĂNG");
         frame.setSize(850, 1000);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
