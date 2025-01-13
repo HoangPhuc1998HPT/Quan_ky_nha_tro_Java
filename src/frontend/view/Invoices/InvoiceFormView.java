@@ -258,14 +258,5 @@ public class InvoiceFormView {
         return panel;
     }
 
-    public static void main(String[] args) {
-        NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId(Integer.parseInt("02"));
-        Chutro landlord = Chutro.getChutroByUserId(Integer.parseInt("12"));
-        Room room = Room.getRoomDetails(Integer.parseInt("03"));
-        Invoices invoice = Invoices.getInvoiceDetails(Integer.parseInt("02"));
 
-
-        //new InvoiceFormView(landlord,tenant,invoice,room);
-
-    }
 }

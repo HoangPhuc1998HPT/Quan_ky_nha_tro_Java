@@ -97,8 +97,5 @@ public class InvoiceCreateNewInvoice {
         JOptionPane.showMessageDialog(frame, message, "Lỗi", JOptionPane.ERROR_MESSAGE);
     }
 
-    // Main để test
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new InvoiceCreateNewInvoice(9, 1));
-    }
+
 }

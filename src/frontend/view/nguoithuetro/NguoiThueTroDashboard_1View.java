@@ -119,7 +119,5 @@ public class NguoiThueTroDashboard_1View extends JFrame {
         setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new NguoiThueTroDashboard_1View(19);
-    }
+
 }

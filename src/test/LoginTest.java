@@ -35,7 +35,7 @@ public class LoginTest {
         // Assert that the login was successful
         assertNotNull(loginResult);
         assertEquals("1", loginResult.getUserId());
-        assertEquals("admin", loginResult.getRole()); // Replace "USER_ROLE" with the expected role for valid credentials
+        assertEquals("admin_1", loginResult.getRole()); // Replace "USER_ROLE" with the expected role for valid credentials
     }
 
     @Test

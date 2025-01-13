@@ -103,8 +103,6 @@ public class ChutroDashboardView {
 
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new ChutroDashboardView("testchutro02"));
-    }
+
 
 }
