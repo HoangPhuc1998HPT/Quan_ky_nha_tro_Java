@@ -17,13 +17,13 @@
         OK + Cập nhật mật khẩu
     -  OK Tạo phòng trọ ==>  DONE
     - Xem danh sách phòng trọ
-        +  Cập nhật người thuê bằng CCCD == > chưa được
+        +  Cập nhật người thuê bằng CCCD == > Đã được nhưng cần giải quyết thêm
         +  Cập nhật thông tin phòng:
             * OK Cập nhật giá thuê phòng
             * OK Capajp nhật giá điện
             * OK Cập nhật giá nước
             * OK Cập nhật gi rác
-            * OK Nút quay lại ==> Lỗi khi bấm cập nhật nhiều lần ==> Mở quá nheieuf RoomView
+            * OK Nút quay lại ==> Lỗi khi bấm cập nhật nhiều lần ==> Mở quá nheieuf RoomView => đã sửa
         + Cập nhật hóa đơn ===> cập nhật thất bại
         + Xuất hóa đơn ==> nhằm View ==> chưa load ra dữ liệu
         + Nút gửi hóa đơn chưa có công dụng
