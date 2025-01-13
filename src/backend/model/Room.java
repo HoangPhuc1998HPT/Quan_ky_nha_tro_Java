@@ -182,7 +182,7 @@ public class Room {
                 TTPhongtro.GiaPhong,
                 TTPhongtro.Giadien,
                 TTPhongtro.Gianuoc,
-                ISNULL(TTphongtro.Giarac, 0) AS Tienrac
+                ISNULL(TTphongtro.Giarac, 0) AS Giarac
             FROM TTPhongtro
             LEFT JOIN NguoiThueTro ON TTPhongtro.IDPhong = NguoiThueTro.IDnguoithue
             WHERE TTPhongtro.IDPhong = ?
@@ -201,7 +201,7 @@ public class Room {
                             rs.getDouble("GiaPhong"),           // Giá phòng
                             rs.getDouble("Giadien"),            // Giá điện
                             rs.getDouble("Gianuoc"),            // Giá nước
-                            rs.getDouble("Tienrac")             // Tiền rác (mặc định 0 nếu NULL)
+                            rs.getDouble("Giarac")             // Tiền rác (mặc định 0 nếu NULL)
                     );
                 }
             }
@@ -331,7 +331,7 @@ public class Room {
                 TTPhongtro.GiaPhong, 
                 TTPhongtro.Giadien, 
                 TTPhongtro.Gianuoc, 
-                ISNULL(TTPhongtro.Tienrac, 0) AS Tienrac 
+                ISNULL(TTPhongtro.Giarac, 0) AS Giarac 
             FROM TTPhongtro
             LEFT JOIN NguoiThueTro ON TTPhongtro.IDNguoiThue = NguoiThueTro.IDNguoiThue
             LEFT JOIN HoaDon ON TTPhongtro.IDPhong = HoaDon.IDPhong
@@ -350,7 +350,7 @@ public class Room {
                         rs.getDouble("GiaPhong"),        // Giá phòng
                         rs.getDouble("Giadien"),         // Giá điện
                         rs.getDouble("Gianuoc"),         // Giá nước
-                        rs.getDouble("Tienrac")          // Tiền rác
+                        rs.getDouble("Giarac")          // Tiền rác
                 );
             }
         } catch (Exception e) {
