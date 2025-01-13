@@ -48,7 +48,7 @@ public class ButtonEditorNguoiThueTro_0 extends DefaultCellEditor {
                 // Lấy Room ID từ cột ẩn (index 0)
                 int roomId = (int) table.getValueAt(selectedRow, 0);
                 System.out.println("Room ID: " + roomId); // In ra Room ID để kiểm tra
-                RoomController.goToRoomInforView(roomId); // Điều hướng đến RoomInforView với roomId
+                //RoomController.goToRoomInforView(roomId); // Điều hướng đến RoomInforView với roomId
             }
         }
         fireEditingStopped(); // Dừng chỉnh sửa

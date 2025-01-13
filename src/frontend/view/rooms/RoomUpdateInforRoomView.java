@@ -39,7 +39,7 @@ public class RoomUpdateInforRoomView {
         gbc.gridwidth = 4;
         frame.add(titleLabel, gbc);
 
-        JLabel tenantLabel = new JLabel("Người thuê: " + room.getTenantName());
+        JLabel tenantLabel = new JLabel("Người thuê: " + Room.getNameNguoiThueFromIDRoom(roomId));
         tenantLabel.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
         gbc.gridy = 1;
         frame.add(tenantLabel, gbc);

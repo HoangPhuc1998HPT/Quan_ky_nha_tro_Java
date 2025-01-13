@@ -51,7 +51,7 @@ public class AdminShowAllPhongTroView extends JFrame {
 
         JTable table = new JTable(tableModel);
         table.getColumn("Chức năng").setCellRenderer(new ButtonRendererRoom());
-        table.getColumn("Chức năng").setCellEditor(new ButtonEditorRoom(new JCheckBox()));
+        table.getColumn("Chức năng").setCellEditor(new ButtonEditorRoom(new JCheckBox())); // Xử lý chức năng xem chi tiết phòng
         table.removeColumn(table.getColumnModel().getColumn(0)); // Ẩn cột ID
 
         JScrollPane scrollPane = new JScrollPane(table);

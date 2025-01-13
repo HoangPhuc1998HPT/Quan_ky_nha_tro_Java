@@ -1,6 +1,10 @@
 // ButtonEditorRoom.java
 package frontend.components.Room;
 
+import backend.model.Room;
+import frontend.view.rooms.RoomUpdateInforRoomView;
+
+import javax.management.StringValueExp;
 import javax.swing.*;
 import java.awt.*;
 
@@ -34,11 +38,33 @@ public class ButtonEditorRoom extends DefaultCellEditor {
         if (table != null) {
             int selectedRow = table.getSelectedRow();
             if (selectedRow != -1) {
-                Object roomId = table.getValueAt(selectedRow, 0);
-                System.out.println("Xem chi tiết phòng: " + roomId);
-                // Thực hiện logic chi tiết ở đây
+                Object roomIdObj = table.getValueAt(selectedRow, 0);
+                if (roomIdObj == null) {
+                    System.out.println("Không thể lấy roomId từ hàng đã chọn.");
+                    return;
+                }
+
+                try {
+                    // Chuyển đổi roomId sang int
+                    int roomId = Integer.parseInt(roomIdObj.toString());
+                    System.out.println("Xem chi tiết phòng: " + roomId);
+
+                    // Gọi phương thức getIdChutrobyRoomId
+                    int idChutro = Room.getIdChutrobyRoomId(roomId);
+                    if (idChutro == -1) {
+                        System.out.println("Không tìm thấy ID chủ trọ cho phòng: " + roomId);
+                        return;
+                    }
+
+                    // Tạo view cập nhật thông tin phòng
+                    new RoomUpdateInforRoomView(roomId, idChutro); // Truyền trực tiếp roomId và idChutro
+                } catch (NumberFormatException e) {
+                    System.out.println("roomId không phải là số hợp lệ: " + roomIdObj);
+                }
             }
         }
         fireEditingStopped();
     }
+
+
 }
