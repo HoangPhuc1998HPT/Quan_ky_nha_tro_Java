@@ -65,7 +65,6 @@ public class  AdminController {
 
 
     public static void deleteUser(int rowIndex, JTable table) {
-        // TODO: Thực hiện thao tác delete User trong table User
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         String username = (String) model.getValueAt(rowIndex, 0);
         int userID = User.getUserIdByUsername(username);
