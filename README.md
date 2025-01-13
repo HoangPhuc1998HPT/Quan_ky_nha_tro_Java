@@ -451,7 +451,6 @@ Phúc fixx
 
 // TODO: cần fix InvoiceButtonEditor_1
 : openInvoiceDetails
-
-
-
-
+updateButton.addActionListener
+    +
+InvoiceDetail currentDetail = InvoiceDetail.getInvoiceDetail(id_room);

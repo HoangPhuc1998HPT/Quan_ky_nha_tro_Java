@@ -29,7 +29,7 @@
            OK *  Cập nhật giá nước
            OK *  Cập nhật gi rác
            OK *  Nút quay lại ==> Lỗi khi bấm cập nhật nhiều lần ==> Mở quá nheieuf RoomView
-        + Cập nhật hóa đơn ===> cập nhật thất bại
+        OK + Cập nhật hóa đơn ===> cập nhật thất bại
         + Xuất hóa đơn ==> nhằm View ==> chưa load ra dữ liệu
         + Nút gửi hóa đơn chưa có công dụng
         + Nút xóa phòng chưa hoạt động

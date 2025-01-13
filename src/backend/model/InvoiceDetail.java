@@ -5,6 +5,7 @@ import backend.connectDatabase;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -13,8 +14,8 @@ public class InvoiceDetail {
     private int idRoom;
     private int oldElectricReading;
     private int oldWaterReading;
-    private int newElectricReading;
-    private int newWaterReading;
+    private int useElectricReading;
+    private int useWaterReading;
     private double rentPrice;
     private double electricPrice;
     private double waterPrice;
@@ -28,8 +29,8 @@ public class InvoiceDetail {
         this.idRoom = idRoom;
         this.oldElectricReading = oldElectricReading;
         this.oldWaterReading = oldWaterReading;
-        this.newElectricReading = newElectricReading;
-        this.newWaterReading = newWaterReading;
+        this.useElectricReading = newElectricReading;
+        this.useWaterReading = newWaterReading;
         this.rentPrice = rentPrice;
         this.electricPrice = electricPrice;
         this.waterPrice = waterPrice;
@@ -64,20 +65,20 @@ public class InvoiceDetail {
         this.oldWaterReading = oldWaterReading;
     }
 
-    public int getNewElectricReading() {
-        return newElectricReading;
+    public int getUseElectricReading() {
+        return useElectricReading;
     }
 
-    public void setNewElectricReading(int newElectricReading) {
-        this.newElectricReading = newElectricReading;
+    public void setUseElectricReading(int newElectricReading) {
+        this.useElectricReading = newElectricReading;
     }
 
-    public int getNewWaterReading() {
-        return newWaterReading;
+    public int getUseWaterReading() {
+        return useWaterReading;
     }
 
-    public void setNewWaterReading(int newWaterReading) {
-        this.newWaterReading = newWaterReading;
+    public void setUseWaterReading(int useWaterReading) {
+        this.useWaterReading = useWaterReading;
     }
 
     public double getRentPrice() {
@@ -132,20 +133,19 @@ public class InvoiceDetail {
 
     // Hàm lấy thông tin chi tiết hóa đơn từ database
 
-    public static InvoiceDetail getInvoiceDetail(int idRoom) {
+    public static InvoiceDetail getInvoiceDetailForUpdate(int idRoom) {
         InvoiceDetail invoiceDetail = null;
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = """
             SELECT 
-                cthd.SodienUsed, cthd.SonuocUsed, cthd.DaysInMonth, cthd.Tiennha, 
-                cthd.Tienrac, cthd.Chiphiphatsinh, cthd.Giamgia, cthd.Ghichu,
-                cthd.sodienthangtruoc, cthd.sonuocthangtruoc, cthd.ngaythutiendukien,
-                cthd.IDPhong, pt.GiaPhong, pt.Giadien, pt.GIanuoc, pt.Giarac
-            FROM CTHoaDon cthd
-            JOIN TTPhongtro pt ON cthd.IDPhong = pt.IDPhong
-            WHERE cthd.IDPhong = ?
-            ORDER BY cthd.ngaythutiendukien DESC
-            LIMIT 1
+                ISNULL(pt.Sodienhientai,0) AS sodienthangtruoc, 
+                ISNULL(pt.Sonuochientai,0) AS sonuocthangtruoc, 
+                pt.GiaPhong AS Tiennha, 
+                pt.Giadien AS Giadien, 
+                pt.GIanuoc AS GIanuoc, 
+                pt.Giarac AS Tienrac
+            FROM TTPhongtro pt
+            WHERE pt.IDPhong = ?
         """;
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -153,15 +153,13 @@ public class InvoiceDetail {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                // Trích xuất dữ liệu từ bảng CTHoaDon
+                // Trích xuất dữ liệu từ bảng TTPhongtro
                 int oldElectric = rs.getInt("sodienthangtruoc");
                 int oldWater = rs.getInt("sonuocthangtruoc");
                 double rentPrice = rs.getDouble("Tiennha");
                 double electricPrice = rs.getDouble("Giadien");
                 double waterPrice = rs.getDouble("GIanuoc");
                 double garbagePrice = rs.getDouble("Tienrac");
-                double discount = rs.getDouble("Giamgia");
-                String invoiceDate = rs.getString("ngaythutiendukien");
 
                 // Tạo đối tượng InvoiceDetail với thông tin đầy đủ
                 invoiceDetail = new InvoiceDetail(
@@ -174,8 +172,8 @@ public class InvoiceDetail {
                         electricPrice,
                         waterPrice,
                         garbagePrice,
-                        discount,
-                        invoiceDate
+                        0, // Discount - mặc định
+                        null // InvoiceDate - chưa có
                 );
             }
         } catch (Exception e) {
@@ -183,6 +181,7 @@ public class InvoiceDetail {
         }
         return invoiceDetail;
     }
+
 
 
 
@@ -296,46 +295,82 @@ public class InvoiceDetail {
     // Hàm cập nhật hóa đơn mới vào bảng CTHoaDon
     // Hàm cập nhật hóa đơn mới vào bảng CTHoaDon
     public static boolean updateInvoiceDetail(InvoiceDetail detail, String lastInvoiceDate) {
-        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-            String sql = """
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = connectDatabase.DatabaseConnection.getConnection();
+            conn.setAutoCommit(false); // Bắt đầu transaction
+
+            // Chuyển đổi ngày tháng về định dạng yyyy-MM-dd
+            String formattedInvoiceDate = LocalDate.parse(detail.getInvoiceDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+            // Cập nhật vào bảng CTHoaDon
+            String sqlInsertCTHD = """
             INSERT INTO CTHoaDon (SodienUsed, SonuocUsed, DaysInMonth, Tiennha, Tienrac, Chiphiphatsinh, Giamgia, Ghichu, sodienthangtruoc, sonuocthangtruoc, ngaythutiendukien, IDPhong)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
-            // Tính toán DaysInMonth
             int daysInMonth = 0;
             if (lastInvoiceDate != null && !lastInvoiceDate.isEmpty()) {
-                LocalDate currentInvoiceDate = LocalDate.parse(detail.getInvoiceDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                LocalDate currentInvoiceDate = LocalDate.parse(formattedInvoiceDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 LocalDate previousInvoiceDate = LocalDate.parse(lastInvoiceDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 daysInMonth = (int) ChronoUnit.DAYS.between(previousInvoiceDate, currentInvoiceDate);
             }
 
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, detail.getNewElectricReading() - detail.getOldElectricReading()); // SodienUsed
-            pstmt.setInt(2, detail.getNewWaterReading() - detail.getOldWaterReading()); // SonuocUsed
-            pstmt.setInt(3, daysInMonth); // DaysInMonth
-            pstmt.setDouble(4, detail.getRentPrice()); // Tiennha
-            pstmt.setDouble(5, detail.getGarbagePrice()); // Tienrac
-            pstmt.setDouble(6, detail.getDiscount()); // Chiphiphatsinh
-            pstmt.setDouble(7, detail.getDiscount()); // Giamgia
-            pstmt.setString(8, "Cập nhật hóa đơn từ hệ thống"); // Ghichu
-            pstmt.setInt(9, detail.getOldElectricReading()); // sodienthangtruoc
-            pstmt.setInt(10, detail.getOldWaterReading()); // sonuocthangtruoc
-            pstmt.setString(11, detail.getInvoiceDate()); // ngaythutiendukien
-            pstmt.setInt(12, detail.getIdRoom()); // IDPhong
+            pstmt = conn.prepareStatement(sqlInsertCTHD);
+            pstmt.setInt(1, detail.getUseElectricReading() - detail.getOldElectricReading());
+            pstmt.setInt(2, detail.getUseWaterReading() - detail.getOldWaterReading());
+            pstmt.setInt(3, daysInMonth);
+            pstmt.setDouble(4, detail.getRentPrice());
+            pstmt.setDouble(5, detail.getGarbagePrice());
+            pstmt.setDouble(6, detail.getDiscount());
+            pstmt.setDouble(7, detail.getDiscount());
+            pstmt.setString(8, "Cập nhật hóa đơn từ hệ thống");
+            pstmt.setInt(9, detail.getOldElectricReading());
+            pstmt.setInt(10, detail.getOldWaterReading());
+            pstmt.setString(11, formattedInvoiceDate); // Sử dụng ngày đã định dạng
+            pstmt.setInt(12, detail.getIdRoom());
 
-            int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
+            int rowsInserted = pstmt.executeUpdate();
+
+            if (rowsInserted > 0) {
+                // Cập nhật số điện/nước hiện tại vào bảng TTPhongtro
+                String sqlUpdateTTPhongtro = "UPDATE TTPhongtro SET Sodienhientai = ?, Sonuochientai = ? WHERE IDPhong = ?";
+                pstmt = conn.prepareStatement(sqlUpdateTTPhongtro);
+                pstmt.setInt(1, detail.getUseElectricReading());
+                pstmt.setInt(2, detail.getUseWaterReading());
+                pstmt.setInt(3, detail.getIdRoom());
+
+                int rowsUpdated = pstmt.executeUpdate();
+                if (rowsUpdated > 0) {
+                    conn.commit(); // Commit transaction nếu cả 2 thành công
+                    return true;
+                }
+            }
+
+            conn.rollback(); // Rollback nếu bất kỳ thao tác nào thất bại
         } catch (Exception e) {
             e.printStackTrace();
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } finally {
+            try {
+                if (pstmt != null) pstmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
         return false;
     }
-
-
-
-
-
 
 
 }

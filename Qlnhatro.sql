@@ -166,6 +166,16 @@ CREATE TABLE CTHoadon (
 alter table CTHoadon Drop CONSTRAINT FK__CTHoadon__BillID__59FA5E80
 alter table CTHoadon Drop column BillID
 
+SELECT 
+    OBJECT_NAME(constraint_object_id) AS ForeignKeyName,
+    OBJECT_NAME(parent_object_id) AS TableName,
+    COL_NAME(parent_object_id, parent_column_id) AS ColumnName
+FROM sys.foreign_key_columns
+WHERE COL_NAME(parent_object_id, parent_column_id) = 'BillID';
+
+ALTER TABLE CTHoaDon DROP CONSTRAINT FK__CTHoadon__BillID__5FB337D6;
+
+
 ALTER TABLE CTHoadon
 DROP COLUMN Ngaythutienthangtruoc, Ngaykiemtrasodiennuoc;
 
@@ -427,7 +437,6 @@ SET GiaNuoc = 20000
 WHERE idPhong = 1;
 
 
-
 select * from Chutro
 select * from HoaDon	
 select * from CTHoadon
@@ -454,3 +463,11 @@ SELECT * FROM TTPhongtro WHERE IDPhong =3;
 UPDATE TTPhongtro
 SET IDNguoiThue = 2
 WHERE IDPhong = 3;
+
+SELECT hd.NgayXuatHoaDon, 
+       hd.TongChiPhi, 
+       CASE WHEN hd.TongChiPhi > 0 THEN 1 ELSE 0 END AS DaThanhToan, 
+       hd.BillID
+FROM HoaDon hd
+JOIN TTPhongtro pt ON hd.IDPhong = pt.IDPhong
+WHERE pt.IDNguoiThue = 2;

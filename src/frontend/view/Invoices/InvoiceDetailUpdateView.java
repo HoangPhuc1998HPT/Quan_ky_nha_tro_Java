@@ -1,6 +1,7 @@
 package frontend.view.Invoices;
 
 import backend.model.InvoiceDetail;
+import controller.RoomController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 
 import static backend.model.InvoiceDetail.updateInvoiceDetail;
 import static controller.RoomController.GoToBackRoomView;
+
 
 public class InvoiceDetailUpdateView {
 
@@ -201,7 +203,14 @@ public class InvoiceDetailUpdateView {
                 String invoiceDate = dateField.getText();
 
                 // Lấy thông tin chi tiết hóa đơn hiện tại
-                InvoiceDetail currentDetail = InvoiceDetail.getInvoiceDetail(id_room);
+                InvoiceDetail currentDetail = InvoiceDetail.getInvoiceDetailForUpdate(id_room);
+                // // Trích xuất dữ liệu từ bảng TTPhongtro
+                //   int oldElectric = rs.getInt("sodienthangtruoc");
+                //   int oldWater = rs.getInt("sonuocthangtruoc");
+                //   double rentPrice = rs.getDouble("Tiennha");
+                //   double electricPrice = rs.getDouble("Giadien");
+                //   double waterPrice = rs.getDouble("GIanuoc");
+                //   double garbagePrice = rs.getDouble("Tienrac");
 
                 if (currentDetail == null) {
                     JOptionPane.showMessageDialog(frame, "Không thể lấy thông tin hóa đơn hiện tại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -213,8 +222,8 @@ public class InvoiceDetailUpdateView {
                         id_room,
                         currentDetail.getOldElectricReading(),
                         currentDetail.getOldWaterReading(),
-                        newElectric,
-                        newWater,
+                        newElectric - currentDetail.getOldElectricReading(),
+                        newWater - currentDetail.getOldWaterReading(),
                         currentDetail.getRentPrice(),
                         currentDetail.getElectricPrice(),
                         currentDetail.getWaterPrice(),
@@ -222,13 +231,29 @@ public class InvoiceDetailUpdateView {
                         discount,
                         invoiceDate
                 );
+                // check
+                System.out.println("Chi tiết hóa đơn cập nhật:");
+                System.out.println("ID Phòng: " + updatedDetail.getIdRoom());
+                System.out.println("Số điện cũ: " + updatedDetail.getOldElectricReading());
+                System.out.println("Số điện mới: " + updatedDetail.getUseElectricReading());
+                System.out.println("Số nước cũ: " + updatedDetail.getOldWaterReading());
+                System.out.println("Số nước mới: " + updatedDetail.getUseWaterReading());
+                System.out.println("Giá thuê: " + updatedDetail.getRentPrice());
+                System.out.println("Giá điện: " + updatedDetail.getElectricPrice());
+                System.out.println("Giá nước: " + updatedDetail.getWaterPrice());
+                System.out.println("Giảm giá: " + updatedDetail.getDiscount());
+                System.out.println("Ngày hóa đơn: " + updatedDetail.getInvoiceDate());
+
                 // Gọi hàm cập nhật CSDL
                 boolean isSuccess = InvoiceDetail.updateInvoiceDetail(updatedDetail,lastPaymentDate);
+
                 if (isSuccess) {
-                    JOptionPane.showMessageDialog(frame, "Cập nhật hóa đơn thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(frame, "Cập nhật hóa đơn và số điện/nước thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    RoomController.GoToBackRoomView(frame,id_room, id_chutro); // Quay lại RoomView
                 } else {
                     JOptionPane.showMessageDialog(frame, "Cập nhật hóa đơn thất bại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
+
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(frame, "Vui lòng nhập đúng định dạng số!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {

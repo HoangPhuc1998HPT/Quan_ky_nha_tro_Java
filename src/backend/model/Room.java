@@ -185,11 +185,8 @@ public class Room {
                 ISNULL(TTphongtro.Giarac, 0) AS Tienrac
             FROM TTPhongtro
             LEFT JOIN NguoiThueTro ON TTPhongtro.IDPhong = NguoiThueTro.IDnguoithue
-            LEFT JOIN HoaDon ON TTPhongtro.IDPhong = HoaDon.BillID
             WHERE TTPhongtro.IDPhong = ?
-            ORDER BY HoaDon.Ngayxuathoadon DESC
         """;
-
             // Chuẩn bị câu lệnh PreparedStatement
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, idRoom);
@@ -334,12 +331,11 @@ public class Room {
                 TTPhongtro.GiaPhong, 
                 TTPhongtro.Giadien, 
                 TTPhongtro.Gianuoc, 
-                ISNULL(HoaDon.Tienrac, 0) AS Tienrac 
+                ISNULL(TTPhongtro.Tienrac, 0) AS Tienrac 
             FROM TTPhongtro
             LEFT JOIN NguoiThueTro ON TTPhongtro.IDNguoiThue = NguoiThueTro.IDNguoiThue
             LEFT JOIN HoaDon ON TTPhongtro.IDPhong = HoaDon.IDPhong
             WHERE TTPhongtro.IDPhong = ?
-            ORDER BY HoaDon.NgayXuatHoaDon DESC
         """;
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
