@@ -20,6 +20,8 @@
     - Xem danh sách phòng trọ
        OK  + Hiển thị tên người thuê: Null
         +  Cập nhật người thuê bằng CCCD == > chưa được
+        +  Cập nhật người thuê phải cập nhật luôn ngày bắt đầu thuê trọ
+        +  Khi cập nhật người khác thuê trọ ==> Cập nhật ngày kết thúc thuê trọ cho ng cũ và cập nhakat ngày bắt đầu thuê cho người mới
         +  Cập nhật thông tin phòng:
             * Hiển thị tên người thue vãn null
            OK *  Cập nhật giá thuê phòng
@@ -36,12 +38,14 @@
              + Tên người thuê lỗi font ===> Hiệu chỉnh tất cả về Be VietNamPro
     NguoithuetroDashboardView
         - NguoithuetroDashboard_0View
-            + Chức năng Xem thông tin phòng tróng không hoạt động
+            OK + Chức năng Xem thông tin phòng tróng không hoạt động
             + Lỗi font chữ vị trí địa chỉ
+            + Đăng xuất
         - NguoithuetroDashboard_1View
             + Chưa xử lý backend cho check để chuyển vào chức năng này khi id người thuê đã thuộc 1 phòng
             + Thông tin phòng ==> chưa có gì
             + Danh sách hóa đơn ==> trống lỏng
+            + Đăng xuất
     RegisterView
         - OK  Tạo tài khoản
         - OK Cập nhật họ tên người thuê trọ ==> báo lỗi đỏ lè

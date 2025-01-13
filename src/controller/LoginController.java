@@ -93,10 +93,11 @@ import java.sql.ResultSet;
                         break;
 
                     case "nguoithuetro":
+                        // Lấy thông tin người thuê trọ
                         NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId(userId);
                         if (tenant != null) {
                             // Kiểm tra xem người thuê đã có phòng hay chưa
-                            int roomId = Room.getTenantRoomId(userId); // Gọi hàm kiểm tra phòng
+                            int roomId = Room.getTenantRoomId(tenant.getIdNguoiThue()); // Gọi hàm kiểm tra phòng
                             if (roomId == 0) {
                                 // Chưa được thêm vào bất cứ phòng nào
                                 new NguoiThueTroDashboard_0View(userId);

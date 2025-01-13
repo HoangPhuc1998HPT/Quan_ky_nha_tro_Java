@@ -176,4 +176,20 @@ public class NguoiThueTro {
         return 0; // Trả về null nếu không có dữ liệu
     }
 
+    public static int getUserIDFromIdNguoiThuetro(int idNguoiThue) {
+        int userId = -1; // Giá trị mặc định nếu không tìm thấy
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "SELECT UserID FROM NguoiThueTro WHERE IDNguoiThue = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idNguoiThue);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                userId = rs.getInt("UserID");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userId;
+    }
+
 }

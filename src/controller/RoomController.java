@@ -4,9 +4,12 @@ import backend.connectDatabase;
 //import frontend.view.rooms.RoomUpdateInforRoomView;
 import backend.model.Chutro;
 import backend.model.InvoiceDetail;
+import backend.model.NguoiThueTro;
 import backend.model.Room;
 import frontend.view.Invoices.InvoiceBefoeSentToNguoiThueView;
 import frontend.view.Invoices.InvoiceDetailUpdateView;
+import frontend.view.nguoithuetro.NguoiThueTroDashboard_0View;
+import frontend.view.nguoithuetro.NguoiThueTroDashboard_1View;
 import frontend.view.rooms.RoomInforView;
 import frontend.view.rooms.RoomUpdateInforRoomView;
 import frontend.view.rooms.RoomUpdateNguoithueView;
@@ -31,10 +34,10 @@ public class RoomController {
         new RoomUpdateNguoithueView(idPhong);
     }
 
-    public static void updateInforRoom(JFrame frame, int idPhong,int id_chutro) {
+    public static void updateInforRoom(JFrame frame, int idPhong, int id_chutro) {
         //JOptionPane.showMessageDialog(frame, "Cập nhật thông tin phòng " + idPhong);
         frame.setVisible(false);
-        new RoomUpdateInforRoomView(idPhong,id_chutro);
+        new RoomUpdateInforRoomView(idPhong, id_chutro);
     }
 
     public static void goToUpdateHoaDon(JFrame frame, int idRoom, int idChutro) {
@@ -184,7 +187,7 @@ public class RoomController {
             int rowsUpdated = pstmt.executeUpdate();
             if (rowsUpdated > 0) {
                 System.out.println("Đã cập nhật " + type + " cho phòng " + roomId + " thành: " + newValue);
-                new RoomUpdateInforRoomView(roomId,id_chutro);
+                new RoomUpdateInforRoomView(roomId, id_chutro);
             } else {
                 System.out.println("Không tìm thấy phòng với ID: " + roomId);
             }
@@ -196,8 +199,9 @@ public class RoomController {
 
     public static void GoToBackRoomViewFromUpdate(JFrame frame, int id_room, int id_chutro) {
         frame.setVisible(false);
-        new RoomView(id_room,id_chutro);
+        new RoomView(id_room, id_chutro);
     }
+
     // Lấy danh sách phòng dựa trên ID chủ trọ
     public static List<String[]> getRoomListByChutro(int idChutro) {
         return Chutro.getRoomList(idChutro);
@@ -220,7 +224,7 @@ public class RoomController {
     }
 
 
-    public static double getGarbageFee (int id_phong){
+    public static double getGarbageFee(int id_phong) {
         // TODo: Truy xuất từ Table HoaDon, nếu chưa có thì cho bằng 0. Khi cập nhật cho số hóa đơn gần nhất
         return 0;
     }
@@ -250,8 +254,21 @@ public class RoomController {
     }
 
 
-    public static void goToRoomInforView(int roomId) {
-     //   Room room = Room.getRoomInForViewbyRoomId(roomId);
-     //   new RoomInforView(room);
+    public static void goToNguoiThutroInforView(int IdNguoiThuetro) {
+        int userId = NguoiThueTro.getUserIDFromIdNguoiThuetro(IdNguoiThuetro);
+        NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId(userId);
+        if (tenant != null) {
+            // Kiểm tra xem người thuê đã có phòng hay chưa
+            int roomId = Room.getTenantRoomId(userId); // Gọi hàm kiểm tra phòng
+            if (roomId == 0) {
+                // Chưa được thêm vào bất cứ phòng nào
+                new NguoiThueTroDashboard_0View(userId);
+                System.out.println("Chuyển đến Dashboard Người Thuê Trọ (chưa có phòng)");
+            } else {
+                // Đã có phòng
+                new NguoiThueTroDashboard_1View(userId);
+                System.out.println("Chuyển đến Dashboard Người Thuê Trọ (đã có phòng)");
+            }
+        }
     }
 }

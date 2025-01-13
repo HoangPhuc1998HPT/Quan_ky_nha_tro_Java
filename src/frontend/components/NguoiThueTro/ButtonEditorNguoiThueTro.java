@@ -37,7 +37,7 @@ public class ButtonEditorNguoiThueTro extends DefaultCellEditor {
                 if (tenantId != null) {
                     System.out.println("Tenant ID: " + tenantId);
                     // Gọi RoomController hoặc thực hiện logic khác
-                    RoomController.goToRoomInforView((int) tenantId);
+                    RoomController.goToNguoiThutroInforView((int) tenantId);
                 }
             }
         }
