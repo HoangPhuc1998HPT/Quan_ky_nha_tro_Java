@@ -81,6 +81,8 @@ CREATE TABLE HoaDon (
 
 ALTER TABLE HoaDon ADD idCTHD INT;
 
+ALTER TABLE HoaDon ADD Ghichu NVARCHAR(255) ;
+
 ALTER TABLE HoaDon ADD CONSTRAINT FK_HoaDon_IDPhong
     FOREIGN KEY (IDPhong) REFERENCES TTPhongtro(IDPhong) ON DELETE CASCADE;
 
@@ -88,6 +90,7 @@ ALTER TABLE HoaDon ADD CONSTRAINT DF_ThanhToan DEFAULT 0 FOR ThanhToan;
 
 ALTER TABLE HoaDon ADD CONSTRAINT CK_ThanhToan CHECK (ThanhToan IN (0, 1));
 
+A
 select* from HoaDon
 select* from CTHoadon
 
