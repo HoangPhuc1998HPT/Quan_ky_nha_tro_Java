@@ -2,10 +2,7 @@ package controller;
 
 
 import backend.connectDatabase;
-import backend.model.Chutro;
-import backend.model.Invoices;
-import backend.model.NguoiThueTro;
-import backend.model.Room;
+import backend.model.*;
 import frontend.view.admin.AdminShowAllHoaDonView;
 import frontend.view.admin.AdminShowAllChutroView;
 import frontend.view.admin.AdminShowAllNguoiThueTroView;
@@ -71,12 +68,21 @@ public class  AdminController {
         // TODO: Thực hiện thao tác delete User trong table User
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         String username = (String) model.getValueAt(rowIndex, 0);
+        int userID = User.getUserIdByUsername(username);
+        String role = User.getRoleFromUsername(username);
+        String tableName = role.equals("nguoithuetro") ? "NguoiThueTro" : "Chutro";
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-            String sql = "DELETE FROM Users WHERE Username = ?";
+            String sql = "DELETE FROM " + tableName + " WHERE UserID = ?";
+            String sql1 = "DELETE FROM Users WHERE UserID = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, username);
+            PreparedStatement pstmt1 = conn.prepareStatement(sql1);
+            pstmt.setInt(1, userID);
+            pstmt1.setInt(1, userID);
+            pstmt1.executeUpdate();
             int rowsUpdated = pstmt.executeUpdate();
-            if (rowsUpdated > 0) {
+
+            System.out.println("Rows Updated: " + rowsUpdated);
+            if (rowsUpdated == 0) {
                 JOptionPane.showMessageDialog(null, "Đã xóa tài khoản thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 model.removeRow(rowIndex); // Xóa dòng sau khi kích hoạt thành công
             } else {
@@ -87,6 +93,7 @@ public class  AdminController {
             JOptionPane.showMessageDialog(null, "Xảy ra lỗi khi xóa tài khoản!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
+
     public static void goToAdminShowAllChutroView() {
         List<Object[]> chutroData = Chutro.getAllChutroData();
         new AdminShowAllChutroView(chutroData);
