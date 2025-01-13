@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="a935602f-a046-4bd8-adc1-08d307ddb6ae" name="QLThueNhaTro_java@localhost Mapping">
+      <data-sources db="df62d5cc-8397-44af-a37d-3b5a17474fd7" />
+      <scope>
+        <node kind="database" qname="QLThueNhaTro_java" />
+      </scope>
+    </mapping>
+  </component>
+</project>
