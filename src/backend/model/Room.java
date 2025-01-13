@@ -293,6 +293,7 @@ public class Room {
         }
         return emptyRooms;
     }
+
     public static List<Object[]> getEmptyRoomsForTenant(int tenantId) {
         List<Object[]> emptyRooms = new ArrayList<>();
         //"Tên Phòng", "Người liên hệ", "Số điện thoại", "Địa chỉ", "Giá Phòng"
