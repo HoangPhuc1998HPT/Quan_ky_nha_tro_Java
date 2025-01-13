@@ -450,3 +450,7 @@ SELECT
                 WHERE pt.IDChutro = '9';
 
 SELECT * FROM TTPhongtro WHERE IDPhong =3;
+
+UPDATE TTPhongtro
+SET IDNguoiThue = 2
+WHERE IDPhong = 3;

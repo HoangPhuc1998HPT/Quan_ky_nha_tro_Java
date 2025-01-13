@@ -23,7 +23,7 @@ public class RoomView {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        JLabel tenantLabel = new JLabel("Tên Người Thuê: " + (room != null ? room.getTenantName() : "Không có"));
+        JLabel tenantLabel = new JLabel("Tên Người Thuê: " + (Room.getNameNguoiThueFromIDRoom(idRoom)));
         tenantLabel.setFont(new Font("Be Vietnam Pro", Font.BOLD, 16));
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -62,7 +62,5 @@ public class RoomView {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new RoomView(1,12);
-    }
+
 }

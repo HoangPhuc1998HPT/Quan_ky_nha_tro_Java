@@ -362,5 +362,25 @@ public class Room {
         return null; // Trả về null nếu không tìm thấy
     }
 
+    public static String getNameNguoiThueFromIDRoom(int idRoom) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+            SELECT ISNULL(nt.Hoten, N'Không có') AS TenNguoiThue
+            FROM TTPhongtro pt
+            LEFT JOIN NguoiThueTro nt ON pt.IDNguoiThue = nt.IDNguoiThue
+            WHERE pt.IDPhong = ?
+        """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idRoom);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("TenNguoiThue");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "Không có dữ liệu";
+    }
+
 
 }
