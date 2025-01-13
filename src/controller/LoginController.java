@@ -70,7 +70,6 @@ import java.sql.ResultSet;
             }
             return null;
         }
-        //TODO Hiếu nhớ đưa checkLogin vào Login.java nha
 
         public static void checkLogin(String username, String password, JFrame frame) {
             Login.LoginResult result = Login.checkLogin(username, password);
