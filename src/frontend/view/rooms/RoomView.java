@@ -62,5 +62,7 @@ public class RoomView {
         frame.setVisible(true);
     }
 
-
+    public static void main(String[] args) {
+        new RoomView(3,12);
+    }
 }

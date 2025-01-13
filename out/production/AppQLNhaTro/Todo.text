@@ -21,6 +21,7 @@
         + Hiển thị tên người thuê: Null
         +  Cập nhật người thuê bằng CCCD == > chưa được
         +  Cập nhật thông tin phòng:
+            * Hiển thị tên người thue vãn null
             * OK Cập nhật giá thuê phòng
             * OK Capajp nhật giá điện
             * OK Cập nhật giá nước

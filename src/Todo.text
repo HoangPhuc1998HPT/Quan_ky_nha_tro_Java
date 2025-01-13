@@ -6,7 +6,7 @@
         + Tổng chi phí không xuất ra màn hiình (N/A)
         + Chức năng chi tiết không thể tải chi tiết hóa đơn
     - Danh sách phòng trọ
-        + Chức năng xem chi tiết không hoạt động - không hiển thị chi tiết phòng trọ
+       OK  + Chức năng xem chi tiết không hoạt động - không hiển thị chi tiết phòng trọ
         + Chức năng tạm ngưng hoạt động phòng - không hoạt động
     - Danh sách người thuê trọ
         + Chức năng xem chi tiết người thuê trọ không hoạt động
@@ -18,14 +18,15 @@
         OK + Cập nhật mật khẩu
     -  OK Tạo phòng trọ ==>  DONE
     - Xem danh sách phòng trọ
-        + Hiển thị tên người thuê: Null
+       OK  + Hiển thị tên người thuê: Null
         +  Cập nhật người thuê bằng CCCD == > chưa được
         +  Cập nhật thông tin phòng:
-            * OK Cập nhật giá thuê phòng
-            * OK Capajp nhật giá điện
-            * OK Cập nhật giá nước
-            * OK Cập nhật gi rác
-            * OK Nút quay lại ==> Lỗi khi bấm cập nhật nhiều lần ==> Mở quá nheieuf RoomView
+            * Hiển thị tên người thue vãn null
+           OK *  Cập nhật giá thuê phòng
+           OK *  Capajp nhật giá điện
+           OK *  Cập nhật giá nước
+           OK *  Cập nhật gi rác
+           OK *  Nút quay lại ==> Lỗi khi bấm cập nhật nhiều lần ==> Mở quá nheieuf RoomView
         + Cập nhật hóa đơn ===> cập nhật thất bại
         + Xuất hóa đơn ==> nhằm View ==> chưa load ra dữ liệu
         + Nút gửi hóa đơn chưa có công dụng
