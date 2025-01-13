@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.List;
 
 public class NguoiThueTroDashboard_1View extends JFrame {
@@ -45,13 +46,27 @@ public class NguoiThueTroDashboard_1View extends JFrame {
         roomScrollPane.setBounds(20, 80, 750, 100);
         mainPanel.add(roomScrollPane);
 
-        // Load dữ liệu thông tin phòng
-        DefaultTableModel roomTableModel = new DefaultTableModel(new String[]{"Tên Phòng", "Tên Chủ Trọ", "Số Điện Thoại", "Địa Chỉ", "Ngày Bắt Đầu Thuê"}, 0);
-        List<Object[]> roomInfo = Room.getRoomInfoByTenantId(userId);
-        for (Object[] info : roomInfo) {
-            roomTableModel.addRow(info);
+            /// Load dữ liệu thông tin phòng
+        DefaultTableModel roomTableModel = new DefaultTableModel(
+                new String[]{"Tên Phòng", "Tên Chủ Trọ", "Số Điện Thoại", "Địa Chỉ", "Ngày Bắt Đầu Thuê"}, 0
+        );
+        int TenantId = NguoiThueTro.getIdNguoiThueFromUserID(userId) ;
+        List<Object[]> roomInfo = Room.getRoomInfoByTenantId(TenantId);
+
+// Kiểm tra dữ liệu trả về
+        if (roomInfo.isEmpty()) {
+            System.out.println("Không có dữ liệu phòng cho userId: " + userId);
+        } else {
+            for (Object[] info : roomInfo) {
+                roomTableModel.addRow(info);
+                System.out.println(Arrays.toString(info)); // In dữ liệu từng hàng
+            }
         }
+        // Gán dữ liệu cho JTable
         roomInfoTable.setModel(roomTableModel);
+        roomInfoTable.repaint();
+        mainPanel.revalidate();
+        mainPanel.repaint();
 
         // Bảng danh sách hóa đơn
         JLabel invoiceLabel = new JLabel("Danh sách hóa đơn");
@@ -66,7 +81,7 @@ public class NguoiThueTroDashboard_1View extends JFrame {
 
         // Load dữ liệu hóa đơn
         DefaultTableModel invoiceTableModel = new DefaultTableModel(new String[]{"Ngày Xuất Hóa Đơn", "Tổng Giá Trị", "Trạng Thái", "Xem Hóa Đơn"}, 0);
-        List<Object[]> invoices = Invoices.getInvoicesByTenantId(userId);
+        List<Object[]> invoices = Invoices.getInvoicesByTenantId(TenantId);
         for (Object[] invoice : invoices) {
             Object[] row = new Object[4];
             row[0] = invoice[0]; // Ngày Xuất Hóa Đơn

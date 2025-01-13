@@ -43,6 +43,9 @@ public class Invoices {
     // Constructor rỗng
     public Invoices() {}
 
+
+
+
     // Getter và Setter
     public int getBillID() {
         return billID;
@@ -379,7 +382,7 @@ public class Invoices {
         return unpaidValue;
     }
 
-    public static List<Object[]> getInvoicesByTenantId(int userId) {
+    public static List<Object[]> getInvoicesByTenantId(int TenantId) {
         List<Object[]> invoices = new ArrayList<>();
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = """
@@ -392,7 +395,7 @@ public class Invoices {
             WHERE pt.IDNguoiThue = ?
         """;
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, userId);
+            pstmt.setInt(1, TenantId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 invoices.add(new Object[]{
@@ -621,6 +624,27 @@ public class Invoices {
         }
         return invoices;
     }
+
+    public static int getIdHoadonFromidCTHD(int idCTHD) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+            SELECT BillID 
+            FROM HoaDon
+            WHERE idCHTD = ?
+        """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idCTHD);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("IDPhong");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0; // Trả về 0 nếu không tìm thấy
+    }
+
+
 
 
 }

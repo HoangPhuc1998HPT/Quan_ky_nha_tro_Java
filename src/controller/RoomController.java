@@ -2,12 +2,10 @@ package controller;
 
 import backend.connectDatabase;
 //import frontend.view.rooms.RoomUpdateInforRoomView;
-import backend.model.Chutro;
-import backend.model.InvoiceDetail;
-import backend.model.NguoiThueTro;
-import backend.model.Room;
+import backend.model.*;
 import frontend.view.Invoices.InvoiceBefoeSentToNguoiThueView;
 import frontend.view.Invoices.InvoiceDetailUpdateView;
+import frontend.view.Invoices.InvoiceFormView;
 import frontend.view.nguoithuetro.NguoiThueTroDashboard_0View;
 import frontend.view.nguoithuetro.NguoiThueTroDashboard_1View;
 import frontend.view.rooms.RoomInforView;
@@ -42,22 +40,33 @@ public class RoomController {
 
     public static void goToUpdateHoaDon(JFrame frame, int idRoom, int idChutro) {
         try {
-            // Lấy thông tin từ cơ sở dữ liệu
+            System.out.println("Đã tới goToUpdateHoaDon ");
             Room room = Room.getRoomDetails(idRoom);
             if (room == null) {
                 throw new Exception("Không tìm thấy thông tin phòng!");
             }
 
-            String tenantName = InvoiceDetail.getTenantName((idRoom));
+            String tenantName = InvoiceDetail.getTenantName(idRoom);
             String startDate = InvoiceDetail.getStartDate(idRoom);
-            int oldElectric = InvoiceDetail.getOldElectricReading(idRoom);
-            int oldWater = InvoiceDetail.getOldWaterReading(idRoom);
-            String lastPaymentDate = InvoiceDetail.getLastPaymentDate(idRoom);
 
-            // Ẩn frame hiện tại
+            // Kiểm tra thông tin hóa đơn hiện tại
+            InvoiceDetail currentDetail = InvoiceDetail.getInvoiceDetailForUpdate(idRoom);
+            int oldElectric = 0;
+            int oldWater = 0;
+            String lastPaymentDate = "Chưa có";
+
+            if (currentDetail != null) {
+                oldElectric = currentDetail.getOldElectricReading();
+                oldWater = currentDetail.getOldWaterReading();
+                lastPaymentDate = currentDetail.getInvoiceDate();
+            } else {
+                // Lấy dữ liệu mặc định từ bảng TTPhongtro nếu chưa có hóa đơn
+                oldElectric = InvoiceDetail.getOldElectricReading(idRoom);
+                oldWater = InvoiceDetail.getOldWaterReading(idRoom);
+            }
+
             frame.setVisible(false);
 
-            // Hiển thị giao diện cập nhật chi tiết hóa đơn
             new InvoiceDetailUpdateView(
                     idChutro,
                     idRoom,
@@ -80,10 +89,16 @@ public class RoomController {
         }
     }
 
-    // TODO: đang lỗi ở đây nè
-    public static void goToXuatHoaDon(JFrame frame, int idPhong) {
 
-        new InvoiceBefoeSentToNguoiThueView(idPhong);
+
+    // TODO: đang lỗi ở đây nè
+    public static void goToXuatHoaDon(JFrame frame, int idPhong, int idChutro) {
+        Chutro chutro = Chutro.getChutrobyChutroID(idChutro);
+        NguoiThueTro nguoiThueTro = NguoiThueTro.getTenantByRoomId(idPhong);
+        InvoiceDetail invoiceDetail = InvoiceDetail.getInvoiceDetailByIdRoom(idPhong); //limit 1 nếu không được đổi sang TOP1
+        Room room = Room.getRoomById(idPhong);
+
+        new InvoiceFormView(chutro,  nguoiThueTro,  invoiceDetail,  room);
         JOptionPane.showMessageDialog(frame, "Xuất hóa đơn cho phòng " + idPhong);
     }
 

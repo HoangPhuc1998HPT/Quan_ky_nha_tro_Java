@@ -166,6 +166,16 @@ CREATE TABLE CTHoadon (
 alter table CTHoadon Drop CONSTRAINT FK__CTHoadon__BillID__59FA5E80
 alter table CTHoadon Drop column BillID
 
+SELECT 
+    OBJECT_NAME(constraint_object_id) AS ForeignKeyName,
+    OBJECT_NAME(parent_object_id) AS TableName,
+    COL_NAME(parent_object_id, parent_column_id) AS ColumnName
+FROM sys.foreign_key_columns
+WHERE COL_NAME(parent_object_id, parent_column_id) = 'BillID';
+
+ALTER TABLE CTHoaDon DROP CONSTRAINT FK__CTHoadon__BillID__5FB337D6;
+
+
 ALTER TABLE CTHoadon
 DROP COLUMN Ngaythutienthangtruoc, Ngaykiemtrasodiennuoc;
 
@@ -173,6 +183,9 @@ alter table CTHoadon add IDPhong INT;
 
 ALTER TABLE CTHoadon ADD CONSTRAINT FK_CTHoadon_IDPhong
 FOREIGN KEY (IDPhong) REFERENCES TTPhongtro(IDPhong);
+
+ALTER TABLE CTHoadon ADD CONSTRAINT FK_CTHoadon_Hoadon
+FOREIGN KEY (IDCTHD) REFERENCES TTPhongtro(IDPhong);
 
 alter table CTHoadon add Ghichu NVARCHAR(250);
 
@@ -427,12 +440,13 @@ SET GiaNuoc = 20000
 WHERE idPhong = 1;
 
 
-
 select * from Chutro
 select * from HoaDon	
-select * from CTHoadon
-select* from NguoiThueTro
 select * from TTPhongtro	
+select * from CTHoadon
+
+select* from NguoiThueTro
+
 select* from Users
 select* from Admins
 -- ĐỘ là phải thêm 1 cột trong HoaDOn để biết là hóa đơn được thanh toán chưa
@@ -454,3 +468,25 @@ SELECT * FROM TTPhongtro WHERE IDPhong =3;
 UPDATE TTPhongtro
 SET IDNguoiThue = 2
 WHERE IDPhong = 3;
+
+SELECT hd.NgayXuatHoaDon, 
+       hd.TongChiPhi, 
+       CASE WHEN hd.TongChiPhi > 0 THEN 1 ELSE 0 END AS DaThanhToan, 
+       hd.BillID
+FROM HoaDon hd
+JOIN TTPhongtro pt ON hd.IDPhong = pt.IDPhong
+WHERE pt.IDNguoiThue = 2;
+
+SELECT TOP 1
+    ISNULL(pt.Sodienhientai, 0) AS sodienthangtruoc,
+    ISNULL(pt.Sonuochientai, 0) AS sonuocthangtruoc,
+    pt.GiaPhong AS tiennha,
+    pt.Giadien AS giadien,
+    pt.Gianuoc AS gianuoc,
+    pt.Giarac AS tienrac,
+    ISNULL(chd.Giamgia, 0) AS giamgia,
+    ISNULL(chd.Ngaythutiendukien, GETDATE()) AS ngayhoadon
+FROM TTPhongtro pt
+LEFT JOIN CTHoaDon chd ON pt.IDPhong = chd.IDPhong
+WHERE pt.IDPhong = 3
+ORDER BY chd.Ngaythutiendukien DESC;

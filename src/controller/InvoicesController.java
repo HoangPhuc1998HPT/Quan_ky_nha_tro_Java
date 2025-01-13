@@ -1,10 +1,7 @@
 package controller;
 
 import backend.connectDatabase;
-import backend.model.Chutro;
-import backend.model.Invoices;
-import backend.model.NguoiThueTro;
-import backend.model.Room;
+import backend.model.*;
 import frontend.view.Invoices.InvoiceCreateNewInvoice;
 import frontend.view.Invoices.InvoiceFormView;
 
@@ -136,11 +133,11 @@ public class InvoicesController {
         Chutro chutro = Chutro.getChutrobyChutroID(idChutro);
         NguoiThueTro nguoithuetro = NguoiThueTro.getTenantById(idNguoiThueTro);
         Room room = Room.getRoomById(idRoom);
-        Invoices invoice = Invoices.getInvoiceDetails(idhoadon);
+        InvoiceDetail invoiceDetail = InvoiceDetail.getInvoiceDetailByIdRoom(idRoom);
 
-        if (chutro != null && nguoithuetro != null && room != null && invoice != null) {
+        if (chutro != null && nguoithuetro != null && room != null && invoiceDetail != null) {
             // Mở giao diện chi tiết hóa đơn
-            new InvoiceFormView(chutro, nguoithuetro, invoice, room);
+            new InvoiceFormView(chutro, nguoithuetro, invoiceDetail, room);
         } else {
             JOptionPane.showMessageDialog(null, "Không thể tải thông tin chi tiết hóa đơn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }

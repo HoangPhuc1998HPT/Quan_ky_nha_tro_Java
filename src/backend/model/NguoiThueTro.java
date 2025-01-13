@@ -156,25 +156,40 @@ public class NguoiThueTro {
 
 
     // truy vấn này kiềm tra id người thuê trọ nằ trong TT Phòng
-    public static int getTenantRoomId(int tenantId) {
+    public static NguoiThueTro getTenantByRoomId(int roomId) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-            // Truy vấn kiểm tra id_nguoiThueTro có trong TTPhongtro hay không
+            // Truy vấn SQL để kiểm tra ID người thuê trong bảng TTPhongtro
             String sql = """
-            SELECT IDPhong
-            FROM TTPhongtro
-            WHERE IDNguoiThue = ?
+            SELECT 
+                nt.IDNguoiThue, 
+                nt.UserID, 
+                nt.Hoten AS FullName, 
+                nt.Phone, 
+                nt.CCCD 
+            FROM TTPhongtro pt
+            JOIN NguoiThueTro nt ON pt.IDNguoiThue = nt.IDNguoiThue
+            WHERE pt.IDPhong = ?
         """;
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, tenantId);
+            pstmt.setInt(1, roomId);
             ResultSet rs = pstmt.executeQuery();
+
             if (rs.next()) {
-                return rs.getInt("IDPhong"); // Trả về ID phòng nếu tìm thấy
+                // Trả về đối tượng NguoiThueTro nếu tìm thấy dữ liệu
+                return new NguoiThueTro(
+                        rs.getInt("IDNguoiThue"), // Sử dụng getInt
+                        rs.getInt("UserID"),     // Sử dụng getInt
+                        rs.getString("FullName"),
+                        rs.getString("Phone"),
+                        rs.getString("CCCD")
+                );
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return 0; // Trả về null nếu không có dữ liệu
+        return null; // Trả về null nếu không có dữ liệu
     }
+
 
     public static int getUserIDFromIdNguoiThuetro(int idNguoiThue) {
         int userId = -1; // Giá trị mặc định nếu không tìm thấy

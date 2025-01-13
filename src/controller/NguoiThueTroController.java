@@ -1,9 +1,6 @@
 package controller;
 
-import backend.model.Chutro;
-import backend.model.NguoiThueTro;
-import backend.model.Room;
-import backend.model.Invoices;
+import backend.model.*;
 import frontend.view.Invoices.InvoiceFormView;
 
 import javax.swing.*;
@@ -40,13 +37,13 @@ public class NguoiThueTroController {
             }
 
             // Lấy thông tin hóa đơn
-            Invoices invoice = Invoices.getInvoiceDetails(invoiceId);
-            if (invoice == null) {
+            InvoiceDetail invoiceDetail = InvoiceDetail.getInvoiceDetailByIdRoom (idPhong);
+            if (invoiceDetail == null) {
                 throw new IllegalArgumentException("Không tìm thấy thông tin hóa đơn.");
             }
 
             // Mở form hóa đơn
-            new InvoiceFormView(chutro, tenant, invoice, room);
+            new InvoiceFormView(chutro, tenant, invoiceDetail, room);
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Lỗi: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
