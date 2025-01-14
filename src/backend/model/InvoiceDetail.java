@@ -142,66 +142,70 @@ public class InvoiceDetail {
     // Hàm lấy thông tin chi tiết hóa đơn từ database
     //TODO: Kiểm tra lại hàm bên dưới
 
-    public static InvoiceDetail getInvoiceDetailForUpdate(int idRoom) {
-        InvoiceDetail invoiceDetail = null;
+    public static Object[] getInvoiceDetailForUpdate(int idCTHD) {
+        Object[] inforToUpdateHoadon = null;
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = """
-            SELECT 
-                chd.idCTHD,
-                ISNULL(chd.sodienused, 0) AS sodienused,
-                ISNULL(chd.sonuocused, 0) AS sonuocused,
-                ISNULL(pt.Sodienhientai, 0) AS sodienthangtruoc,
-                ISNULL(pt.Sonuochientai, 0) AS sonuocthangtruoc,
-                pt.GiaPhong AS tiennha,
-                pt.Giadien AS giadien,
-                pt.Gianuoc AS gianuoc,
-                pt.Giarac AS tienrac,
-                ISNULL(chd.Giamgia, 0) AS giamgia,
-                ISNULL(chd.Ngaythutiendukien, GETDATE()) AS ngayhoadon
-            FROM TTPhongtro pt
-            LEFT JOIN CTHoaDon chd ON pt.IDPhong = chd.IDPhong
-            WHERE pt.IDPhong = ?
-            ORDER BY chd.Ngaythutiendukien DESC
+        SELECT 
+            chd.IDCTHD, 
+            chd.IDPhong,
+            ISNULL(chd.sodienused, 0) AS sodienused,
+            ISNULL(chd.sonuocused, 0) AS sonuocused,
+            ISNULL(pt.Sodienhientai, 0) AS sodienthangtruoc,
+            ISNULL(pt.Sonuochientai, 0) AS sonuocthangtruoc,
+            chd.DaysInMonth,
+            ISNULL(chd.Chiphiphatsinh, 0) AS chiphiphatsinh,
+            ISNULL(chd.Giamgia, 0) AS giamgia,
+            pt.GiaPhong AS tiennha,
+            pt.Giadien AS giadien,
+            pt.Gianuoc AS gianuoc,
+            pt.Giarac AS tienrac,  
+            ISNULL(chd.Ngaythutiendukien, GETDATE()) AS ngayhoadon
+        FROM TTPhongtro pt
+        LEFT JOIN CTHoaDon chd ON pt.IDPhong = chd.IDPhong
+        WHERE chd.IDCTHD = ?
+        ORDER BY chd.Ngaythutiendukien DESC
         """;
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, idRoom);
+            pstmt.setInt(1, idCTHD);
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                int idCTHD = rs.getInt("idCTHD");
+                int idPhong = rs.getInt("IDPhong");
                 int sodienused = rs.getInt("sodienused");
                 int sonuocused = rs.getInt("sonuocused");
                 int sodienthangtruoc = rs.getInt("sodienthangtruoc");
                 int sonuocthangtruoc = rs.getInt("sonuocthangtruoc");
+                int daysInMonth = rs.getInt("DaysInMonth");
+                double chiphiphatsinh = rs.getDouble("chiphiphatsinh");
                 double tiennha = rs.getDouble("tiennha");
                 double giadien = rs.getDouble("giadien");
                 double gianuoc = rs.getDouble("gianuoc");
                 double tienrac = rs.getDouble("tienrac");
                 double giamgia = rs.getDouble("giamgia");
                 Date ngayhoadon = rs.getDate("ngayhoadon");
-                ;
 
-                // Tạo đối tượng InvoiceDetail
-                invoiceDetail = new InvoiceDetail(
-                        idRoom,
+                // Tạo mảng đối tượng chứa thông tin hóa đơn
+                inforToUpdateHoadon = new Object[]{
+                        idPhong,
                         idCTHD,
                         sodienthangtruoc,
                         sonuocthangtruoc,
                         sodienused,
                         sonuocused,
-                        0, // Số ngày sẽ được tính sau
+                        daysInMonth,
                         tiennha,
                         tienrac,
-                        0, // Chi phí phát sinh (default)
+                        chiphiphatsinh,
                         giamgia,
                         ngayhoadon
-                );
+                };
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return invoiceDetail;
+        return inforToUpdateHoadon;
     }
 
 
@@ -423,7 +427,7 @@ public class InvoiceDetail {
                         rs.getDouble("gianuoc"),          // Giá nước
                         rs.getDouble("Tienrac"),          // Giá rác
                         rs.getDouble("giamgia"),          // Giảm giá
-                        rs.getString("ngayhoadon")        // Ngày hóa đơn
+                        rs.getDate("ngayhoadon")        // Ngày hóa đơn
                 };
             }
         } catch (Exception e) {

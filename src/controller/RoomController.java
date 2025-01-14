@@ -60,15 +60,18 @@ public class RoomController {
     // TODO: đang lỗi ở đây nè
     public static void goToXuatHoaDon(JFrame frame, int idPhong, int idChutro) {
 
-
-
         Chutro chutro = Chutro.getChutrobyChutroID(idChutro);
         NguoiThueTro nguoiThueTro = NguoiThueTro.getTenantByRoomId(idPhong);
         Object[] invoiceDetail = InvoiceDetail.getInvoiceDetailByIdRoom(idPhong); //limit 1 nếu không được đổi sang TOP1
         Room room = Room.getRoomById(idPhong);
+        if (invoiceDetail == null) {
+            JOptionPane.showMessageDialog(frame, "Không tìm thấy dữ liệu hóa đơn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            new InvoiceFormView(chutro,  nguoiThueTro,  invoiceDetail,  room);
+            JOptionPane.showMessageDialog(frame, "Xuất hóa đơn cho phòng " + idPhong);
+        }
 
-        new InvoiceFormView(chutro,  nguoiThueTro,  invoiceDetail,  room);
-        JOptionPane.showMessageDialog(frame, "Xuất hóa đơn cho phòng " + idPhong);
     }
 
 
