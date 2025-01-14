@@ -25,7 +25,7 @@ public class Room {
 
 
     // Constructor
-    public Room(int idRoom, String name, String tenantName, double roomPrice, double electricityPrice, double waterPrice, double garbagePrice) {
+    public Room(int idRoom, String name, String tenantName, double roomPrice, double electricityPrice, double waterPrice, double garbagePrice, int currentElectricity, int currentWater) {
         this.idRoom = idRoom;
         this.name = name;
         this.tenantName = null;
@@ -33,8 +33,8 @@ public class Room {
         this.electricityPrice = electricityPrice;
         this.waterPrice = waterPrice;
         this.garbagePrice = garbagePrice;
-        this.currentElectricity = 0;
-        this.currentWater = 0;
+        this.currentElectricity = currentElectricity;
+        this.currentWater = currentWater;
     }
     public static List<Object[]> getRoomInfoByTenantId(int userId) {
         List<Object[]> roomInfoList = new ArrayList<>();
@@ -185,6 +185,8 @@ public class Room {
                 TTPhongtro.Giadien,
                 TTPhongtro.Gianuoc,
                 ISNULL(TTphongtro.Giarac, 0) AS Giarac
+                TTPhongtro.Sodienhientai,
+                TTPhongtro.Sonuochientai
             FROM TTPhongtro
             LEFT JOIN NguoiThueTro ON TTPhongtro.IDPhong = NguoiThueTro.IDnguoithue
             WHERE TTPhongtro.IDPhong = ?
@@ -203,7 +205,9 @@ public class Room {
                             rs.getDouble("GiaPhong"),           // Giá phòng
                             rs.getDouble("Giadien"),            // Giá điện
                             rs.getDouble("Gianuoc"),            // Giá nước
-                            rs.getDouble("Giarac")             // Tiền rác (mặc định 0 nếu NULL)
+                            rs.getDouble("Giarac"),         // Tiền rác (mặc định 0 nếu NULL)
+                            rs.getInt("Sodienhientai"),
+                            rs.getInt("Sonuochientai")
                     );
                 }
             }
@@ -370,7 +374,10 @@ public class Room {
                 TTPhongtro.GiaPhong, 
                 TTPhongtro.Giadien, 
                 TTPhongtro.Gianuoc, 
-                ISNULL(TTPhongtro.Giarac, 0) AS Giarac 
+                ISNULL(TTPhongtro.Giarac, 0) AS Giarac ,
+                TTPhongtro.Sodienhientai,
+                TTPhongtro.Sonuochientai,
+                
             FROM TTPhongtro
             LEFT JOIN NguoiThueTro ON TTPhongtro.IDNguoiThue = NguoiThueTro.IDNguoiThue
             LEFT JOIN HoaDon ON TTPhongtro.IDPhong = HoaDon.IDPhong
@@ -389,7 +396,9 @@ public class Room {
                         rs.getDouble("GiaPhong"),        // Giá phòng
                         rs.getDouble("Giadien"),         // Giá điện
                         rs.getDouble("Gianuoc"),         // Giá nước
-                        rs.getDouble("Giarac")          // Tiền rác
+                        rs.getDouble("Giarac"),       // Tiền rác
+                        rs.getInt("Sodienhientai"),
+                        rs.getInt("Sonuochientai")
                 );
             }
         } catch (Exception e) {

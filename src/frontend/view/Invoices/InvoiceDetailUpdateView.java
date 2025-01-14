@@ -284,7 +284,7 @@ public class InvoiceDetailUpdateView {
                 String formattedDate = LocalDate.parse(dateField.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"))
                         .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-                boolean isSuccess = InvoiceDetail.updateInvoiceDetail(updatedDetail, Date.valueOf(formattedDate));
+                boolean isSuccess = InvoiceDetail.updateInvoiceDetail(room.getIdRoom(), updatedDetail, Date.valueOf(formattedDate));
 
                 if (isSuccess) {
                     JOptionPane.showMessageDialog(frame, "Cập nhật hóa đơn và số điện/nước thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);

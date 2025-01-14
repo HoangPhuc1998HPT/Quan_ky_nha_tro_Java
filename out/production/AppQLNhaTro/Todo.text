@@ -56,3 +56,11 @@
 ---
     TODO: note : openInvoiceDetails cần fix
     Ngày thu tiền nhà tháng trước : chưa format hiển thị
+---
+Cập chi tiết hóa đơn
+- số điện cũ ==> lấy sai
+- SỐ nước cũ lấy sai
+- format dịnh ạng ngày bắt đâầu thuê sai
+- format ngày thu tiền nhà tháng trước sai
+Ràng buộc khóa ngoại (FK_TTPhongtro_CTHoadon) yêu cầu IDPhong trong bảng CTHoaDon phải tồn tại trong bảng TTPhongtro.
+Tuy nhiên, trong quá trình thực thi, giá trị IDPhong bạn đang cố gắng chèn là 0, không tồn tại trong bảng TTPhongtro.

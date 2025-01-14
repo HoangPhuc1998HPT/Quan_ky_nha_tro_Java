@@ -315,10 +315,10 @@ public class InvoiceDetail {
     // 11-01-2025
 
     // Hàm cập nhật hóa đơn mới vào bảng CTHoaDon
-    public static boolean updateInvoiceDetail(InvoiceDetail detail, Date ngaythutien) {
+    public static boolean updateInvoiceDetail(int idRoom, InvoiceDetail detail, Date ngaythutien) {
         Connection conn = null;
         PreparedStatement pstmt = null;
-        System.out.println("Kiểm tra IDPhong: " + detail.getIdRoom());
+        System.out.println("Kiểm tra IDPhong: " + idRoom);
 
         try {
             conn = connectDatabase.DatabaseConnection.getConnection();
@@ -343,7 +343,7 @@ public class InvoiceDetail {
             pstmt.setInt(8, detail.getOldElectricReading());
             pstmt.setInt(9, detail.getOldWaterReading());
             pstmt.setDate(10, ngaythutien); // Sử dụng ngày đã định dạng
-            pstmt.setInt(11, detail.getIdRoom());
+            pstmt.setInt(11, idRoom);
 
             int rowsInserted = pstmt.executeUpdate();
 
