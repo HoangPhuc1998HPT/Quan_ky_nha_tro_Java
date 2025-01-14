@@ -133,7 +133,7 @@ public class InvoicesController {
         Chutro chutro = Chutro.getChutrobyChutroID(idChutro);
         NguoiThueTro nguoithuetro = NguoiThueTro.getTenantById(idNguoiThueTro);
         Room room = Room.getRoomById(idRoom);
-        InvoiceDetail invoiceDetail = InvoiceDetail.getInvoiceDetailByIdRoom(idRoom);
+        Object[] invoiceDetail = InvoiceDetail.getInvoiceDetailByIdRoom(idRoom);
 
         if (chutro != null && nguoithuetro != null && room != null && invoiceDetail != null) {
             // Mở giao diện chi tiết hóa đơn

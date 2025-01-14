@@ -2,10 +2,7 @@ package backend.model;
 
 import backend.connectDatabase;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -19,7 +16,7 @@ public class InvoiceDetail {
     private int useWaterReading;
     private int dayInMonth;
     private double rentPrice;
-    private String invoiceDate;
+    private Date invoiceDate;
     private int oldElectricReading;
     private int oldWaterReading;
     private double additionalCost;
@@ -28,20 +25,22 @@ public class InvoiceDetail {
 
 
     // Constructor đầy đủ
-    public InvoiceDetail(int idRoom,int idCTHD, int oldElectricReading, int oldWaterReading, int newElectricReading, int newWaterReading,
-                         double rentPrice, double garbagePrice,double additionalCost, double discount, String invoiceDate) {
+    public InvoiceDetail(int idRoom,int idCTHD, int oldElectricReading, int oldWaterReading, int useElectricReading, int useWaterReading,
+                         int dayInMonth,double rentPrice, double garbagePrice,double additionalCost, double discount, Date invoiceDate) {
         this.idRoom = idRoom;
         this.idCTHD = idCTHD;
         this.oldElectricReading = oldElectricReading;
         this.oldWaterReading = oldWaterReading;
-        this.useElectricReading = newElectricReading;
-        this.useWaterReading = newWaterReading;
+        this.useElectricReading = useElectricReading;
+        this.useWaterReading = useWaterReading;
+        this.dayInMonth = dayInMonth;
         this.rentPrice = rentPrice;
         this.additionalCost = additionalCost;
         this.garbagePrice = garbagePrice;
         this.discount = discount;
         this.invoiceDate = invoiceDate;
     }
+
 
     // Getter và Setter
 
@@ -130,17 +129,18 @@ public class InvoiceDetail {
         this.discount = discount;
     }
 
-    public String getInvoiceDate() {
+    public Date getInvoiceDate() {
         return invoiceDate;
     }
 
-    public void setInvoiceDate(String invoiceDate) {
+    public void setInvoiceDate(Date invoiceDate) {
         this.invoiceDate = invoiceDate;
     }
     // phía trên OK
 
 
     // Hàm lấy thông tin chi tiết hóa đơn từ database
+    //TODO: Kiểm tra lại hàm bên dưới
 
     public static InvoiceDetail getInvoiceDetailForUpdate(int idRoom) {
         InvoiceDetail invoiceDetail = null;
@@ -148,15 +148,20 @@ public class InvoiceDetail {
             String sql = """
             SELECT 
                 chd.idCTHD,
-                ISNULL(pt.Sodienhientai,0) AS sodienthangtruoc, 
-                ISNULL(pt.Sonuochientai,0) AS sonuocthangtruoc, 
-                pt.GiaPhong AS Tiennha, 
-                pt.Giadien AS Giadien, 
-                pt.GIanuoc AS GIanuoc, 
-                pt.Giarac AS Tienrac
+                ISNULL(chd.sodienused, 0) AS sodienused,
+                ISNULL(chd.sonuocused, 0) AS sonuocused,
+                ISNULL(pt.Sodienhientai, 0) AS sodienthangtruoc,
+                ISNULL(pt.Sonuochientai, 0) AS sonuocthangtruoc,
+                pt.GiaPhong AS tiennha,
+                pt.Giadien AS giadien,
+                pt.Gianuoc AS gianuoc,
+                pt.Giarac AS tienrac,
+                ISNULL(chd.Giamgia, 0) AS giamgia,
+                ISNULL(chd.Ngaythutiendukien, GETDATE()) AS ngayhoadon
             FROM TTPhongtro pt
             LEFT JOIN CTHoaDon chd ON pt.IDPhong = chd.IDPhong
             WHERE pt.IDPhong = ?
+            ORDER BY chd.Ngaythutiendukien DESC
         """;
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -164,29 +169,33 @@ public class InvoiceDetail {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                // Trích xuất dữ liệu từ bảng TTPhongtro
                 int idCTHD = rs.getInt("idCTHD");
-                int oldElectric = rs.getInt("sodienthangtruoc");
-                int oldWater = rs.getInt("sonuocthangtruoc");
-                double rentPrice = rs.getDouble("Tiennha");
-                double electricPrice = rs.getDouble("Giadien");
-                double waterPrice = rs.getDouble("GIanuoc");
-                double garbagePrice = rs.getDouble("Tienrac");
+                int sodienused = rs.getInt("sodienused");
+                int sonuocused = rs.getInt("sonuocused");
+                int sodienthangtruoc = rs.getInt("sodienthangtruoc");
+                int sonuocthangtruoc = rs.getInt("sonuocthangtruoc");
+                double tiennha = rs.getDouble("tiennha");
+                double giadien = rs.getDouble("giadien");
+                double gianuoc = rs.getDouble("gianuoc");
+                double tienrac = rs.getDouble("tienrac");
+                double giamgia = rs.getDouble("giamgia");
+                Date ngayhoadon = rs.getDate("ngayhoadon");
+                ;
 
-                // Tạo đối tượng InvoiceDetail với thông tin đầy đủ
+                // Tạo đối tượng InvoiceDetail
                 invoiceDetail = new InvoiceDetail(
                         idRoom,
                         idCTHD,
-                        oldElectric,
-                        oldWater,
-                        0, // NewElectricReading - mặc định
-                        0, // NewWaterReading - mặc định
-                        rentPrice,
-                        electricPrice,
-                        waterPrice,
-                        garbagePrice,
-                        0, // Discount - mặc định
-                        null // InvoiceDate - chưa có
+                        sodienthangtruoc,
+                        sonuocthangtruoc,
+                        sodienused,
+                        sonuocused,
+                        0, // Số ngày sẽ được tính sau
+                        tiennha,
+                        tienrac,
+                        0, // Chi phí phát sinh (default)
+                        giamgia,
+                        ngayhoadon
                 );
             }
         } catch (Exception e) {
@@ -306,38 +315,22 @@ public class InvoiceDetail {
     // 11-01-2025
 
     // Hàm cập nhật hóa đơn mới vào bảng CTHoaDon
-    // Hàm cập nhật hóa đơn mới vào bảng CTHoaDon
-    public static boolean updateInvoiceDetail(InvoiceDetail detail, String lastInvoiceDate) {
+    public static boolean updateInvoiceDetail(InvoiceDetail detail, Date ngaythutien) {
         Connection conn = null;
         PreparedStatement pstmt = null;
+        System.out.println("Kiểm tra IDPhong: " + detail.getIdRoom());
 
         try {
             conn = connectDatabase.DatabaseConnection.getConnection();
             conn.setAutoCommit(false); // Bắt đầu transaction
 
-            // Chuyển đổi ngày tháng về định dạng yyyy-MM-dd
-            String formattedInvoiceDate = LocalDate.parse(detail.getInvoiceDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-                    .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-
             // Cập nhật vào bảng CTHoaDon
             String sqlInsertCTHD = """
-            INSERT INTO CTHoaDon (SodienUsed, SonuocUsed, DaysInMonth, Tiennha, Tienrac, Chiphiphatsinh, Giamgia, sodienthangtruoc, sonuocthangtruoc, ngaythutiendukien, IDPhong)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """;
+                INSERT INTO CTHoaDon (SodienUsed, SonuocUsed, DaysInMonth, Tiennha, Tienrac, Chiphiphatsinh, Giamgia, sodienthangtruoc, sonuocthangtruoc, ngaythutiendukien, IDPhong)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """;
 
             int daysInMonth = 0;
-            LocalDate currentInvoiceDate = LocalDate.parse(formattedInvoiceDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            // Cần kiểm tra lại dayInMonth: số ngày người thuê ở tới khi xuất hóa đơn nếu chưa có hóa dodnwd naào
-            // Nếu người thuê đã có hóa đơn, tính từ lần xuất hóa đơn trước
-            if (lastInvoiceDate == null || lastInvoiceDate.isEmpty()) {
-                // Lấy ngày bắt đầu thuê từ database
-                String startDate = InvoiceDetail.getStartDate(detail.getIdRoom());
-                LocalDate startRentalDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                daysInMonth = (int) ChronoUnit.DAYS.between(startRentalDate, currentInvoiceDate);
-            } else {
-                LocalDate previousInvoiceDate = LocalDate.parse(lastInvoiceDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-                daysInMonth = (int) ChronoUnit.DAYS.between(previousInvoiceDate, currentInvoiceDate);
-            }
 
             pstmt = conn.prepareStatement(sqlInsertCTHD);
             pstmt.setInt(1, detail.getUseElectricReading());
@@ -347,11 +340,10 @@ public class InvoiceDetail {
             pstmt.setDouble(5, detail.getGarbagePrice());
             pstmt.setDouble(6, detail.getAdditionalCost());
             pstmt.setDouble(7, detail.getDiscount());
-            pstmt.setString(8, "Cập nhật hóa đơn từ hệ thống");
-            pstmt.setInt(9, detail.getOldElectricReading());
-            pstmt.setInt(10, detail.getOldWaterReading());
-            pstmt.setString(11, formattedInvoiceDate); // Sử dụng ngày đã định dạng
-            pstmt.setInt(12, detail.getIdRoom());
+            pstmt.setInt(8, detail.getOldElectricReading());
+            pstmt.setInt(9, detail.getOldWaterReading());
+            pstmt.setDate(10, ngaythutien); // Sử dụng ngày đã định dạng
+            pstmt.setInt(11, detail.getIdRoom());
 
             int rowsInserted = pstmt.executeUpdate();
 
@@ -394,25 +386,26 @@ public class InvoiceDetail {
 
 
 
+    // phục vụ cho InvoiceFormView
 
-    public static InvoiceDetail getInvoiceDetailByIdRoom(int idPhong) {
+    public static Object[] getInvoiceDetailByIdRoom(int idPhong) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             // Truy vấn SQL để lấy thông tin chi tiết hóa đơn từ CTHoaDon hoặc TTPhongtro
             String sql = """
-            SELECT TOP 1
-                chd.idCTHD,
-                ISNULL(pt.Sodienhientai, 0) AS sodienthangtruoc,
-                ISNULL(pt.Sonuochientai, 0) AS sonuocthangtruoc,
-                pt.GiaPhong AS tiennha,
-                pt.Giadien AS giadien,
-                pt.Gianuoc AS gianuoc,
-                pt.Giarac AS Tienrac,
-                ISNULL(chd.Giamgia, 0) AS giamgia,
-                ISNULL(chd.Ngaythutiendukien, GETDATE()) AS ngayhoadon
-            FROM TTPhongtro pt
-            LEFT JOIN CTHoaDon chd ON pt.IDPhong = chd.IDPhong
-            WHERE pt.IDPhong = ?
-            ORDER BY chd.Ngaythutiendukien DESC
+        SELECT TOP 1
+            chd.idCTHD,
+            ISNULL(chd.sodienused, 0) AS sodienused,
+            ISNULL(chd.sonuocused, 0) AS sonuocused,
+            pt.GiaPhong AS tiennha,
+            pt.Giadien AS giadien,
+            pt.Gianuoc AS gianuoc,
+            pt.Giarac AS Tienrac,
+            ISNULL(chd.Giamgia, 0) AS giamgia,
+            ISNULL(chd.Ngaythutiendukien, GETDATE()) AS ngayhoadon
+        FROM TTPhongtro pt
+        LEFT JOIN CTHoaDon chd ON pt.IDPhong = chd.IDPhong
+        WHERE pt.IDPhong = ?
+        ORDER BY chd.Ngaythutiendukien DESC
         """;
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -420,21 +413,18 @@ public class InvoiceDetail {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                // Tạo đối tượng InvoiceDetail từ kết quả truy vấn
-                return new InvoiceDetail(
-                        idPhong,
-                        rs.getInt("idCTHD"),// ID phòng
-                        rs.getInt("sodienthangtruoc"),          // Số điện cũ
-                        rs.getInt("sonuocthangtruoc"),          // Số nước cũ
-                        0,                                      // Số điện mới (mặc định)
-                        0,                                      // Số nước mới (mặc định)
-                        rs.getDouble("tiennha"),                // Tiền nhà
-                        rs.getDouble("giadien"),                // Giá điện
-                        rs.getDouble("gianuoc"),                // Giá nước
-                        rs.getDouble("Tienrac"),                // Giá rác
-                        rs.getDouble("giamgia"),                // Giảm giá
-                        rs.getString("ngayhoadon")              // Ngày hóa đơn
-                );
+                // Trả về một mảng đối tượng chứa thông tin cần thiết
+                return new Object[]{
+                        rs.getInt("idCTHD"),              // ID chi tiết hóa đơn
+                        rs.getInt("sodienused"),    // Số điện use
+                        rs.getInt("sonuocused"),    // Số nước use
+                        rs.getDouble("tiennha"),          // Tiền nhà
+                        rs.getDouble("giadien"),          // Giá điện
+                        rs.getDouble("gianuoc"),          // Giá nước
+                        rs.getDouble("Tienrac"),          // Giá rác
+                        rs.getDouble("giamgia"),          // Giảm giá
+                        rs.getString("ngayhoadon")        // Ngày hóa đơn
+                };
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -442,5 +432,54 @@ public class InvoiceDetail {
         return null; // Trả về null nếu không tìm thấy dữ liệu
     }
 
+    public static Date getPreDayInMonth(int idRoom) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            // Truy vấn ngày xuất hóa đơn gần nhất
+            String sqlLastInvoiceDate = """
+            SELECT TOP 1 NgayxuatHoaDon 
+            FROM HoaDon 
+            WHERE IDPhong = ? 
+            ORDER BY NgayxuatHoaDon DESC
+        """;
 
+            PreparedStatement pstmt = conn.prepareStatement(sqlLastInvoiceDate);
+            pstmt.setInt(1, idRoom);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Trả về ngày xuất hóa đơn nếu có
+                return rs.getDate("NgayxuatHoaDon");
+            }
+
+            // Nếu không tìm thấy, truy vấn ngày bắt đầu thuê từ bảng NguoiThueTro
+            String sqlStartRentalDate = """
+            SELECT Ngaybatdauthue 
+            FROM NguoiThueTro 
+            WHERE IDNguoiThue = (
+                SELECT IDNguoiThue 
+                FROM TTPhongtro 
+                WHERE IDPhong = ?
+            )
+        """;
+
+            pstmt = conn.prepareStatement(sqlStartRentalDate);
+            pstmt.setInt(1, idRoom);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                // Trả về ngày bắt đầu thuê nếu có
+                return rs.getDate("Ngaybatdauthue");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null; // Trả về null nếu không tìm thấy thông tin
+    }
+
+    public static int calculateDaysBetweenDates(LocalDate startDate, LocalDate endDate) {
+        if (startDate == null || endDate == null) {
+            throw new IllegalArgumentException("Ngày bắt đầu và ngày kết thúc không được null.");
+        }
+        return (int) ChronoUnit.DAYS.between(startDate, endDate);
+    }
 }

@@ -19,9 +19,11 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Date;
 import java.util.List;
 
 import static backend.model.InvoiceDetail.*;
+import static backend.model.Room.getRoomById;
 import static backend.model.Room.updateNguoiThueTroInRoom;
 
 public class RoomController {
@@ -39,63 +41,27 @@ public class RoomController {
     }
 
     public static void goToUpdateHoaDon(JFrame frame, int idRoom, int idChutro) {
-        try {
-            System.out.println("Đã tới goToUpdateHoaDon ");
-            Room room = Room.getRoomDetails(idRoom);
-            if (room == null) {
-                throw new Exception("Không tìm thấy thông tin phòng!");
-            }
+        //TODO : Thực thi hàm controller cho upate hóa đơn
+        //đóng frame cũ
+        frame.setVisible(false);
+        //int id_chutro,Room room, String tenantName, String startDate, String lastPaymentDate
+        Room room = getRoomById(idRoom);
+        NguoiThueTro nguoiThueTro = NguoiThueTro.getTenantByRoomId(idRoom);
+        Date startDate = getPreDayInMonth(idRoom);
+        new InvoiceDetailUpdateView(idChutro,room, nguoiThueTro, startDate);
 
-            String tenantName = InvoiceDetail.getTenantName(idRoom);
-            String startDate = InvoiceDetail.getStartDate(idRoom);
-
-            // Kiểm tra thông tin hóa đơn hiện tại
-            InvoiceDetail currentDetail = InvoiceDetail.getInvoiceDetailForUpdate(idRoom);
-            int oldElectric = 0;
-            int oldWater = 0;
-            String lastPaymentDate = "Chưa có";
-
-            if (currentDetail != null) {
-                oldElectric = currentDetail.getOldElectricReading();
-                oldWater = currentDetail.getOldWaterReading();
-                lastPaymentDate = currentDetail.getInvoiceDate();
-            } else {
-                // Lấy dữ liệu mặc định từ bảng TTPhongtro nếu chưa có hóa đơn
-                oldElectric = InvoiceDetail.getOldElectricReading(idRoom);
-                oldWater = InvoiceDetail.getOldWaterReading(idRoom);
-            }
-
-            frame.setVisible(false);
-
-            new InvoiceDetailUpdateView(
-                    idChutro,
-                    idRoom,
-                    room.getName(),
-                    tenantName,
-                    startDate,
-                    oldElectric,
-                    oldWater,
-                    lastPaymentDate
-            );
-
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(
-                    frame,
-                    "Không thể tải dữ liệu phòng: " + idRoom,
-                    "Lỗi",
-                    JOptionPane.ERROR_MESSAGE
-            );
-            e.printStackTrace();
-        }
     }
 
 
 
     // TODO: đang lỗi ở đây nè
     public static void goToXuatHoaDon(JFrame frame, int idPhong, int idChutro) {
+
+
+
         Chutro chutro = Chutro.getChutrobyChutroID(idChutro);
         NguoiThueTro nguoiThueTro = NguoiThueTro.getTenantByRoomId(idPhong);
-        InvoiceDetail invoiceDetail = InvoiceDetail.getInvoiceDetailByIdRoom(idPhong); //limit 1 nếu không được đổi sang TOP1
+        Object[] invoiceDetail = InvoiceDetail.getInvoiceDetailByIdRoom(idPhong); //limit 1 nếu không được đổi sang TOP1
         Room room = Room.getRoomById(idPhong);
 
         new InvoiceFormView(chutro,  nguoiThueTro,  invoiceDetail,  room);
@@ -103,12 +69,7 @@ public class RoomController {
     }
 
 
-    public static Object[] getThongTinPhong(int id_room, int id_chutro) {
-        System.out.println("Lấy thông tin phòng trọ");
-        Object[] roomInfor = {"id_phong", "id_chutro", "id)_nguoithue", "gia_dien", "gia_nuoc", "gia_rac", "chi_phi_khac", 123, "bla bla"};
-        // 6-7-8 tùy thuộc vào tạo thong tin phòng như nèo
-        return roomInfor;
-    }
+
 
     public static Object[] getDataRoomFromDataBase(int id_room) {
         System.out.println(" lấy thông tin phòng phục vụ cập nhật data");
@@ -119,12 +80,12 @@ public class RoomController {
         return roomData;
     }
 
-    public static void UpdateNguoiThue(String cccdValue, JFrame frame, int idPhong) {
+    public static void UpdateNguoiThue(String cccdValue, JFrame frame, int idPhong , Date ngaybatdauthue) {
         // Khởi tạo đối tượng NguoiThueTro và gọi phương thức UpdateNguoiThue
         //System.out.println(" đã gọi controller GoToUpdateNguoiThue");
         //NguoiThueTro ngThueTro = new NguoiThueTro();guoiThueTro.UpdateNguoiThueInRoom(cccdValue, idPhong, frame);
         // Update xong gửi thông báo về ==> Đã thêm người thuê trọ "name" vào"
-        boolean result = updateNguoiThueTroInRoom(idPhong, cccdValue);
+        boolean result = updateNguoiThueTroInRoom(idPhong, cccdValue, (java.sql.Date) ngaybatdauthue);
         if (result) {
             JOptionPane.showMessageDialog(frame, "Đã lưu thông tin người thuê trọ thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         } else {

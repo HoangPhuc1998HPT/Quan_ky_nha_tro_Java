@@ -37,7 +37,7 @@ public class NguoiThueTroController {
             }
 
             // Lấy thông tin hóa đơn
-            InvoiceDetail invoiceDetail = InvoiceDetail.getInvoiceDetailByIdRoom (idPhong);
+            Object[] invoiceDetail = InvoiceDetail.getInvoiceDetailByIdRoom (idPhong);
             if (invoiceDetail == null) {
                 throw new IllegalArgumentException("Không tìm thấy thông tin hóa đơn.");
             }

@@ -1,14 +1,17 @@
 package frontend.view.Invoices;
 
 import backend.model.InvoiceDetail;
+import backend.model.NguoiThueTro;
 import backend.model.Room;
 import controller.RoomController;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static backend.model.InvoiceDetail.getPreDayInMonth;
 import static backend.model.InvoiceDetail.updateInvoiceDetail;
 import static controller.RoomController.GoToBackRoomView;
 
@@ -17,12 +20,12 @@ public class InvoiceDetailUpdateView {
 
     private JFrame frame;
     private int idCTHD;
-    public InvoiceDetailUpdateView(int id_chutro,int id_room, String roomName, String tenantName, String startDate, int oldElectric, int oldWater, String lastPaymentDate) {
+    public InvoiceDetailUpdateView(int id_chutro, Room room, NguoiThueTro nguoiThueTro, java.util.Date startDate) {
         // Tạo JFrame
         this.idCTHD = idCTHD;
-
+        Date lastPaymentDate = getPreDayInMonth(room.getIdRoom());
         frame = new JFrame("Cập nhật chi tiết hóa đơn");
-        frame.setSize(800, 600);
+        frame.setSize(800, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BorderLayout());
 
@@ -50,13 +53,13 @@ public class InvoiceDetailUpdateView {
         gbc.gridy = 1;
         panel.add(roomInfoLabel, gbc);
 
-        JLabel roomNameLabel = new JLabel("Tên phòng: " + roomName);
+        JLabel roomNameLabel = new JLabel("Tên phòng: " + room.getName());
         roomNameLabel.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
         gbc.gridx = 1;
         gbc.gridy = 1;
         panel.add(roomNameLabel, gbc);
 
-        JLabel tenantNameLabel = new JLabel("Tên người thuê: " + tenantName);
+        JLabel tenantNameLabel = new JLabel("Tên người thuê: " + nguoiThueTro.getFullName());
         tenantNameLabel.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
         gbc.gridx = 1;
         gbc.gridy = 2;
@@ -75,7 +78,7 @@ public class InvoiceDetailUpdateView {
         gbc.gridy = 4;
         panel.add(oldElectricLabel, gbc);
 
-        JLabel oldElectricLabelShow = new JLabel(String.valueOf(oldElectric));
+        JLabel oldElectricLabelShow = new JLabel(String.valueOf(room.getCurrentElectricity()));
         oldElectricLabelShow.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
         gbc.gridx = 1;
         gbc.gridy = 4;
@@ -118,7 +121,7 @@ public class InvoiceDetailUpdateView {
         gbc.gridy = 6;
         panel.add(waterUnitLabel_0, gbc);
 
-        JLabel oldWaterLabelShow = new JLabel(String.valueOf(oldWater));
+        JLabel oldWaterLabelShow = new JLabel(String.valueOf(room.getCurrentWater()));
         oldWaterLabelShow.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
         gbc.gridx = 1;
         gbc.gridy = 6;
@@ -149,7 +152,8 @@ public class InvoiceDetailUpdateView {
         gbc.gridy = 8;
         panel.add(lastPaymentLabel, gbc);
 
-        JLabel lastPaymentValue = new JLabel(lastPaymentDate != null ? lastPaymentDate : "Chưa có");
+
+        JLabel lastPaymentValue = new JLabel(String.valueOf(lastPaymentDate) != null ? String.valueOf(lastPaymentDate) : "Chưa có");
         lastPaymentValue.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
         gbc.gridx = 1;
         gbc.gridy = 8;
@@ -188,41 +192,79 @@ public class InvoiceDetailUpdateView {
         gbc.gridy = 10;
         panel.add(discountUnitLabel, gbc);
 
-        // Nút cập nhật
+        // Chi phí phát sinh
+        JLabel additionalCostLabel = new JLabel("Chi phí phát sinh:");
+        additionalCostLabel.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 11;
+        panel.add(additionalCostLabel, gbc);
+
+        JTextField additionalCostField = new JTextField(10);
+        additionalCostField.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
+        gbc.gridx = 1;
+        gbc.gridy = 11;
+        panel.add(additionalCostField, gbc);
+
+        JLabel additionalCostUnitLabel = new JLabel("VNĐ"); // Đơn vị
+        additionalCostUnitLabel.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
+        gbc.gridx = 2;
+        gbc.gridy = 11;
+        panel.add(additionalCostUnitLabel, gbc);
+
+
         // Nút cập nhật
         JButton updateButton = new JButton("Cập nhật");
         updateButton.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
         gbc.gridx = 0;
-        gbc.gridy = 11;
+        gbc.gridy = 12;
         gbc.gridwidth = 3; // Chiếm 3 cột
         gbc.anchor = GridBagConstraints.CENTER;
         updateButton.addActionListener(e -> {
             try {
-                // Lấy giá trị từ giao diện
+                // Lấy và kiểm tra các giá trị đầu vào
+                if (newElectricField.getText().trim().isEmpty() || newWaterField.getText().trim().isEmpty() ||
+                        discountField.getText().trim().isEmpty() || additionalCostField.getText().trim().isEmpty()) {
+                    throw new IllegalArgumentException("Vui lòng điền đầy đủ các trường dữ liệu.");
+                }
+
                 int newElectric = Integer.parseInt(newElectricField.getText());
                 int newWater = Integer.parseInt(newWaterField.getText());
                 double discount = Double.parseDouble(discountField.getText());
-                String invoiceDate = dateField.getText();
+                double additionalCost = Double.parseDouble(additionalCostField.getText());
 
-                // Lấy thông tin cần thiêết để xử lý hóa odnw hiện tại
-                Room room = Room.getRoomById(id_room);
+                String invoiceDateStr = dateField.getText().trim();
+                LocalDate invoiceDate;
+                try {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    invoiceDate = LocalDate.parse(invoiceDateStr, formatter);
+                } catch (Exception parseEx) {
+                    throw new IllegalArgumentException("Định dạng ngày không hợp lệ. Vui lòng nhập ngày theo định dạng dd/MM/yyyy.");
+                }
+                Date sqlInvoiceDate = Date.valueOf(invoiceDate);
 
+                // Xử lý ngày tháng trước
+                //lastPaymentDate = getPreDayInMonth(room.getIdRoom());
+                if (lastPaymentDate == null) {
+                    JOptionPane.showMessageDialog(frame, "Không tìm thấy ngày thu tiền nhà tháng trước.", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                LocalDate invoiceLastMonth = lastPaymentDate.toLocalDate();
+                int dayInMonth = InvoiceDetail.calculateDaysBetweenDates(invoiceLastMonth, invoiceDate);
 
-
-                // Cập nhật thông tin hóa đơn mới
+                // Tạo đối tượng InvoiceDetail
                 InvoiceDetail updatedDetail = new InvoiceDetail(
-                        id_room,
                         idCTHD,
-                        oldElectric,
-                        oldWater,
-                        newElectric - oldElectric,
-                        newWater - oldWater,
+                        room.getIdRoom(),
+                        room.getCurrentElectricity(),
+                        room.getCurrentWater(),
+                        newElectric - room.getCurrentElectricity(),
+                        newWater - room.getCurrentWater(),
+                        dayInMonth,
                         room.getRoomPrice(),
-                        room.getElectricityPrice(),
-                        room.getWaterPrice(),
+                        additionalCost,
                         room.getGarbagePrice(),
                         discount,
-                        invoiceDate
+                        sqlInvoiceDate
                 );
                 // check
                 System.out.println("Chi tiết hóa đơn cập nhật:");
@@ -233,17 +275,20 @@ public class InvoiceDetailUpdateView {
                 System.out.println("Số nước cũ: " + updatedDetail.getOldWaterReading());
                 System.out.println("Số nước mới: " + updatedDetail.getUseWaterReading());
                 System.out.println("Giá thuê: " + updatedDetail.getRentPrice());
-                System.out.println("Giá điện: " + updatedDetail.getElectricPrice());
-                System.out.println("Giá nước: " + updatedDetail.getWaterPrice());
+                System.out.println("Giá điện: " + updatedDetail.getAdditionalCost());
+                //System.out.println("Giá nước: " + updatedDetail.getWaterPrice());
                 System.out.println("Giảm giá: " + updatedDetail.getDiscount());
                 System.out.println("Ngày hóa đơn: " + updatedDetail.getInvoiceDate());
 
                 // Gọi hàm cập nhật CSDL
-                boolean isSuccess = InvoiceDetail.updateInvoiceDetail(updatedDetail,lastPaymentDate);
+                String formattedDate = LocalDate.parse(dateField.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                        .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+                boolean isSuccess = InvoiceDetail.updateInvoiceDetail(updatedDetail, Date.valueOf(formattedDate));
 
                 if (isSuccess) {
                     JOptionPane.showMessageDialog(frame, "Cập nhật hóa đơn và số điện/nước thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    RoomController.GoToBackRoomView(frame,id_room, id_chutro); // Quay lại RoomView
+                    RoomController.GoToBackRoomView(frame,room.getIdRoom(), id_chutro); // Quay lại RoomView
                 } else {
                     JOptionPane.showMessageDialog(frame, "Cập nhật hóa đơn thất bại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
@@ -261,10 +306,10 @@ public class InvoiceDetailUpdateView {
         JButton backButton = new JButton("Quay lại");
         backButton.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
         gbc.gridx = 0;
-        gbc.gridy = 12;
+        gbc.gridy = 13;
         gbc.gridwidth = 3; // Chiếm 3 cột
         gbc.anchor = GridBagConstraints.CENTER;
-        backButton.addActionListener(e -> GoToBackRoomView( frame,  id_room,  id_chutro));
+        backButton.addActionListener(e -> GoToBackRoomView( frame,  room.getIdRoom(),  id_chutro));
         panel.add(backButton, gbc);
 
 

@@ -60,7 +60,7 @@ public class DashboardChutroController {
 //        new ChutroDashboardView(getUsernameFromIdChutro(id_chutro));
 //        frame.setVisible(false);
 //    }
-    public static void save_room_into_database(String name, String address, double roomPrice, double electricityPrice, double waterPrice, double garbagePrice, int id_chutro, JFrame frame) {
+    public static void save_room_into_database(String name, String address, double roomPrice, double electricityPrice, double waterPrice, double garbagePrice,int currentElectricity,int currentWater,int id_chutro, JFrame frame) {
     // Kiểm tra các thông tin không được bỏ trống
     if (name.isEmpty() || address.isEmpty() || roomPrice <= 0 || electricityPrice <= 0 || waterPrice <= 0 || garbagePrice < 0) {
         JOptionPane.showMessageDialog(frame, "Vui lòng nhập đầy đủ và hợp lệ thông tin!", "Thông báo", JOptionPane.WARNING_MESSAGE);
@@ -68,7 +68,7 @@ public class DashboardChutroController {
     }
 
     // Lưu thông tin vào cơ sở dữ liệu
-    boolean newRoom = Room.addRoom(name, address, roomPrice, electricityPrice, waterPrice, garbagePrice, id_chutro);
+    boolean newRoom = Room.addRoom(name, address, roomPrice, electricityPrice, waterPrice, garbagePrice,currentElectricity,currentWater, id_chutro);
     if (newRoom) {
         JOptionPane.showMessageDialog(frame, "Đã lưu thông tin phòng trọ thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         System.out.println("Đã lưu thông tin phòng trọ: " + name);

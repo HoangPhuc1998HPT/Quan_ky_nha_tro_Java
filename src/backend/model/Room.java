@@ -2,10 +2,12 @@ package backend.model;
 
 import backend.connectDatabase;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static backend.model.NguoiThueTro.getIdNguoiThueFromCCCD;
 
@@ -211,9 +213,9 @@ public class Room {
         return null; // Trả về null nếu không có dữ liệu
     }
 
-    public static boolean addRoom(String name, String address, double roomPrice, double electricityPrice, double waterPrice, double garbagePrice, int id_chutro) {
+    public static boolean addRoom(String name, String address, double roomPrice, double electricityPrice, double waterPrice, double garbagePrice, int currentElectricity, int currentWater, int id_chutro) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-            String sql = "INSERT INTO TTPhongtro (TenPhong, Address ,GiaPhong , Giadien, Gianuoc, Giarac, IDChutro) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO TTPhongtro (TenPhong, Address, GiaPhong, Giadien, Gianuoc, Giarac, Sodienhientai, Sonuochientai, IDChutro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, name);
             pstmt.setString(2, address);
@@ -221,7 +223,9 @@ public class Room {
             pstmt.setDouble(4, electricityPrice);
             pstmt.setDouble(5, waterPrice);
             pstmt.setDouble(6, garbagePrice);
-            pstmt.setInt(7, id_chutro);
+            pstmt.setInt(7, currentElectricity); // Số điện hiện tại
+            pstmt.setInt(8, currentWater);       // Số nước hiện tại
+            pstmt.setInt(9, id_chutro);          // ID chủ trọ
             return pstmt.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -229,33 +233,67 @@ public class Room {
         return false;
     }
 
+
     public static boolean deleteRoom(int idRoom) {
         // TODO: Hiếu kiểm tra Tạo truy vấn xóa phòng ==> Cơ chế tốt nhất là sau khi delete th không cho truy vấn id phòng đó nữa
         //..............
         return false;
     }
 
-    public static boolean updateNguoiThueTroInRoom(int idRoom, String CCCD) {
-        // TODO: Hiếu tạo truy vấn cho update thông tin người thuê vào phòng trọ lên database => Done
+    public static boolean updateNguoiThueTroInRoom(int idRoom, String CCCD, Date ngaybatdauthue) {
+        // Lấy ID của người thuê dựa trên CCCD
+        int idNguoiThue = getIdNguoiThueFromCCCD(CCCD);
+        System.out.println("ID Người thuê: " + idNguoiThue);
 
-        int id_nguoithue = getIdNguoiThueFromCCCD(CCCD);
-        System.out.println("ID Nguoi thue: " + id_nguoithue);
-        if (id_nguoithue == 0) {
+        if (idNguoiThue == 0) {
+            System.err.println("Không tìm thấy người thuê với CCCD: " + CCCD);
             return false;
         }
+
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-           String sql = """
-                   UPDATE TTPhongtro SET IDnguoithue = ? WHERE IDPhong = ?
-                   """;
-           PreparedStatement pstm = conn.prepareStatement(sql);
-           pstm.setInt(1, id_nguoithue);
-           pstm.setInt(2, idRoom);
-           return pstm.executeUpdate() > 0;
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-       return false;
+            // Tắt auto-commit để quản lý transaction
+            conn.setAutoCommit(false);
+
+            // Câu lệnh SQL 1: Cập nhật TTPhongtro
+            String sql1 = """
+            UPDATE TTPhongtro 
+            SET IDNguoiThue = ? 
+            WHERE IDPhong = ?
+        """;
+            try (PreparedStatement pstm1 = conn.prepareStatement(sql1)) {
+                pstm1.setInt(1, idNguoiThue); // Gán ID người thuê
+                pstm1.setInt(2, idRoom);      // Gán ID phòng
+                pstm1.executeUpdate();
+            }
+
+            // Câu lệnh SQL 2: Cập nhật NguoiThueTro
+            String sql2 = """
+            UPDATE NguoiThueTro 
+            SET Ngaybatdauthue = ? 
+            WHERE IDNguoiThue = ?
+        """;
+            try (PreparedStatement pstm2 = conn.prepareStatement(sql2)) {
+                pstm2.setDate(1, ngaybatdauthue); // Gán ngày bắt đầu thuê
+                pstm2.setInt(2, idNguoiThue);    // Gán ID người thuê
+                pstm2.executeUpdate();
+            }
+
+            // Commit transaction nếu cả hai cập nhật thành công
+            conn.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+                // Rollback nếu xảy ra lỗi
+                conn.rollback();
+            } catch (Exception rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
+        }
+        return false; // Trả về false nếu có lỗi xảy ra
     }
+
+
 
 
     public static int getTenantRoomId(int tenantId) {

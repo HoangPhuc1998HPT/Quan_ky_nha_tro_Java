@@ -1,7 +1,11 @@
 
 CREATE DATABASE QLThueNhaTro_java;
 USE QLThueNhaTro_java;
-SET Dateformat DMY;
+
+
+SET DATEFORMAT DMY;
+
+
 -- Table Creating
 CREATE TABLE Users (
                        UserID INT PRIMARY KEY IDENTITY(1,1),
@@ -90,7 +94,7 @@ ALTER TABLE HoaDon ADD CONSTRAINT DF_ThanhToan DEFAULT 0 FOR ThanhToan;
 
 ALTER TABLE HoaDon ADD CONSTRAINT CK_ThanhToan CHECK (ThanhToan IN (0, 1));
 
-A
+
 select* from HoaDon
 select* from CTHoadon
 
