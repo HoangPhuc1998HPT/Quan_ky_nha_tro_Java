@@ -28,10 +28,10 @@ public class RoomInforView {
 
         // Hiển thị thông tin
         gbc.gridwidth = 1;
-        addLabelAndValue("Tên chủ trọ:", room != null ? room.getTenantName() : "Không xác định", frame, gbc, 1);
-        addLabelAndValue("Số điện thoại:", room != null ? String.valueOf(room.getElectricityPrice()) : "Không xác định", frame, gbc, 2);
+        addLabelAndValue("Tên chủ trọ:", room != null ? room.getChuTroNameFromRoomID(room.getIdRoom()) : "Không xác định", frame, gbc, 1);
+        addLabelAndValue("Số điện thoại:", room != null ? room.getChutroPhoneByRoomID(room.getIdRoom()) : "Không xác định", frame, gbc, 2);
         addLabelAndValue("Tên phòng:", room != null ? room.getName() : "Không xác định", frame, gbc, 3);
-        addLabelAndValue("Địa chỉ:", "Địa chỉ phòng trọ", frame, gbc, 4);
+        addLabelAndValue("Địa chỉ:", room.getAddress(), frame, gbc, 4);
         addLabelAndValue("Giá phòng:", room != null ? String.valueOf(room.getRoomPrice()) + " VNĐ" : "Không xác định", frame, gbc, 5);
         addLabelAndValue("Giá điện:", room != null ? String.valueOf(room.getElectricityPrice()) + " VNĐ/kWh" : "Không xác định", frame, gbc, 6);
         addLabelAndValue("Giá nước:", room != null ? String.valueOf(room.getWaterPrice()) + " VNĐ/m³" : "Không xác định", frame, gbc, 7);

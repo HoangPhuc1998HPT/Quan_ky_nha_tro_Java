@@ -40,6 +40,10 @@ public class RoomController {
         new RoomUpdateInforRoomView(idPhong, id_chutro);
     }
 
+    public static void goToRoomInfoView(Room room) {
+        new RoomInforView(room);
+    }
+
     public static void goToUpdateHoaDon(JFrame frame, int idRoom, int idChutro) {
         //TODO : Thực thi hàm controller cho upate hóa đơn
         //đóng frame cũ

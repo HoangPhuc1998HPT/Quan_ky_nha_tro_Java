@@ -5,6 +5,7 @@ import backend.model.NguoiThueTro;
 import backend.model.Room;
 import frontend.components.NguoiThueTro.ButtonEditorNguoiThueTro_0;
 import frontend.components.NguoiThueTro.ButtonRendererNguoiThueTro_0;
+import frontend.view.login_register.loginView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -81,7 +82,10 @@ public class NguoiThueTroDashboard_0View extends JFrame {
         // Nút Đăng xuất
         JButton logoutBtn = new JButton("Đăng xuất");
         logoutBtn.setBounds(680, 400, 100, 30);
-        logoutBtn.addActionListener(e -> dispose());
+        logoutBtn.addActionListener(e -> {
+            dispose();
+            new loginView();
+        });
         mainPanel.add(logoutBtn);
 
         setVisible(true);

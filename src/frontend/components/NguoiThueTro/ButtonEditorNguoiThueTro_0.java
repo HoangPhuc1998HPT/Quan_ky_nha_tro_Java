@@ -48,12 +48,13 @@ public class ButtonEditorNguoiThueTro_0 extends DefaultCellEditor {
             int selectedRow = table.getSelectedRow(); // Lấy hàng được chọn
             if (selectedRow != -1) {
                 // Lấy Room ID từ cột ẩn (index 0)
-                Object roomName = table.getValueAt(selectedRow, 0);
-                Object fullName = table.getValueAt(selectedRow, 1);
+                Object roomName = table.getValueAt(selectedRow, 1);
+                Object fullName = table.getValueAt(selectedRow, 2);
                 int roomId = Room.getIDRoomFromRoomName((String) roomName);
+                Room room = Room.getRoomById(roomId);
                 int chutroID = Chutro.getIDChutroFromHoTen((String) fullName);
                 System.out.println("Room ID: " + roomId); // In ra Room ID để kiểm tra
-                RoomController.openRoomView(roomId, chutroID); // Điều hướng đến RoomInforView với roomId
+                RoomController.goToRoomInfoView(room); // Điều hướng đến RoomInforView với roomId
             }
         }
         fireEditingStopped(); // Dừng chỉnh sửa

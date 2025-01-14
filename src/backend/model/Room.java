@@ -15,6 +15,7 @@ public class Room {
     private int idRoom;
     private String name;
     private String tenantName;
+    private String address;
     private double roomPrice;
     private double electricityPrice;
     private double waterPrice;
@@ -25,10 +26,11 @@ public class Room {
 
 
     // Constructor
-    public Room(int idRoom, String name, String tenantName, double roomPrice, double electricityPrice, double waterPrice, double garbagePrice, int currentElectricity, int currentWater) {
+    public Room(int idRoom, String name, String tenantName, String address, double roomPrice, double electricityPrice, double waterPrice, double garbagePrice, int currentElectricity, int currentWater) {
         this.idRoom = idRoom;
         this.name = name;
         this.tenantName = null;
+        this.address = address;
         this.roomPrice = roomPrice;
         this.electricityPrice = electricityPrice;
         this.waterPrice = waterPrice;
@@ -131,6 +133,41 @@ public class Room {
         return idChutro;
     }
 
+    public static String getChuTroNameFromRoomID (int roomID) {
+        int idChutro = getIdChutrobyRoomId(roomID);
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()){
+            String sql = "SELECT HoTen FROM Chutro WHERE IDChutro = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, idChutro);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+               return rs.getString("HoTen");
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getChutroPhoneByRoomID (int roomID) {
+        int idChutro = getIdChutrobyRoomId(roomID);
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()){
+            String sql = "SELECT Phone FROM Chutro WHERE IDChutro = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, idChutro);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getString("Phone");
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
     // Getters
@@ -170,6 +207,9 @@ public class Room {
         return currentWater;
     }
 
+    public String getAddress() {
+        return address;
+    }
 
 
     // Static method to fetch room details from database
@@ -181,6 +221,7 @@ public class Room {
                 TTPhongtro.IDPhong,
                 TTPhongtro.TenPhong,
                 ISNULL(NguoiThueTro.Hoten, N'Không có') AS TenNguoiThue,
+                TTPhongtro.Address,
                 TTPhongtro.GiaPhong,
                 TTPhongtro.Giadien,
                 TTPhongtro.Gianuoc,
@@ -202,6 +243,7 @@ public class Room {
                             rs.getInt("IDPhong"),            // ID phòng
                             rs.getString("TenPhong"),           // Tên phòng
                             rs.getString("TenNguoiThue"),       // Tên người thuê
+                            rs.getString("Address"),
                             rs.getDouble("GiaPhong"),           // Giá phòng
                             rs.getDouble("Giadien"),            // Giá điện
                             rs.getDouble("Gianuoc"),            // Giá nước
@@ -371,6 +413,7 @@ public class Room {
                 TTPhongtro.IDPhong, 
                 TTPhongtro.TenPhong, 
                 ISNULL(NguoiThueTro.Hoten, 'Không có') AS TenNguoiThue, 
+                TTPhongtro.Address,
                 TTPhongtro.GiaPhong, 
                 TTPhongtro.Giadien, 
                 TTPhongtro.Gianuoc, 
@@ -391,6 +434,7 @@ public class Room {
                         rs.getInt("IDPhong"),            // ID phòng
                         rs.getString("TenPhong"),        // Tên phòng
                         rs.getString("TenNguoiThue"),    // Tên người thuê (nếu có)
+                        rs.getString("Address"),
                         rs.getDouble("GiaPhong"),        // Giá phòng
                         rs.getDouble("Giadien"),         // Giá điện
                         rs.getDouble("Gianuoc"),         // Giá nước

@@ -23,7 +23,7 @@
         +  Cập nhật người thuê phải cập nhật luôn ngày bắt đầu thuê trọ
         +  Khi cập nhật người khác thuê trọ ==> Cập nhật ngày kết thúc thuê trọ cho ng cũ và cập nhakat ngày bắt đầu thuê cho người mới
         +  Cập nhật thông tin phòng:
-            * Hiển thị tên người thue vãn null
+           OK * Hiển thị tên người thue vãn null
            OK *  Cập nhật giá thuê phòng
            OK *  Capajp nhật giá điện
            OK *  Cập nhật giá nước
