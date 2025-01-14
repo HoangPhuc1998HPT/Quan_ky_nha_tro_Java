@@ -3,7 +3,7 @@ CREATE DATABASE QLThueNhaTro_java;
 USE QLThueNhaTro_java;
 
 
-SET DATEFORMAT DMY;
+SET DATEFORMAT YMD;
 
 
 -- Table Creating

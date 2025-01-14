@@ -6,13 +6,22 @@ ALTER DATABASE QLThueNhaTro_java SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
 DROP DATABASE QLThueNhaTro_java
 
 -- SELECT Section
-01
+
 SELECT * FROM Admins
 SELECT * FROM Chutro
 SELECT * FROM NguoiThueTro
 SELECT * FROM TTPhongtro
 SELECT * FROM HoaDon
 SELECT * FROM CTHoadon
+
+Insert Into TTPhongtro
+set Sodienhientai = 1 , Sonuochientai = 1
+where idPhong = 1 & 2
+
+UPDATE TTPhongtro
+SET Sodienhientai = 1, Sonuochientai = 1
+WHERE IDPhong IN (1, 2);
+
 
 -- INSERT Section
 -- Initialize Admins
@@ -37,4 +46,18 @@ ALTER TABLE TTPhongtro ADD
 DROP TABLE Users
 DROP TABLE TTPhongtro
 
-select * from user
+
+
+SELECT 
+                TTPhongtro.IDPhong, 
+                TTPhongtro.TenPhong, 
+                ISNULL(NguoiThueTro.Hoten, 'Không có') AS TenNguoiThue, 
+                TTPhongtro.GiaPhong, 
+                TTPhongtro.Giadien, 
+                TTPhongtro.Gianuoc, 
+                ISNULL(TTPhongtro.Giarac, 0) AS Giarac ,
+                TTPhongtro.Sodienhientai,
+                TTPhongtro.Sonuochientai
+            FROM TTPhongtro
+            LEFT JOIN NguoiThueTro ON TTPhongtro.IDNguoiThue = NguoiThueTro.IDNguoiThue
+            WHERE TTPhongtro.IDPhong = 3
