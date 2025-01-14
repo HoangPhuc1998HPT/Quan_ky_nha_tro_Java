@@ -14,6 +14,7 @@ SELECT * FROM TTPhongtro
 SELECT * FROM HoaDon
 SELECT * FROM CTHoadon
 
+
 Insert Into TTPhongtro
 set Sodienhientai = 1 , Sonuochientai = 1
 where idPhong = 1 & 2

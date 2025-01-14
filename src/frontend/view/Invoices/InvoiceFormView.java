@@ -40,7 +40,9 @@ public class InvoiceFormView {
         Object invoiceDetail1 = InvoiceDetail.getInvoiceDetailForUpdate(idCTHD);
 
 
-        double Tongchiphi = tiennha*1.1 + giadien*sodienuse*1.1  + gianuoc*sonuocuse*1.1  + tienrac*1.1 - giamgia;
+        double Tongchiphichuathue = tiennha*1.1 + giadien*sodienuse*1.1  + gianuoc*sonuocuse*1.1  + tienrac*1.1 - giamgia ;
+        double Tongtienthue = tiennha*0.1 + giadien*sodienuse*0.1  + gianuoc*sonuocuse*0.1  + tienrac*0.1;
+        double Tongchiphi = tiennha*1.1 + giadien*sodienuse*1.1  + gianuoc*sonuocuse*1.1  + tienrac*1.1 - giamgia - Tongtienthue ;
 
         int idhoadon = Invoices.getIdHoadonFromidCTHD(idCTHD);
 
@@ -179,13 +181,13 @@ public class InvoiceFormView {
 
         // Tổng cộng
         JPanel totalNoTax = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-        totalNoTax.add(new JLabel("Tổng tiền chưa có thuế GTGT: " + Tongchiphi));
+        totalNoTax.add(new JLabel("Tổng tiền chưa có thuế GTGT: " + ((int) Tongchiphichuathue) + "VNĐ" ) );
         totalNoTax.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         mainPanel.add(totalNoTax);
 
 
         JPanel totalTax = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-        totalTax.add(new JLabel("Tổng tiền thuế GTGT: " + Tongchiphi*0.08));
+        totalTax.add(new JLabel("Tổng tiền thuế GTGT: " + ((int) Tongtienthue) + " VNĐ"));
         totalTax.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
         mainPanel.add(totalTax);
 
@@ -194,7 +196,7 @@ public class InvoiceFormView {
         totaInvoice.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.BLACK));
 
         JPanel row_in_1 = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
-        row_in_1.add(new JLabel("Tổng tiền thanh toán: " + Tongchiphi + Tongchiphi*0.08) );
+        row_in_1.add(new JLabel("Tổng tiền thanh toán: " +( (int) (Tongchiphichuathue + Tongtienthue)) + "VNĐ") );
         totaInvoice.add(row_in_1);
 
         JPanel row_in_2 = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));

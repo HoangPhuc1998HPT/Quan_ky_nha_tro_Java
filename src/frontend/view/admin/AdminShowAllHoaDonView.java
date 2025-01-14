@@ -1,11 +1,8 @@
 package frontend.view.admin;
 
-import backend.model.Invoices;
 import controller.AdminController;
-import frontend.components.InvoiceButtonEditor_1;
-import frontend.components.InvoiceButtonRenderer;
-import frontend.components.InvoiceButtonEditor;
-import frontend.components.InvoiceButtonRenderer_1;
+import frontend.components.Invoice.InvoiceButtonEditor_1;
+import frontend.components.Invoice.InvoiceButtonRenderer_1;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;

@@ -4,6 +4,7 @@ import backend.connectDatabase;
 import backend.model.*;
 import frontend.view.Invoices.InvoiceCreateNewInvoice;
 import frontend.view.Invoices.InvoiceFormView;
+import frontend.view.Invoices.InvoiceListsView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -206,7 +207,9 @@ public class InvoicesController {
         });
     }
 
-
+    public static void goToInvoiceListsView(int idChutro, String landlordName, int roomCount){
+        new InvoiceListsView( idChutro,  landlordName,  roomCount);
+    }
 
     // hàm bên trên
 }

@@ -2,15 +2,16 @@ package frontend.view.Invoices;
 
 
 import backend.model.Invoices;
-import frontend.components.InvoiceButtonEditor;
-import frontend.components.InvoiceButtonRenderer;
+import frontend.components.Invoice.InvoiceButtonEditor;
+import frontend.components.Invoice.InvoiceButtonEditor_watchHoaDon;
+import frontend.components.Invoice.InvoiceButtonRenderer;
+import frontend.components.Invoice.InvoiceButtonRenderer_watchHoaDon;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.List;
 
 import static controller.InvoicesController.*;
 
@@ -42,24 +43,24 @@ public class InvoiceListsView {
         landlordInfoPanel.add(new JLabel("| Tổng số Phòng: " + roomCount));
         mainPanel.add(landlordInfoPanel);
 
-        // Bảng danh sách hóa đơn
 
-        // TODO: Khu vực này sẽ có thay đổi vị trí Tình Trạng
-        // TODO: Dự tính sẽ chuyển qua nút bấm, nếu xác nhận người thuê đẫ thanh toán ==> bấm đã thanh toán ==> không cho thay đổi
-        String[] columnNames = {"STT", "Tên Phòng", "Tên Người Thuê", "Tổng Giá Trị", "Ngày Xuất", "Tình Trạng"};
+
+        // Bảng danh sách hóa đơn
+        String[] columnNames = {"id Hóa đơn (ẩn)", "STT", "Tên Phòng", "Tên Người Thuê", "Tổng Giá Trị", "Ngày Xuất", "Tình Trạng", "Xem hóa đơn"};
         DefaultTableModel tableModel = new DefaultTableModel(null, columnNames) {
             @Override
             public Class<?> getColumnClass(int column) {
-                // Cột "Tình Trạng" (cột thứ 5) phải luôn là kiểu Boolean để hiển thị checkbox
-                return column == 5 ? Boolean.class : String.class;
+                if (column == 6) return Boolean.class; // "Tình Trạng" là checkbox
+                if (column == 7) return JButton.class; // "Xem hóa đơn" là nút
+                return String.class; // Các cột khác
             }
 
             @Override
             public boolean isCellEditable(int row, int column) {
-                // Chỉ cho phép chỉnh sửa cột "Tình Trạng"
-                return column == 5;
+                return column == 6 || column == 7; // Chỉ cột "Tình Trạng" và "Xem hóa đơn" có thể chỉnh sửa
             }
         };
+
 
         JTable table = new JTable(tableModel);
         table.setRowHeight(30); // Tăng chiều cao hàng
@@ -75,14 +76,19 @@ public class InvoiceListsView {
         }
 
         // Đặt độ rộng cột
+        // Ẩn cột "id Hóa đơn (ẩn)"
+        table.removeColumn(table.getColumnModel().getColumn(0)); // Cột 0 là "id Hóa đơn (ẩn)"
         table.getColumnModel().getColumn(0).setPreferredWidth(50); // STT
         table.getColumnModel().getColumn(1).setPreferredWidth(150); // Tên phòng
         table.getColumnModel().getColumn(2).setPreferredWidth(200); // Tên người thuê
         table.getColumnModel().getColumn(3).setPreferredWidth(150); // Tổng giá trị
         table.getColumnModel().getColumn(4).setPreferredWidth(150); // Ngày xuất
-        // Gán ButtonRenderer và ButtonEditor cho cột "Tình Trạng"
+
+        // Gán ButtonRenderer và ButtonEditor cho cột "Tình Trạng" và "Xem hóa đơn"
         table.getColumnModel().getColumn(5).setCellRenderer(new InvoiceButtonRenderer());
-        table.getColumnModel().getColumn(5).setCellEditor(new InvoiceButtonEditor(table));
+        table.getColumnModel().getColumn(5).setCellEditor(new InvoiceButtonEditor(frame,table, idChutro,  landlordName,  roomCount));
+        table.getColumnModel().getColumn(6).setCellRenderer(new InvoiceButtonRenderer_watchHoaDon());
+        table.getColumnModel().getColumn(6).setCellEditor(new InvoiceButtonEditor_watchHoaDon(table, idChutro));
 
 
         JScrollPane tableScrollPane = new JScrollPane(table);

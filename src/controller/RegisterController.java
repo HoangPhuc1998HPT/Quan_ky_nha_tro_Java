@@ -1,6 +1,7 @@
 package controller;
 
 import backend.Register;
+import frontend.view.login_register.homeloginView;
 import frontend.view.login_register.loginView;
 import frontend.view.login_register.UpdateChutroInforView;
 
@@ -66,6 +67,11 @@ public class RegisterController {
                     JOptionPane.showMessageDialog(frame, "Cập nhật thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 }
         }
+    }
+
+    public static void goToHomelogin(JFrame frame) {
+        frame.setVisible(false);
+        new homeloginView();
     }
 }
 

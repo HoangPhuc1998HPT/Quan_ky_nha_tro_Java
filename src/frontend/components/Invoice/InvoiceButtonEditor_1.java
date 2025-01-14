@@ -1,4 +1,4 @@
-package frontend.components;
+package frontend.components.Invoice;
 
 import backend.model.Invoices;
 import controller.InvoicesController;

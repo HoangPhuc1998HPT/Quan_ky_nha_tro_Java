@@ -49,7 +49,9 @@ public class DashboardChutroController {
         String nameChutro = getNameChutroFromIdChutro(idChutro);
         System.out.println("Đi đến view xem danh sách tất cả hóa đơn thuộc chủ trọ" + nameChutro);
         int roomCount = getCountRoomFromIdChutro(idChutro);
+
         new InvoiceListsView(idChutro, nameChutro, roomCount);
+
         //InvoiceListsView(String idChutro, String landlordName, int roomCount)
     }
 

@@ -1,9 +1,12 @@
 package backend.model;
 
 import backend.connectDatabase;
+import controller.InvoicesController;
+import frontend.view.Invoices.InvoiceListsView;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -416,7 +419,8 @@ public class Invoices {
 
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = """
-        SELECT ROW_NUMBER() OVER (ORDER BY hd.NgayXuatHoaDon DESC) AS STT,
+        SELECT hd.BillID AS idHoaDon,
+               ROW_NUMBER() OVER (ORDER BY hd.NgayXuatHoaDon DESC) AS STT,
                pt.TenPhong,
                COALESCE(nt.Hoten, 'Không có dữ liệu') AS TenNguoiThue,
                COALESCE(hd.TongChiPhi, 0) AS TongChiPhi,
@@ -434,12 +438,13 @@ public class Invoices {
 
             while (rs.next()) {
                 tableModel.addRow(new Object[] {
-                        rs.getInt("STT"),
-                        rs.getString("TenPhong"),
-                        rs.getString("TenNguoiThue"),
-                        String.format("%,.2f VNĐ", rs.getDouble("TongChiPhi")),
-                        rs.getDate("NgayXuatHoaDon"),
-                        rs.getString("TinhTrang")
+                        rs.getInt("idHoaDon"), // id Hóa đơn (ẩn)
+                        rs.getInt("STT"),      // Số thứ tự
+                        rs.getString("TenPhong"), // Tên phòng
+                        rs.getString("TenNguoiThue"), // Tên người thuê
+                        String.format("%,.2f VNĐ", rs.getDouble("TongChiPhi")), // Tổng chi phí
+                        rs.getDate("NgayXuatHoaDon"), // Ngày xuất hóa đơn
+                        rs.getString("TinhTrang")    // Tình trạng thanh toán
                 });
             }
         } catch (Exception e) {
@@ -447,6 +452,7 @@ public class Invoices {
             JOptionPane.showMessageDialog(null, "Không thể tải dữ liệu hóa đơn.", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 
     // Hàm lấy thông tin hóa đơn theo ID
     public static Invoices getInvoiceDetails(int billID) {
@@ -476,16 +482,18 @@ public class Invoices {
         return null;
     }
     // Hàm đánh dấu hóa đơn đã thanh toán
-    public static void markInvoiceAsPaid(String idInvoice) {
+    public static boolean markInvoiceAsPaid(Frame frame, int idInvoice,int idChutro, String landlordName, int roomCount) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             // Cập nhật cột ThanhToan trong bảng HoaDon
             String sql = "UPDATE HoaDon SET ThanhToan = 1 WHERE BillID = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, idInvoice);
+            pstmt.setInt(1, idInvoice);
 
             int rowsUpdated = pstmt.executeUpdate();
             if (rowsUpdated > 0) {
                 JOptionPane.showMessageDialog(null, "Đã cập nhật trạng thái thanh toán cho hóa đơn ID: " + idInvoice, "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                InvoicesController.goToInvoiceListsView( idChutro,  landlordName,  roomCount);
+                return true; // Cập nhật thành công
             } else {
                 JOptionPane.showMessageDialog(null, "Không tìm thấy hóa đơn với ID: " + idInvoice, "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
@@ -493,7 +501,9 @@ public class Invoices {
             JOptionPane.showMessageDialog(null, "Không thể cập nhật trạng thái thanh toán!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
+        return false; // Cập nhật thất bại
     }
+
     //TODO: phía dưới đang test có thể có lỗi
     // Lấy thông tin cần thiết của hóa đơn từ idhoadon
     public static Invoices getInvoiceById(int idhoadon) {
@@ -627,24 +637,31 @@ public class Invoices {
     }
 
     public static int getIdHoadonFromidCTHD(int idCTHD) {
+        int billID = 0; // Giá trị mặc định nếu không tìm thấy
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = """
-        SELECT hd.BillID 
-        FROM HoaDon hd
-        WHERE idCTHD = ?
+            SELECT hd.BillID 
+            FROM HoaDon hd
+            WHERE idCTHD = ?
         """;
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, idCTHD);
             ResultSet rs = pstmt.executeQuery();
+
             if (rs.next()) {
-                return rs.getInt("IDPhong");
+                billID = rs.getInt("BillID"); // Sửa "IDPhong" thành "BillID"
+                System.out.println("Tìm thấy BillID: " + billID + " với IDCTHD: " + idCTHD);
+            } else {
+                System.out.println("Không tìm thấy BillID với IDCTHD: " + idCTHD);
             }
         } catch (Exception e) {
+            System.err.println("Lỗi khi truy vấn BillID: " + e.getMessage());
             e.printStackTrace();
         }
-        return 0; // Trả về 0 nếu không tìm thấy
+        return billID; // Trả về 0 nếu không tìm thấy
     }
+
 
     public static void saveInvoiceToDatabase(Object invoiceDetail1) {
         // dùng update lên Hoadon

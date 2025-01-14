@@ -132,6 +132,7 @@ public class RegisterView {
         gbc.gridx = 1;
         gbc.gridy = 6;
         gbc.gridwidth = 2;
+        backButton.addActionListener(e->RegisterController.goToHomelogin(frame));
         panel.add(backButton, gbc);
 
         // Thêm panel vào frame
