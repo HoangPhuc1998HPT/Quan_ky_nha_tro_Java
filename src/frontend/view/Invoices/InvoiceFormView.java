@@ -1,6 +1,7 @@
 package frontend.view.Invoices;
 
 import backend.model.*;
+import controller.InvoicesController;
 
 import javax.management.StringValueExp;
 import javax.swing.*;
@@ -37,22 +38,9 @@ public class InvoiceFormView {
 
         //TODO : phải làm
         Object invoiceDetail1 = InvoiceDetail.getInvoiceDetailForUpdate(idCTHD);
-        // dùng update lên Hoadon
-        // invoiceDetail1 sẽ bao hàm các thông tin sau:
-        //                        idPhong,0
-        //                        idCTHD,1
-        //                        sodienthangtruoc,2
-        //                        sonuocthangtruoc,3
-        //                        sodienused,4
-        //                        sonuocused,5
-        //                        daysInMonth,6
-        //                        tiennha,7
-        //                        tienrac,8
-        //                        chiphiphatsinh,9
-        //                        giamgia,10
-        //                        ngayhoadon,11
 
-        double Tongchiphi = tiennha + giadien*sodienuse + gianuoc*sonuocuse + tienrac - giamgia;
+
+        double Tongchiphi = tiennha*1.1 + giadien*sodienuse*1.1  + gianuoc*sonuocuse*1.1  + tienrac*1.1 - giamgia;
 
         int idhoadon = Invoices.getIdHoadonFromidCTHD(idCTHD);
 
@@ -187,7 +175,7 @@ public class InvoiceFormView {
         mainPanel.add(scrollPane);
 
         // Populate table with data
-        populateInvoiceTable(table, (Object[]) invoiceDetail1);
+        InvoicesController.populateInvoiceTable(table, (Object[]) invoiceDetail1);
 
         // Tổng cộng
         JPanel totalNoTax = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -224,9 +212,11 @@ public class InvoiceFormView {
         leftSign.add(new JLabel("(Ký, ghi rõ họ tên)", SwingConstants.CENTER));
         signPanel.add(leftSign);
 
-        JPanel rightSign = new JPanel(new GridLayout(2, 1));
+        JPanel rightSign = new JPanel(new GridLayout(4,1 ));
         rightSign.add(new JLabel("Người bán hàng", SwingConstants.CENTER));
         rightSign.add(new JLabel("(Ký, ghi rõ họ tên)", SwingConstants.CENTER));
+        rightSign.add(new JLabel("                  ", SwingConstants.CENTER));
+        rightSign.add(new JLabel("(đã ký)", SwingConstants.CENTER));
         signPanel.add(rightSign);
 
         mainPanel.add(signPanel);
@@ -238,17 +228,31 @@ public class InvoiceFormView {
         invoiceNote.add(new JLabel("(Cần kiểm tra, đối chiếu khi lập, nhận hóa đơn)", SwingConstants.LEFT));
         mainPanel.add(invoiceNote);
 
+        JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton btnInvoice = new JButton("Xuất hóa đơn");
+        JButton backInvoice = new JButton("Thoát");
+        btnInvoice.addActionListener(e -> {
+            InvoicesController.goToSaveDataToHoadon(frame ,invoiceDetail1);
+
+            JOptionPane.showMessageDialog(frame, "Hóa đơn đã được lưu thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        });
+        backInvoice.addActionListener(e -> {
+            //thoát frame
+            InvoicesController.goToexistInvoiceView(frame);
+        });
+
+        footerPanel.add(backInvoice);
+        footerPanel.add(btnInvoice);
+
         // Thêm panel chính vào frame
         frame.add(mainPanel, BorderLayout.CENTER);
         // Thông tin người bán
-        mainPanel.add(createSellerInfoPanel(chutro));
+        //mainPanel.add(createSellerInfoPanel(chutro));
 
         // Thông tin người mua
-        mainPanel.add(createBuyerInfoPanel(nguoithuetro));
+        //mainPanel.add(createBuyerInfoPanel(nguoithuetro));
 
-        // Thông tin hóa đơn
-        //mainPanel.add(createInvoiceDetailsPanel(invoiceDetail, room));
-
+        frame.add(footerPanel, BorderLayout.SOUTH);
         // Hiển thị JFrame
         frame.setVisible(true);
     }
@@ -271,68 +275,8 @@ public class InvoiceFormView {
         panel.add(new JLabel("Điện thoại: " + tenant.getPhone()));
         return panel;
     }
-    private JPanel createInvoiceDetailsPanel(Invoices invoice, Room room) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(new JLabel("Phòng: " + room.getName()));
-        panel.add(new JLabel("Ngày xuất hóa đơn: " + invoice.getNgayXuatHoaDon()));
-        panel.add(new JLabel("Tổng giá trị: " + invoice.getTongChiPhi() + " VNĐ"));
-        return panel;
-    }
 
-    public static void populateInvoiceTable(JTable table, Object[] invoiceDetail) {
-        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
-        tableModel.setRowCount(0); // Clear existing rows
 
-        // Add row with the provided invoice details
-        tableModel.addRow(new Object[]{
-                1, // STT
-                "Tiền điện", // Tên hàng hóa, dịch vụ
-                "kWh", // Đơn vị tính
-                invoiceDetail[4], // Số lượng
-                invoiceDetail[8], // Đơn giá (giadien)
-                ((int) invoiceDetail[4]) * ((double) invoiceDetail[8]), // Thành tiền chưa có thuế GTGT
-                "10%", // Thuế suất
-                ((int) invoiceDetail[4]) * ((double) invoiceDetail[8]) * 0.1, // Tiền thuế GTGT
-                ((int) invoiceDetail[4]) * ((double) invoiceDetail[8]) * 1.1 // Tổng cộng
-        });
-
-        tableModel.addRow(new Object[]{
-                2, // STT
-                "Tiền nước", // Tên hàng hóa, dịch vụ
-                "m3", // Đơn vị tính
-                invoiceDetail[5], // Số lượng
-                invoiceDetail[9], // Đơn giá (gianuoc)
-                ((int) invoiceDetail[5]) * ((double) invoiceDetail[9]), // Thành tiền chưa có thuế GTGT
-                "10%", // Thuế suất
-                ((int) invoiceDetail[5]) * ((double) invoiceDetail[9]) * 0.1, // Tiền thuế GTGT
-                ((int) invoiceDetail[5]) * ((double) invoiceDetail[9]) * 1.1 // Tổng cộng
-        });
-
-        tableModel.addRow(new Object[]{
-                3, // STT
-                "Tiền rác", // Tên hàng hóa, dịch vụ
-                "tháng", // Đơn vị tính
-                1, // Số lượng
-                invoiceDetail[8], // Đơn giá (tienrac)
-                invoiceDetail[8], // Thành tiền chưa có thuế GTGT
-                "10%", // Thuế suất
-                ((double) invoiceDetail[8]) * 0.1, // Tiền thuế GTGT
-                ((double) invoiceDetail[8]) * 1.1 // Tổng cộng
-        });
-
-        tableModel.addRow(new Object[]{
-                4, // STT
-                "Tổng giảm giá", // Tên hàng hóa, dịch vụ
-                "", // Đơn vị tính
-                "", // Số lượng
-                "", // Đơn giá
-                -(double) invoiceDetail[10], // Thành tiền chưa có thuế GTGT
-                "", // Thuế suất
-                "", // Tiền thuế GTGT
-                -(double) invoiceDetail[10] // Tổng cộng
-        });
-    }
 
 
 

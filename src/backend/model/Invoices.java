@@ -646,7 +646,73 @@ public class Invoices {
         return 0; // Trả về 0 nếu không tìm thấy
     }
 
+    public static void saveInvoiceToDatabase(Object invoiceDetail1) {
+        // dùng update lên Hoadon
+        // invoiceDetail1 sẽ bao hàm các thông tin sau:
+        //                        idPhong,0
+        //                        idCTHD,1
+        //                        sodienthangtruoc,2
+        //                        sonuocthangtruoc,3
+        //                        sodienused,4
+        //                        sonuocused,5
+        //                        daysInMonth,6
+        //                        tiennha,7
+        //                        tienrac,8
+        //                        chiphiphatsinh,9
+        //                        giamgia,10
+        //                        ngayhoadon,11
 
+// Cast invoiceDetail1 to Object[] for easier access
+        Object[] details = (Object[]) invoiceDetail1;
+
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+            INSERT INTO HoaDon (
+                Tiennha, Tiendien, Tiennuoc, Tienrac, Chiphikhac, Giamgia, Tongchiphi, Thanhtoan, Ngayxuathoadon, IDPhong, idCTHD, Ghichu
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """;
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            // Extract values from details array
+            double tiennha = (double) details[7];
+            double giadien = (double) details[9];
+            double gianuoc = (double) details[10];
+            double tienrac = (double) details[8];
+            double chiphikhac = (double) details[9];
+            double giamgia = (double) details[10];
+            double tiendien = giadien * (int) details[4];
+            double tiennuoc = gianuoc * (int) details[5];
+            double tongchiphi = (tiennha + tiendien + tiennuoc + tienrac + chiphikhac - giamgia) * 1.1; // Including 10% VAT
+            int idPhong = (int) details[0];
+            int idCTHD = (int) details[1];
+            Date ngayxuathoadon = (Date) details[11];
+
+            // Set parameters for SQL statement
+            pstmt.setDouble(1, tiennha);
+            pstmt.setDouble(2, tiendien);
+            pstmt.setDouble(3, tiennuoc);
+            pstmt.setDouble(4, tienrac);
+            pstmt.setDouble(5, chiphikhac);
+            pstmt.setDouble(6, giamgia);
+            pstmt.setDouble(7, tongchiphi);
+            pstmt.setInt(8, 0); // Default value for ThanhToan (0 = not paid)
+            pstmt.setDate(9, new java.sql.Date(ngayxuathoadon.getTime()));
+            pstmt.setInt(10, idPhong);
+            pstmt.setInt(11, idCTHD);
+            pstmt.setString(12, "Hóa đơn được tạo tự động"); // Default note
+
+            // Execute SQL insert
+            int rowsInserted = pstmt.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("Hóa đơn đã được lưu thành công vào cơ sở dữ liệu.");
+            } else {
+                System.out.println("Không thể lưu hóa đơn vào cơ sở dữ liệu.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

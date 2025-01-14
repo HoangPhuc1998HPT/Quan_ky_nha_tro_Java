@@ -69,7 +69,7 @@ public class RoomController {
             return;
         } else {
             new InvoiceFormView(chutro,  nguoiThueTro,  invoiceDetail,  room);
-            JOptionPane.showMessageDialog(frame, "Xuất hóa đơn cho phòng " + idPhong);
+            //JOptionPane.showMessageDialog(frame, "Xuất hóa đơn cho phòng" + idPhong);
         }
 
     }

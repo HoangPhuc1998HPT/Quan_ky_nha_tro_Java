@@ -6,8 +6,10 @@ import frontend.view.Invoices.InvoiceCreateNewInvoice;
 import frontend.view.Invoices.InvoiceFormView;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.Date;
 import java.util.List;
 
 public class InvoicesController {
@@ -21,8 +23,15 @@ public class InvoicesController {
         this.id_phong = id_phong;
     }
 
+    public static void goToSaveDataToHoadon(JFrame frame,Object invoiceDetail1) {
+        frame.setVisible(false);
+        Invoices.saveInvoiceToDatabase(invoiceDetail1);
+        JOptionPane.showMessageDialog(null, "Hóa đơn đã được lưu thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+    }
 
-
+    public static void goToexistInvoiceView(JFrame frame) {
+        frame.setVisible(false);
+    }
 
 
     public void loadThongTinHoadon( int id_phong) {
@@ -141,6 +150,60 @@ public class InvoicesController {
         } else {
             JOptionPane.showMessageDialog(null, "Không thể tải thông tin chi tiết hóa đơn!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public static void populateInvoiceTable(JTable table, Object[] invoiceDetail) {
+        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+        tableModel.setRowCount(0); // Clear existing rows
+
+        // Add row with the provided invoice details
+        tableModel.addRow(new Object[]{
+                1, // STT
+                "Tiền điện", // Tên hàng hóa, dịch vụ
+                "kWh", // Đơn vị tính
+                invoiceDetail[4], // Số lượng
+                invoiceDetail[8], // Đơn giá (giadien)
+                ((int) invoiceDetail[4]) * ((double) invoiceDetail[8]), // Thành tiền chưa có thuế GTGT
+                "10%", // Thuế suất
+                ((int) invoiceDetail[4]) * ((double) invoiceDetail[8]) * 0.1, // Tiền thuế GTGT
+                ((int) invoiceDetail[4]) * ((double) invoiceDetail[8]) * 1.1 // Tổng cộng
+        });
+
+        tableModel.addRow(new Object[]{
+                2, // STT
+                "Tiền nước", // Tên hàng hóa, dịch vụ
+                "m3", // Đơn vị tính
+                invoiceDetail[5], // Số lượng
+                invoiceDetail[9], // Đơn giá (gianuoc)
+                ((int) invoiceDetail[5]) * ((double) invoiceDetail[9]), // Thành tiền chưa có thuế GTGT
+                "10%", // Thuế suất
+                ((int) invoiceDetail[5]) * ((double) invoiceDetail[9]) * 0.1, // Tiền thuế GTGT
+                ((int) invoiceDetail[5]) * ((double) invoiceDetail[9]) * 1.1 // Tổng cộng
+        });
+
+        tableModel.addRow(new Object[]{
+                3, // STT
+                "Tiền rác", // Tên hàng hóa, dịch vụ
+                "tháng", // Đơn vị tính
+                1, // Số lượng
+                invoiceDetail[8], // Đơn giá (tienrac)
+                invoiceDetail[8], // Thành tiền chưa có thuế GTGT
+                "10%", // Thuế suất
+                ((double) invoiceDetail[8]) * 0.1, // Tiền thuế GTGT
+                ((double) invoiceDetail[8]) * 1.1 // Tổng cộng
+        });
+
+        tableModel.addRow(new Object[]{
+                4, // STT
+                "Tổng giảm giá", // Tên hàng hóa, dịch vụ
+                "", // Đơn vị tính
+                "", // Số lượng
+                "", // Đơn giá
+                -(double) invoiceDetail[10], // Thành tiền chưa có thuế GTGT
+                "", // Thuế suất
+                "", // Tiền thuế GTGT
+                -(double) invoiceDetail[10] // Tổng cộng
+        });
     }
 
 
