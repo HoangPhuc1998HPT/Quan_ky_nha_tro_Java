@@ -8,6 +8,7 @@ import controller.RoomController;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -65,7 +66,11 @@ public class InvoiceDetailUpdateView {
         gbc.gridy = 2;
         panel.add(tenantNameLabel, gbc);
 
-        JLabel startDateLabel = new JLabel("Ngày bắt đầu thuê: " + startDate);
+        // Giả sử startDate là một đối tượng Date
+        SimpleDateFormat formatterstartDate = new SimpleDateFormat("dd/MM/yy");
+        String formattedStartDate = formatterstartDate.format(startDate);
+
+        JLabel startDateLabel = new JLabel("Ngày bắt đầu thuê: " + formattedStartDate);
         startDateLabel.setFont(new Font("Be Vietnam Pro", Font.BOLD, 14));
         gbc.gridx = 1;
         gbc.gridy = 3;
@@ -250,6 +255,9 @@ public class InvoiceDetailUpdateView {
                 }
                 LocalDate invoiceLastMonth = lastPaymentDate.toLocalDate();
                 int dayInMonth = InvoiceDetail.calculateDaysBetweenDates(invoiceLastMonth, invoiceDate);
+                System.out.println(invoiceLastMonth);
+                System.out.println(invoiceLastMonth);
+                System.out.println(dayInMonth);
 
                 // Tạo đối tượng InvoiceDetail
                 InvoiceDetail updatedDetail = new InvoiceDetail(
@@ -284,7 +292,7 @@ public class InvoiceDetailUpdateView {
                 String formattedDate = LocalDate.parse(dateField.getText(), DateTimeFormatter.ofPattern("dd/MM/yyyy"))
                         .format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-                boolean isSuccess = InvoiceDetail.updateInvoiceDetail(room.getIdRoom(), updatedDetail, Date.valueOf(formattedDate));
+                boolean isSuccess = InvoiceDetail.updateInvoiceDetail(room.getIdRoom(), updatedDetail, Date.valueOf(formattedDate),dayInMonth);
 
                 if (isSuccess) {
                     JOptionPane.showMessageDialog(frame, "Cập nhật hóa đơn và số điện/nước thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);

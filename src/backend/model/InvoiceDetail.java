@@ -315,11 +315,11 @@ public class InvoiceDetail {
     // 11-01-2025
 
     // Hàm cập nhật hóa đơn mới vào bảng CTHoaDon
-    public static boolean updateInvoiceDetail(int idRoom, InvoiceDetail detail, Date ngaythutien) {
+    public static boolean updateInvoiceDetail(int idRoom, InvoiceDetail updatedDetail, Date ngaythutien, int dayInMonth) {
         Connection conn = null;
         PreparedStatement pstmt = null;
         System.out.println("Kiểm tra IDPhong: " + idRoom);
-
+        System.out.println("Kiểm tra dịnh dạng: " + ngaythutien);
         try {
             conn = connectDatabase.DatabaseConnection.getConnection();
             conn.setAutoCommit(false); // Bắt đầu transaction
@@ -330,18 +330,18 @@ public class InvoiceDetail {
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """;
 
-            int daysInMonth = 0;
+
 
             pstmt = conn.prepareStatement(sqlInsertCTHD);
-            pstmt.setInt(1, detail.getUseElectricReading());
-            pstmt.setInt(2, detail.getUseWaterReading());
-            pstmt.setInt(3, daysInMonth);//TODO: cần xem lại
-            pstmt.setDouble(4, detail.getRentPrice());
-            pstmt.setDouble(5, detail.getGarbagePrice());
-            pstmt.setDouble(6, detail.getAdditionalCost());
-            pstmt.setDouble(7, detail.getDiscount());
-            pstmt.setInt(8, detail.getOldElectricReading());
-            pstmt.setInt(9, detail.getOldWaterReading());
+            pstmt.setInt(1, updatedDetail.getUseElectricReading());
+            pstmt.setInt(2, updatedDetail.getUseWaterReading());
+            pstmt.setInt(3, dayInMonth);//TODO: cần xem lại
+            pstmt.setDouble(4, updatedDetail.getRentPrice());
+            pstmt.setDouble(5, updatedDetail.getGarbagePrice());
+            pstmt.setDouble(6, updatedDetail.getAdditionalCost());
+            pstmt.setDouble(7, updatedDetail.getDiscount());
+            pstmt.setInt(8, updatedDetail.getOldElectricReading());
+            pstmt.setInt(9, updatedDetail.getOldWaterReading());
             pstmt.setDate(10, ngaythutien); // Sử dụng ngày đã định dạng
             pstmt.setInt(11, idRoom);
 
@@ -351,9 +351,9 @@ public class InvoiceDetail {
                 // Cập nhật số điện/nước hiện tại vào bảng TTPhongtro
                 String sqlUpdateTTPhongtro = "UPDATE TTPhongtro SET Sodienhientai = ?, Sonuochientai = ? WHERE IDPhong = ?";
                 pstmt = conn.prepareStatement(sqlUpdateTTPhongtro);
-                pstmt.setInt(1, detail.getUseElectricReading());
-                pstmt.setInt(2, detail.getUseWaterReading());
-                pstmt.setInt(3, detail.getIdRoom());
+                pstmt.setInt(1, updatedDetail.getUseElectricReading() +updatedDetail.getOldElectricReading() );
+                pstmt.setInt(2, updatedDetail.getUseWaterReading() + updatedDetail.getOldWaterReading());
+                pstmt.setInt(3, idRoom);
 
                 int rowsUpdated = pstmt.executeUpdate();
                 if (rowsUpdated > 0) {
