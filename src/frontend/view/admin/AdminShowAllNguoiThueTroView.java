@@ -70,7 +70,7 @@ public class AdminShowAllNguoiThueTroView extends JFrame {
         buttonSetVisibleFalse.addActionListener(e -> {
             int selectedRow = table.getSelectedRow();
             if (selectedRow >= 0) {
-                String cccd = table.getValueAt(selectedRow, 4).toString();
+                String cccd = table.getValueAt(selectedRow, 3).toString();
                 AdminController.disableNguoiThueTro(cccd);
             } else {
                 JOptionPane.showMessageDialog(this, "Vui lòng chọn một người thuê để tạm ngưng hoạt động!", "Lỗi", JOptionPane.ERROR_MESSAGE);

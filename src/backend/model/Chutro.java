@@ -80,6 +80,23 @@ public class Chutro {
         return username;
     }
 
+    public static int getUserIdFromCCCD(String cccd) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "SELECT UserID FROM Chutro WHERE CCCD = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, cccd);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()) {
+                return rs.getInt("UserID");
+            } else {
+                return 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public static String getFullNameByUsername(String username) {
         String fullName = null;
         int userID = User.getUserIdByUsername(username);
@@ -259,6 +276,21 @@ public class Chutro {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static int getIDChutroFromHoTen(String hoten){
+        try(Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "SELECT IDChutro FROM Chutro WHERE HoTen = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, hoten);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("IDChutro");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
     /// STRIKE TODO: Xử lý lấy thông tin tên chủ trọ và tổng số phòng chủ trụ nắm giữ
     public static int getCountRoomFromIdChutro(int idChutro){

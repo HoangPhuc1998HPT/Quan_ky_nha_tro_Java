@@ -176,7 +176,7 @@ public class ChutroCreateRoomsView {
         JButton button_back = new JButton("Quay lại");
         gbc.gridx = 1;
         gbc.gridy = 9;
-        button_back.addActionListener(e -> go_back_dashboardchutro(frame, id_chutro ));
+        button_back.addActionListener(e -> frame.dispose());
         gbc.anchor = GridBagConstraints.CENTER; // Căn giữa ô nhập liệu
         panel.add(button_back, gbc);
 

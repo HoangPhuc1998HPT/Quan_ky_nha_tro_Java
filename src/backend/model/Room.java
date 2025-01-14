@@ -380,5 +380,22 @@ public class Room {
         return "Không có dữ liệu";
     }
 
+    public static int getIDRoomFromRoomName(String roomName) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = """
+            SELECT IDPhong FROM TTPhongtro WHERE TenPhong = ?
+        """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, roomName);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("IDPhong");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 
 }

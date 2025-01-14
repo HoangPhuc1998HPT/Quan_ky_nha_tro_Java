@@ -207,4 +207,20 @@ public class NguoiThueTro {
         return userId;
     }
 
+    public static int getUserIDFromCCCD(String cccd) {
+        int userId = -1; // Giá trị mặc định nếu không tìm thấy
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "SELECT UserID FROM NguoiThueTro WHERE CCCD = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, cccd);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                userId = rs.getInt("UserID");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userId;
+    }
+
 }

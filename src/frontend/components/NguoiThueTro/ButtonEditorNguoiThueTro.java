@@ -1,5 +1,6 @@
 package frontend.components.NguoiThueTro;
 
+import backend.model.NguoiThueTro;
 import controller.RoomController;
 
 import javax.swing.*;
@@ -33,11 +34,12 @@ public class ButtonEditorNguoiThueTro extends DefaultCellEditor {
             int selectedRow = table.getSelectedRow();
             if (selectedRow != -1) {
                 // Lấy IDNguoiThue từ cột ẩn
-                Object tenantId = table.getValueAt(selectedRow, 0);
-                if (tenantId != null) {
+                Object cccd = table.getValueAt(selectedRow, 3);
+                int tenantId = NguoiThueTro.getIdNguoiThueFromCCCD((String) cccd);
+                if (tenantId != 0) {
                     System.out.println("Tenant ID: " + tenantId);
                     // Gọi RoomController hoặc thực hiện logic khác
-                    RoomController.goToNguoiThutroInforView((int) tenantId);
+                    RoomController.goToNguoiThutroInforView(tenantId);
                 }
             }
         }
