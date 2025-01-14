@@ -1,6 +1,7 @@
 package frontend.view.Invoices;
 
 import backend.model.InvoiceDetail;
+import backend.model.Room;
 import controller.RoomController;
 
 import javax.swing.*;
@@ -203,33 +204,23 @@ public class InvoiceDetailUpdateView {
                 double discount = Double.parseDouble(discountField.getText());
                 String invoiceDate = dateField.getText();
 
-                // Lấy thông tin chi tiết hóa đơn hiện tại
-                InvoiceDetail currentDetail = InvoiceDetail.getInvoiceDetailForUpdate(id_room);
-                // // Trích xuất dữ liệu từ bảng TTPhongtro
-                //   int oldElectric = rs.getInt("sodienthangtruoc");
-                //   int oldWater = rs.getInt("sonuocthangtruoc");
-                //   double rentPrice = rs.getDouble("Tiennha");
-                //   double electricPrice = rs.getDouble("Giadien");
-                //   double waterPrice = rs.getDouble("GIanuoc");
-                //   double garbagePrice = rs.getDouble("Giarac");
+                // Lấy thông tin cần thiêết để xử lý hóa odnw hiện tại
+                Room room = Room.getRoomById(id_room);
 
-                if (currentDetail == null) {
-                    JOptionPane.showMessageDialog(frame, "Không thể lấy thông tin hóa đơn hiện tại.", "Lỗi", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
+
 
                 // Cập nhật thông tin hóa đơn mới
                 InvoiceDetail updatedDetail = new InvoiceDetail(
                         id_room,
                         idCTHD,
-                        currentDetail.getOldElectricReading(),
-                        currentDetail.getOldWaterReading(),
-                        newElectric - currentDetail.getOldElectricReading(),
-                        newWater - currentDetail.getOldWaterReading(),
-                        currentDetail.getRentPrice(),
-                        currentDetail.getElectricPrice(),
-                        currentDetail.getWaterPrice(),
-                        currentDetail.getGarbagePrice(),
+                        oldElectric,
+                        oldWater,
+                        newElectric - oldElectric,
+                        newWater - oldWater,
+                        room.getRoomPrice(),
+                        room.getElectricityPrice(),
+                        room.getWaterPrice(),
+                        room.getGarbagePrice(),
                         discount,
                         invoiceDate
                 );

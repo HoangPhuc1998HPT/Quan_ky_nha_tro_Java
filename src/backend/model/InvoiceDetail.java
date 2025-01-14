@@ -13,22 +13,23 @@ import java.time.temporal.ChronoUnit;
 import static javax.swing.UIManager.getInt;
 
 public class InvoiceDetail {
-    private int idRoom;
     private int idCTHD;
-    private int oldElectricReading;
-    private int oldWaterReading;
+    private int idRoom;
     private int useElectricReading;
     private int useWaterReading;
+    private int dayInMonth;
     private double rentPrice;
-    private double electricPrice;
-    private double waterPrice;
+    private String invoiceDate;
+    private int oldElectricReading;
+    private int oldWaterReading;
+    private double additionalCost;
     private double garbagePrice;
     private double discount;
-    private String invoiceDate;
+
 
     // Constructor đầy đủ
     public InvoiceDetail(int idRoom,int idCTHD, int oldElectricReading, int oldWaterReading, int newElectricReading, int newWaterReading,
-                         double rentPrice, double electricPrice, double waterPrice, double garbagePrice, double discount, String invoiceDate) {
+                         double rentPrice, double garbagePrice,double additionalCost, double discount, String invoiceDate) {
         this.idRoom = idRoom;
         this.idCTHD = idCTHD;
         this.oldElectricReading = oldElectricReading;
@@ -36,8 +37,7 @@ public class InvoiceDetail {
         this.useElectricReading = newElectricReading;
         this.useWaterReading = newWaterReading;
         this.rentPrice = rentPrice;
-        this.electricPrice = electricPrice;
-        this.waterPrice = waterPrice;
+        this.additionalCost = additionalCost;
         this.garbagePrice = garbagePrice;
         this.discount = discount;
         this.invoiceDate = invoiceDate;
@@ -101,21 +101,18 @@ public class InvoiceDetail {
         this.rentPrice = rentPrice;
     }
 
-    public double getElectricPrice() {
-        return electricPrice;
+    public int getDayInMonth(){
+        return dayInMonth;
     }
 
-    public void setElectricPrice(double electricPrice) {
-        this.electricPrice = electricPrice;
+    public void setDayInMonth(int dayInMonth) {
+        this.dayInMonth = dayInMonth;
     }
+    public void setAdditionalCost(double additionalCost){
+        this.additionalCost = additionalCost;
+    }
+    public double getAdditionalCost() { return additionalCost; }
 
-    public double getWaterPrice() {
-        return waterPrice;
-    }
-
-    public void setWaterPrice(double waterPrice) {
-        this.waterPrice = waterPrice;
-    }
 
     public double getGarbagePrice() {
         return garbagePrice;
@@ -324,24 +321,31 @@ public class InvoiceDetail {
 
             // Cập nhật vào bảng CTHoaDon
             String sqlInsertCTHD = """
-            INSERT INTO CTHoaDon (SodienUsed, SonuocUsed, DaysInMonth, Tiennha, Tienrac, Chiphiphatsinh, Giamgia, Ghichu, sodienthangtruoc, sonuocthangtruoc, ngaythutiendukien, IDPhong)
+            INSERT INTO CTHoaDon (SodienUsed, SonuocUsed, DaysInMonth, Tiennha, Tienrac, Chiphiphatsinh, Giamgia, sodienthangtruoc, sonuocthangtruoc, ngaythutiendukien, IDPhong)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
             int daysInMonth = 0;
-            if (lastInvoiceDate != null && !lastInvoiceDate.isEmpty()) {
-                LocalDate currentInvoiceDate = LocalDate.parse(formattedInvoiceDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            LocalDate currentInvoiceDate = LocalDate.parse(formattedInvoiceDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            // Cần kiểm tra lại dayInMonth: số ngày người thuê ở tới khi xuất hóa đơn nếu chưa có hóa dodnwd naào
+            // Nếu người thuê đã có hóa đơn, tính từ lần xuất hóa đơn trước
+            if (lastInvoiceDate == null || lastInvoiceDate.isEmpty()) {
+                // Lấy ngày bắt đầu thuê từ database
+                String startDate = InvoiceDetail.getStartDate(detail.getIdRoom());
+                LocalDate startRentalDate = LocalDate.parse(startDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+                daysInMonth = (int) ChronoUnit.DAYS.between(startRentalDate, currentInvoiceDate);
+            } else {
                 LocalDate previousInvoiceDate = LocalDate.parse(lastInvoiceDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
                 daysInMonth = (int) ChronoUnit.DAYS.between(previousInvoiceDate, currentInvoiceDate);
             }
 
             pstmt = conn.prepareStatement(sqlInsertCTHD);
-            pstmt.setInt(1, detail.getUseElectricReading() - detail.getOldElectricReading());
-            pstmt.setInt(2, detail.getUseWaterReading() - detail.getOldWaterReading());
-            pstmt.setInt(3, daysInMonth);
+            pstmt.setInt(1, detail.getUseElectricReading());
+            pstmt.setInt(2, detail.getUseWaterReading());
+            pstmt.setInt(3, daysInMonth);//TODO: cần xem lại
             pstmt.setDouble(4, detail.getRentPrice());
             pstmt.setDouble(5, detail.getGarbagePrice());
-            pstmt.setDouble(6, detail.getDiscount());
+            pstmt.setDouble(6, detail.getAdditionalCost());
             pstmt.setDouble(7, detail.getDiscount());
             pstmt.setString(8, "Cập nhật hóa đơn từ hệ thống");
             pstmt.setInt(9, detail.getOldElectricReading());
@@ -387,6 +391,8 @@ public class InvoiceDetail {
 
         return false;
     }
+
+
 
 
     public static InvoiceDetail getInvoiceDetailByIdRoom(int idPhong) {

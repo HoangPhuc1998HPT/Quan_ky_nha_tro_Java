@@ -1,7 +1,7 @@
 
 CREATE DATABASE QLThueNhaTro_java;
 USE QLThueNhaTro_java;
-
+SET Dateformat DMY;
 -- Table Creating
 CREATE TABLE Users (
                        UserID INT PRIMARY KEY IDENTITY(1,1),

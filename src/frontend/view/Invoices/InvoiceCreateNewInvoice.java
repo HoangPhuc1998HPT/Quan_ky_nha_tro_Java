@@ -14,6 +14,7 @@ public class InvoiceCreateNewInvoice {
     private JLabel labelSohoadon;
     private JLabel totalLabel;
     private InvoicesController controller;
+//  không dùng
 
     public InvoiceCreateNewInvoice(int id_chutro, int id_phong) {
         // Khởi tạo Frame

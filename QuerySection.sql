@@ -6,7 +6,7 @@ ALTER DATABASE QLThueNhaTro_java SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
 DROP DATABASE QLThueNhaTro_java
 
 -- SELECT Section
-SELECT * FROM Users
+01
 SELECT * FROM Admins
 SELECT * FROM Chutro
 SELECT * FROM NguoiThueTro
@@ -36,3 +36,5 @@ ALTER TABLE TTPhongtro ADD
     DROP TABLE Admins
 DROP TABLE Users
 DROP TABLE TTPhongtro
+
+select * from user
