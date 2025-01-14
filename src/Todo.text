@@ -56,3 +56,9 @@
 ---
     TODO: note : openInvoiceDetails cần fix
     Ngày thu tiền nhà tháng trước : chưa format hiển thị
+---
+Cập chi tiết hóa đơn
+- số điện cũ ==> lấy sai
+- SỐ nước cũ lấy sai
+- format dịnh ạng ngày bắt đâầu thuê sai
+- format ngày thu tiền nhà tháng trước sai
