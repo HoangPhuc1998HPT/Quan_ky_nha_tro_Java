@@ -184,7 +184,7 @@ public class Room {
                 TTPhongtro.GiaPhong,
                 TTPhongtro.Giadien,
                 TTPhongtro.Gianuoc,
-                ISNULL(TTphongtro.Giarac, 0) AS Giarac
+                ISNULL(TTphongtro.Giarac, 0) AS Giarac,
                 TTPhongtro.Sodienhientai,
                 TTPhongtro.Sonuochientai
             FROM TTPhongtro
@@ -376,11 +376,9 @@ public class Room {
                 TTPhongtro.Gianuoc, 
                 ISNULL(TTPhongtro.Giarac, 0) AS Giarac ,
                 TTPhongtro.Sodienhientai,
-                TTPhongtro.Sonuochientai,
-                
+                TTPhongtro.Sonuochientai
             FROM TTPhongtro
             LEFT JOIN NguoiThueTro ON TTPhongtro.IDNguoiThue = NguoiThueTro.IDNguoiThue
-            LEFT JOIN HoaDon ON TTPhongtro.IDPhong = HoaDon.IDPhong
             WHERE TTPhongtro.IDPhong = ?
         """;
 

@@ -43,11 +43,14 @@ public class RoomController {
     public static void goToUpdateHoaDon(JFrame frame, int idRoom, int idChutro) {
         //TODO : Thực thi hàm controller cho upate hóa đơn
         //đóng frame cũ
+        System.out.println(" ang ở gotoUpatehoadon");
         frame.setVisible(false);
         //int id_chutro,Room room, String tenantName, String startDate, String lastPaymentDate
         Room room = getRoomById(idRoom);
         NguoiThueTro nguoiThueTro = NguoiThueTro.getTenantByRoomId(idRoom);
         Date startDate = getPreDayInMonth(idRoom);
+
+
         new InvoiceDetailUpdateView(idChutro,room, nguoiThueTro, startDate);
 
     }
