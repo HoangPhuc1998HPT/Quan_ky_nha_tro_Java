@@ -129,6 +129,28 @@ public class NguoiThueTro {
         return null;
     }
 
+    public static NguoiThueTro getNguoiThueTroByIDnguoithue(int idNguoiThue) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "SELECT * FROM NguoiThueTro WHERE IDnguoithue = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idNguoiThue);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new NguoiThueTro(
+                        rs.getInt("IDNguoiThue"),
+                        rs.getInt("UserID"),
+                        rs.getString("Hoten"),
+                        rs.getString("Phone"),
+                        rs.getString("CCCD")
+                );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static int getIdNguoiThueFromCCCD(String CCCD) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = """

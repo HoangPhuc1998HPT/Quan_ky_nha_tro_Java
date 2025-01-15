@@ -19,13 +19,13 @@ public class NguoiThueTroController {
     public static void goToOpenInvoiceView(int idNguoiThue, int idPhong, int idChutro, int invoiceId) {
         try {
             // Lấy thông tin người thuê trọ
-            NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId(idNguoiThue);
+            NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByIDnguoithue(idNguoiThue);
             if (tenant == null) {
                 throw new IllegalArgumentException("Không tìm thấy thông tin người thuê trọ.");
             }
 
             // Lấy thông tin chủ trọ
-            Chutro chutro = Chutro.getChutroByUserId(idChutro);
+            Chutro chutro = Chutro.getChutrobyChutroID(idChutro);
             if (chutro == null) {
                 throw new IllegalArgumentException("Không tìm thấy thông tin chủ trọ.");
             }
@@ -37,7 +37,7 @@ public class NguoiThueTroController {
             }
 
             // Lấy thông tin hóa đơn
-            Object[] invoiceDetail = InvoiceDetail.getInvoiceDetailByIdRoom (idPhong);
+            Object[] invoiceDetail = InvoiceDetail.getInvoiceDetailByIdRoom(idPhong);
             if (invoiceDetail == null) {
                 throw new IllegalArgumentException("Không tìm thấy thông tin hóa đơn.");
             }

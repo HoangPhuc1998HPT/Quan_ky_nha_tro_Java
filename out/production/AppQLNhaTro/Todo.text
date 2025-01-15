@@ -29,15 +29,6 @@
             + Khi hiển thi hóa đơn của người thuê trọ : cần cho nút nhấn liên kết mở xem hóa đơn
             + Hiển thị hóa đơn Người thuê trọ: InvoiceFormViewNguoiThueTro (Chutro chutro, NguoiThueTro nguoithuetro, Object[] invoiceDetail, Room room)
             + Đăng xuất
-    RegisterView
-        - OK  Tạo tài khoản
-        - OK Cập nhật họ tên người thuê trọ ==> báo lỗi đỏ lè
 
-    - Phương thức cập nhật nguời thuê không cập nhật ngày bắt đầu thuê\
-    - login ==> thoát ==> phải cho ra homelogin
 
----
-    TODO: note : openInvoiceDetails cần fix
-    Ngày thu tiền nhà tháng trước : chưa format hiển thị
----
- RoomView => Xuất hóa đơn ==> lỗi
+
