@@ -79,30 +79,35 @@ public class NguoiThueTroDashboard_1View extends JFrame {
         invoiceScrollPane.setBounds(20, 230, 750, 200);
         mainPanel.add(invoiceScrollPane);
 
+        // TODO: Đang hiệu chỉnh
         // Load dữ liệu hóa đơn
-        DefaultTableModel invoiceTableModel = new DefaultTableModel(new String[]{"Ngày Xuất Hóa Đơn", "Tổng Giá Trị", "Trạng Thái", "Xem Hóa Đơn"}, 0);
+        DefaultTableModel invoiceTableModel = new DefaultTableModel(
+                new String[]{"idHoaDon (ẩn)", "Ngày Xuất Hóa Đơn", "Tổng Giá Trị", "Trạng Thái", "Xem Hóa Đơn"}, 0);
         List<Object[]> invoices = Invoices.getInvoicesByTenantId(TenantId);
+
         for (Object[] invoice : invoices) {
-            Object[] row = new Object[4];
-            row[0] = invoice[0]; // Ngày Xuất Hóa Đơn
-            row[1] = invoice[1]; // Tổng Giá Trị
-            row[2] = (boolean) invoice[2] ? "Đã Thanh Toán" : "Chưa Thanh Toán"; // Trạng Thái
+            Object[] row = new Object[5]; // Tăng kích thước lên 5 phần tử
+            row[0] = invoice[3]; // idHoaDon (ẩn)
+            row[1] = invoice[0]; // Ngày Xuất Hóa Đơn
+            row[2] = invoice[1]; // Tổng Giá Trị
+            row[3] = (boolean) invoice[2] ? "Đã Thanh Toán" : "Chưa Thanh Toán"; // Trạng Thái
 
             JButton viewButton = new JButton("Xem");
             viewButton.addActionListener(e -> {
-                int invoiceId = (int) invoice[3];
+                int invoiceId = Integer.parseInt(String.valueOf(invoice[3])); // Sử dụng ID Hóa Đơn
                 NguoiThueTroController.goToOpenInvoiceView(
-                        Integer.parseInt(String.valueOf(roomInfo.get(6)) ), // IDChutro
+                        Integer.parseInt(String.valueOf(roomInfo.get(6))), // IDChutro
                         id_nguoithuetro,
                         invoiceId,
                         Integer.parseInt(String.valueOf(roomInfo.get(5)))  // IDPhong
                 );
             });
-            row[3] = viewButton;
+            row[4] = viewButton;
 
             invoiceTableModel.addRow(row);
         }
         invoiceTable.setModel(invoiceTableModel);
+
 
         // Nút Đăng xuất
         JButton logoutBtn = new JButton("Đăng xuất");
