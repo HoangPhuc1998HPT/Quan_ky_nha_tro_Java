@@ -30,5 +30,5 @@
             + Hiển thị hóa đơn Người thuê trọ: InvoiceFormViewNguoiThueTro (Chutro chutro, NguoiThueTro nguoithuetro, Object[] invoiceDetail, Room room)
             + Đăng xuất
 
-
+    Dashboard người thuê trọ đã có phòng: cần thêm 1 đoạn thông tin về cá nhân của nguoiwf thuê trọ ==> cho phép thay đổi 1 số thoong tin
 

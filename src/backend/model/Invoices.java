@@ -49,6 +49,7 @@ public class Invoices {
 
 
 
+
     // Getter và Setter
     public int getBillID() {
         return billID;
@@ -730,6 +731,20 @@ public class Invoices {
             e.printStackTrace();
         }
     }
-
+    public static int getRoomIdFromInvoiceID(int invoiceId) {
+        int roomId = -1; // Giá trị mặc định nếu không tìm thấy
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "SELECT IDPhong FROM HoaDon WHERE BillID = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, invoiceId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                roomId = rs.getInt("IDPhong");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return roomId;
+    }
 
 }
