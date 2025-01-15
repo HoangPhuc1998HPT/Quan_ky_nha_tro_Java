@@ -29,7 +29,7 @@ public class Room {
     public Room(int idRoom, String name, String tenantName, String address, double roomPrice, double electricityPrice, double waterPrice, double garbagePrice, int currentElectricity, int currentWater) {
         this.idRoom = idRoom;
         this.name = name;
-        this.tenantName = null;
+        this.tenantName = tenantName;
         this.address = address;
         this.roomPrice = roomPrice;
         this.electricityPrice = electricityPrice;
@@ -286,7 +286,7 @@ public class Room {
         return false;
     }
 
-    public static boolean updateNguoiThueTroInRoom(int idRoom, String CCCD, Date ngaybatdauthue) {
+        public static boolean updateNguoiThueTroInRoom(int idRoom, String CCCD, Date ngaybatdauthue) {
         // Lấy ID của người thuê dựa trên CCCD
         int idNguoiThue = getIdNguoiThueFromCCCD(CCCD);
         System.out.println("ID Người thuê: " + idNguoiThue);

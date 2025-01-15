@@ -87,6 +87,8 @@ public class NguoiThueTroDashboard_1View extends JFrame {
         mainPanel.add(invoiceScrollPane);
 
         // Load dữ liệu hóa đơn
+        //TODO: cái này đang fix
+
         DefaultTableModel invoiceTableModel = new DefaultTableModel(
                 new String[]{"idHoaDon (ẩn)", "Ngày Xuất Hóa Đơn", "Tổng Giá Trị", "Trạng Thái", "Xem Hóa Đơn"}, 0);
         List<Object[]> invoices = Invoices.getInvoicesByTenantId(TenantId);
