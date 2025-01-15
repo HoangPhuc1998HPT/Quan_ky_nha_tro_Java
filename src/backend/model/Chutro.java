@@ -363,4 +363,27 @@ public class Chutro {
         }
         return username;
     }
+
+
+    public static String getLandlordNameFromIdNguoiThue(int idNguoiThueTro) {
+        String landlordName = null;
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            // Truy vấn SQL để lấy tên chủ trọ
+            String sql = """
+            SELECT ct.Hoten AS LandlordName
+            FROM TTPhongtro pt
+            JOIN Chutro ct ON pt.IDChutro = ct.IDChutro
+            WHERE pt.IDNguoiThue = ?
+        """;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idNguoiThueTro);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                landlordName = rs.getString("LandlordName");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return landlordName != null ? landlordName : "Không xác định";
+    }
 }
