@@ -49,10 +49,8 @@ public class AdminShowAllHoaDonView extends JFrame {
             row[1] = i + 1; // STT
             row[2] = invoiceData.get(i)[1]; // Tên phòng
             row[3] = invoiceData.get(i)[2]; // Tên người thuê
-            row[4] = invoiceData.get(i)[4] instanceof java.sql.Date
-                    ? ((java.sql.Date) invoiceData.get(i)[4]).toLocalDate().format(dateFormatter)
-                    : "N/A"; // Ngày xuất
-            row[5] = invoiceData.get(i)[4]; // Ngày xuất
+            row[4] = invoiceData.get(i)[4] ; // Ngày xuất
+            row[5] = invoiceData.get(i)[3]; // Ngày xuất
             row[6] = invoiceData.get(i)[5]; // Tình trạng
             row[7] = "Chi tiết"; // Button
             tableModel.addRow(row);

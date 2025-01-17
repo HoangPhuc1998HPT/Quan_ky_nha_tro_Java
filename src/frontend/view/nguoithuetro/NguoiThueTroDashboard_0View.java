@@ -3,6 +3,7 @@ package frontend.view.nguoithuetro;
 
 import backend.model.NguoiThueTro;
 import backend.model.Room;
+import controller.NguoiThueTroController;
 import frontend.components.NguoiThueTro.ButtonEditorNguoiThueTro_0;
 import frontend.components.NguoiThueTro.ButtonRendererNguoiThueTro_0;
 import frontend.view.login_register.loginView;
@@ -42,6 +43,19 @@ public class NguoiThueTroDashboard_0View extends JFrame {
         JLabel cccdLabel = new JLabel("CCCD: " + (tenant != null ? tenant.getCCCD() : "Không xác định"));
         cccdLabel.setBounds(20, 110, 300, 25);
         mainPanel.add(cccdLabel);
+
+        // Nút Cập nhật thông tin
+        JButton chancebtn = new JButton("Cập nhật thông tin");
+        // Đặt vị trí ngay dưới CCCD
+        chancebtn.setBounds(20, 140, 150, 30); // Đặt y = 140 để nằm ngay dưới cccdLabel
+        chancebtn.addActionListener(e -> {
+            // Mở giao diện mới để cập nhật thông tin hoặc thực hiện logic cập nhật
+            NguoiThueTroController.goToUpdateNguoiThueTroInforView(userId);
+        });
+        mainPanel.add(chancebtn); // Thêm nút vào panel
+
+
+
 
         // Bảng hiển thị gợi ý phòng
         JLabel tableLabel = new JLabel("Danh sách phòng trống:");
@@ -86,7 +100,15 @@ public class NguoiThueTroDashboard_0View extends JFrame {
             dispose();
             new loginView();
         });
+        // Nút Thoát
+        JButton existBtn = new JButton("Thoát");
+        existBtn.setBounds(530, 400, 100, 30); // Cấu hình tọa độ và kích thước riêng cho existBtn
+        existBtn.addActionListener(e -> {
+            dispose(); // Đóng cửa sổ hiện tại
+        });
+
         mainPanel.add(logoutBtn);
+        mainPanel.add(existBtn);
 
         setVisible(true);
     }

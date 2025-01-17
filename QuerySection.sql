@@ -3,7 +3,7 @@ USE QLThueNhaTro_java
 -- DROP a database is in use
 USE MASTER
 ALTER DATABASE QLThueNhaTro_java SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-DROP DATABASE QLThueNhaTro_java
+
 
 -- SELECT Section
 

@@ -82,6 +82,23 @@ public class NguoiThueTro {
         return null; // Trả về null nếu không tìm thấy
     }
 
+    public static boolean updateTenantInformation(int userId, String name, String phone, String cccd) {
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            String sql = "UPDATE NguoiThueTro SET Hoten = ?, Phone = ?, CCCD = ? WHERE UserID = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, name);
+            pstmt.setString(2, phone);
+            pstmt.setString(3, cccd);
+            pstmt.setInt(4, userId);
+
+            int rowsUpdated = pstmt.executeUpdate();
+            return rowsUpdated > 0; // Trả về true nếu cập nhật thành công
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; // Trả về false nếu xảy ra lỗi
+        }
+    }
+
 
 
     // Getters
@@ -108,26 +125,41 @@ public class NguoiThueTro {
 
     // Static methods for database operations
     public static NguoiThueTro getNguoiThueTroByUserId(int userId) {
-        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-            String sql = "SELECT * FROM NguoiThueTro WHERE UserID = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, userId);
-            ResultSet rs = pstmt.executeQuery();
+        // Khởi tạo đối tượng kết quả là null
+        NguoiThueTro nguoiThueTro = null;
 
-            if (rs.next()) {
-                return new NguoiThueTro(
-                        rs.getInt("IDNguoiThue"),
-                        rs.getInt("UserID"),
-                        rs.getString("Hoten"),
-                        rs.getString("Phone"),
-                        rs.getString("CCCD")
-                );
+        // Mở kết nối đến cơ sở dữ liệu
+        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
+            // Câu lệnh SQL lấy thông tin từ bảng NguoiThueTro
+            String sql = "SELECT IDNguoiThue, UserID, Hoten, Phone, CCCD FROM NguoiThueTro WHERE UserID = ?";
+
+            // Chuẩn bị câu lệnh
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, userId); // Gán tham số userId
+
+                // Thực thi câu lệnh và nhận kết quả
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    // Kiểm tra nếu có dữ liệu
+                    if (rs.next()) {
+                        nguoiThueTro = new NguoiThueTro(
+                                rs.getInt("IDNguoiThue"),
+                                rs.getInt("UserID"),
+                                rs.getString("Hoten"),
+                                rs.getString("Phone"),
+                                rs.getString("CCCD")
+                        );
+                    }
+                }
             }
         } catch (Exception e) {
+            // In ra lỗi nếu có
             e.printStackTrace();
         }
-        return null;
+
+        // Trả về kết quả (null nếu không tìm thấy)
+        return nguoiThueTro;
     }
+
 
     public static NguoiThueTro getNguoiThueTroByIDnguoithue(int idNguoiThue) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {

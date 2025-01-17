@@ -2,33 +2,16 @@
 // TODO: Lỗi logic
     Admindashboard
     - Danh sách hóa đơn
-        + Tổng chi phí không xuất ra màn hiình (N/A)
-        + Chức năng chi tiết không thể tải chi tiết hóa đơn
-        + Ngày xuất hiển thị sai
+        + Ngày xuất hóa đơn chưa chuẩn hóa
     - Danh sách phòng trọ
         + Chức năng tạm ngưng hoạt động phòng - không hoạt động
-    - Danh sách người thuê trọ
-        + Bấm tạm ngưng hoạt đông ==> có báo lỗi
     ChutrodashboardView
-    - Xem thông tin chủ trọ
-    - Xem danh sách phòng trọ
-        + Khi cập nhật người thuê trọ:
-            + 2 câu bên dưới note thêm (không có cũng OKe)
-            + Nếu cập nhật người khác vào 1 phòng đã có người thuê
-            + Cập nhật ngày kết thúc thuê trọ cho người cũ và cập nhật ngày bắt đầu thuê cho ng mới
-        + Nút xóa phòng chưa hoạt động ==> fail
         + Xem danh sách hóa đơn
              + Tên người thuê lỗi font ===> Hiệu chỉnh tất cả về Be VietNamPro
     NguoithuetroDashboardView
-        - NguoithuetroDashboard_0View
-            + Lỗi font chữ vị trí địa chỉ
-            + Đăng xuất
-        - NguoithuetroDashboard_1View
-            + Thông tin phòng ==> chưa có gì
-            + Danh sách hóa đơn ==> chưa lấy được hóa đơn của người thuê trọ ra
-            + Khi hiển thi hóa đơn của người thuê trọ : cần cho nút nhấn liên kết mở xem hóa đơn
-            + Hiển thị hóa đơn Người thuê trọ: InvoiceFormViewNguoiThueTro (Chutro chutro, NguoiThueTro nguoithuetro, Object[] invoiceDetail, Room room)
-            + Đăng xuất
 
+
++ Hiển thị hóa đơn Người thuê trọ: InvoiceFormViewNguoiThueTro (Chutro chutro, NguoiThueTro nguoithuetro, Object[] invoiceDetail, Room room)
+            + Đăng xuất
     Dashboard người thuê trọ đã có phòng: cần thêm 1 đoạn thông tin về cá nhân của nguoiwf thuê trọ ==> cho phép thay đổi 1 số thoong tin
 

@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import static backend.model.NguoiThueTro.getIdNguoiThueFromCCCD;
 
@@ -101,16 +100,60 @@ public class Room {
 
 
     public static void disableRoom(String roomId) {
-        try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
-            String sql = "UPDATE TTPhongtro SET IsActive = 0 WHERE IDPhong = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, roomId);
-            pstmt.executeUpdate();
-            System.out.println("Đã tạm ngưng hoạt động phòng: " + roomId);
+        Connection conn = null; // Khai báo Connection bên ngoài
+        try {
+            conn = connectDatabase.DatabaseConnection.getConnection(); // Khởi tạo kết nối
+            conn.setAutoCommit(false); // Bắt đầu transaction
+
+            // Kiểm tra phòng tồn tại
+            String checkRoomSql = "SELECT COUNT(*) FROM TTPhongtro WHERE IDPhong = ?";
+            try (PreparedStatement checkStmt = conn.prepareStatement(checkRoomSql)) {
+                checkStmt.setString(1, roomId);
+                ResultSet rs = checkStmt.executeQuery();
+                if (rs.next() && rs.getInt(1) == 0) {
+                    throw new Exception("Phòng không tồn tại: " + roomId);
+                }
+            }
+
+            // Xóa hóa đơn liên quan đến phòng
+            String deleteInvoicesSql = "DELETE FROM HoaDon WHERE IDPhong = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(deleteInvoicesSql)) {
+                pstmt.setString(1, roomId);
+                pstmt.executeUpdate();
+            }
+
+            // Xóa thông tin phòng
+            String deleteRoomSql = "DELETE FROM TTPhongtro WHERE IDPhong = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(deleteRoomSql)) {
+                pstmt.setString(1, roomId);
+                pstmt.executeUpdate();
+            }
+
+            conn.commit(); // Commit transaction
+            System.out.println("Đã xóa toàn bộ thông tin phòng: " + roomId);
         } catch (Exception e) {
             e.printStackTrace();
+            if (conn != null) {
+                try {
+                    conn.rollback(); // Rollback nếu có lỗi
+                    System.out.println("Đã rollback transaction do lỗi.");
+                } catch (Exception rollbackEx) {
+                    rollbackEx.printStackTrace();
+                }
+            }
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close(); // Đóng kết nối
+                } catch (Exception closeEx) {
+                    closeEx.printStackTrace();
+                }
+            }
         }
     }
+
+
+
 
     public static int getIdChutrobyRoomId(int roomId) {
         int idChutro = -1; // Giá trị mặc định nếu không tìm thấy
@@ -342,19 +385,20 @@ public class Room {
 
 
 
-    public static int getTenantRoomId(int tenantId) {
+    public static int getTenantRoomId(int userId) {
         try (Connection conn = connectDatabase.DatabaseConnection.getConnection()) {
             String sql = "SELECT IDPhong FROM TTPhongtro WHERE IDNguoiThue = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, tenantId);
+            pstmt.setInt(1, userId);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt("IDPhong");
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Không thể lấy IDPhong cho userId: " + userId);
         }
-        return 0;
+        return 0; // Không tìm thấy phòng
     }
 
 

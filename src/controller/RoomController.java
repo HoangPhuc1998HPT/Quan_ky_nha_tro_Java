@@ -223,15 +223,8 @@ public class RoomController {
                 "Xác nhận xóa phòng",
                 JOptionPane.YES_NO_OPTION
         );
-        if (confirm == JOptionPane.YES_OPTION) {
-            boolean isDeleted = Room.deleteRoom(idRoom);
-            if (isDeleted) {
-                JOptionPane.showMessageDialog(frame, "Xóa phòng thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-                frame.dispose(); // Đóng frame sau khi xóa
-            } else {
-                JOptionPane.showMessageDialog(frame, "Xóa phòng thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
-        }
+        Room.disableRoom(String.valueOf(idRoom));
+
     }
 
     public static void goToBackRoomView(JFrame frame, int idRoom, int idChutro) {
@@ -242,19 +235,24 @@ public class RoomController {
 
     public static void goToNguoiThutroInforView(int IdNguoiThuetro) {
         int userId = NguoiThueTro.getUserIDFromIdNguoiThuetro(IdNguoiThuetro);
+        System.out.println("UserId từ IdNguoiThuetro: " + userId);
+
         NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId(userId);
         if (tenant != null) {
-            // Kiểm tra xem người thuê đã có phòng hay chưa
-            int roomId = Room.getTenantRoomId(userId); // Gọi hàm kiểm tra phòng
+            System.out.println("Tìm thấy người thuê: " + tenant.getFullName());
+            int roomId = Room.getTenantRoomId(IdNguoiThuetro);
+            System.out.println("RoomId cho UserId: " + roomId);
+
             if (roomId == 0) {
-                // Chưa được thêm vào bất cứ phòng nào
+                System.out.println("Người thuê chưa có phòng.");
                 new NguoiThueTroDashboard_0View(userId);
-                System.out.println("Chuyển đến Dashboard Người Thuê Trọ (chưa có phòng)");
             } else {
-                // Đã có phòng
+                System.out.println("Người thuê đã có phòng.");
                 new NguoiThueTroDashboard_1View(userId);
-                System.out.println("Chuyển đến Dashboard Người Thuê Trọ (đã có phòng)");
             }
+        } else {
+            System.out.println("Không tìm thấy người thuê với UserId: " + userId);
         }
     }
+
 }

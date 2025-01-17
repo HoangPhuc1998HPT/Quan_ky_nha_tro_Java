@@ -2,6 +2,7 @@ package controller;
 
 import backend.model.*;
 import frontend.view.Invoices.InvoiceFormView;
+import frontend.view.nguoithuetro.UpdateNguoiThueTroInforView;
 
 import javax.swing.*;
 import java.sql.SQLException;
@@ -49,6 +50,18 @@ public class NguoiThueTroController {
             JOptionPane.showMessageDialog(null, "Lỗi: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    public static void goToUpdateNguoiThueTroInforView(int userId) {
+        // Lấy thông tin người thuê từ UserID
+        NguoiThueTro tenant = NguoiThueTro.getNguoiThueTroByUserId(userId);
+        if (tenant != null) {
+            new UpdateNguoiThueTroInforView(userId, tenant.getFullName(), tenant.getPhone(), tenant.getCCCD());
+        } else {
+            JOptionPane.showMessageDialog(null, "Không tìm thấy thông tin người thuê trọ!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
 
 
     public void showDashboard() throws SQLException {

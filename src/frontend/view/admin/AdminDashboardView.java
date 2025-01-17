@@ -25,7 +25,7 @@ public class AdminDashboardView extends JFrame {
 
         // Tiêu đề
         JLabel titleLabel = new JLabel("Admin Dashboard", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        titleLabel.setFont(new Font("Be Vietnam Pro", Font.BOLD, 18));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2; // Chiếm 2 cột

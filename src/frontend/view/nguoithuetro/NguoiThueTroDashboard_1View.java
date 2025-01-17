@@ -55,8 +55,15 @@ public class NguoiThueTroDashboard_1View extends JFrame {
             dispose();
             new loginView();
         });
-        mainPanel.add(logoutBtn);
+        // Nút Thoát
+        JButton existBtn = new JButton("Thoát");
+        existBtn.setBounds(530, 500, 100, 30); // Đặt tọa độ phù hợp, cùng hàng với nút Đăng xuất
+        existBtn.addActionListener(e -> {
+            dispose(); // Đóng cửa sổ hiện tại
+        });
 
+        mainPanel.add(logoutBtn);
+        mainPanel.add(existBtn);
         setVisible(true);
     }
 
