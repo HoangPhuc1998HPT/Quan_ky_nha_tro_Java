@@ -69,40 +69,10 @@ CREATE TABLE TTPhongtro (
 ALTER TABLE TTPhongtro ADD CONSTRAINT FK_TTPhongtro_IDChutro
     FOREIGN KEY (IDChutro) REFERENCES Chutro(IDChutro) ON DELETE SET NULL;
 
-CREATE TABLE HoaDon (
-                        BillID INT PRIMARY KEY IDENTITY(1,1), -- Mã hóa đơn tự động tăng
-                        Tiennha DECIMAL(10,2),               -- Phí thuê nhà hàng tháng
-                        Tiendien DECIMAL(10,2),        -- Phí điện
-                        Tiennuoc DECIMAL(10,2),              -- Phí nước
-                        Tienrac DECIMAL(10,2),              -- Phí rác
-                        Chiphikhac DECIMAL(10,2),             -- Các phí khác
-                        Giamgia DECIMAL(10,2),              -- Giảm giá
-                        Tongchiphi DECIMAL(10,2),           -- Tổng số tiền phải trả
-                        Thanhtoan INT,
-                        Ngayxuathoadon DATE,                        -- Ngày xuất hóa đơn
-                        IDPhong INT REFERENCES TTPhongTro(IDPhong)
-);
-
-ALTER TABLE HoaDon ADD idCTHD INT;
-
-ALTER TABLE HoaDon ADD Ghichu NVARCHAR(255) ;
-
-ALTER TABLE HoaDon ADD CONSTRAINT FK_HoaDon_IDPhong
-    FOREIGN KEY (IDPhong) REFERENCES TTPhongtro(IDPhong) ON DELETE CASCADE;
-
-ALTER TABLE HoaDon ADD CONSTRAINT DF_ThanhToan DEFAULT 0 FOR ThanhToan;
-
-ALTER TABLE HoaDon ADD CONSTRAINT CK_ThanhToan CHECK (ThanhToan IN (0, 1));
-
-
-select* from HoaDon
-select* from CTHoadon
-
 -- Bang chi tiet hoa don
-
 CREATE TABLE CTHoadon (
                           idCTHD INT PRIMARY KEY IDENTITY(1,1),
-						  IDPhong INT,
+                          IDPhong INT,
                           SodienUsed INT, -- Số điện tiêu thụ = số hiện tại - số trước
                           SonuocUsed INT,       -- Số nước tiêu thụ = số hiện tại - số trước
                           DaysInMonth INT,     -- Số ngày ở trong tháng
@@ -117,7 +87,41 @@ CREATE TABLE CTHoadon (
 ALTER TABLE CTHoadon ADD CONSTRAINT FK_TTPhongtro_CTHoadon
     FOREIGN KEY (IDPhong) REFERENCES TTPhongtro(IDPhong) ON DELETE SET NULL;
 
+
+
+CREATE TABLE HoaDon (
+                        BillID INT PRIMARY KEY IDENTITY(1,1), -- Mã hóa đơn tự động tăng
+                        Tiennha DECIMAL(10,2),               -- Phí thuê nhà hàng tháng
+                        Tiendien DECIMAL(10,2),        -- Phí điện
+                        Tiennuoc DECIMAL(10,2),              -- Phí nước
+                        Tienrac DECIMAL(10,2),              -- Phí rác
+                        Chiphikhac DECIMAL(10,2),             -- Các phí khác
+                        Giamgia DECIMAL(10,2),              -- Giảm giá
+                        Tongchiphi DECIMAL(10,2),           -- Tổng số tiền phải trả
+                        Thanhtoan INT,
+                        Ngayxuathoadon DATE,                        -- Ngày xuất hóa đơn
+                        IDPhong INT REFERENCES TTPhongTro(IDPhong)
+);
+
+
+
+ALTER TABLE HoaDon ADD idCTHD INT;
+
+ALTER TABLE HoaDon ADD Ghichu NVARCHAR(255) ;
+
 ALTER TABLE HoaDon ADD CONSTRAINT FK_Hoadon_CTHoadon
     FOREIGN KEY (idCTHD) REFERENCES CTHoadon(idCTHD) ON DELETE SET NULL;
+
+ALTER TABLE HoaDon ADD CONSTRAINT FK_HoaDon_IDPhong
+    FOREIGN KEY (IDPhong) REFERENCES TTPhongtro(IDPhong) ON DELETE CASCADE;
+
+ALTER TABLE HoaDon ADD CONSTRAINT DF_ThanhToan DEFAULT 0 FOR ThanhToan;
+
+ALTER TABLE HoaDon ADD CONSTRAINT CK_ThanhToan CHECK (ThanhToan IN (0, 1));
+
+
+
+
+
 
 

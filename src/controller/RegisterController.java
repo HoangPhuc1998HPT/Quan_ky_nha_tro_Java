@@ -52,6 +52,7 @@ public class RegisterController {
                     JOptionPane.showMessageDialog(frame, "Cập nhật thành công thông tin chủ trọ thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     frame.dispose();
                     new loginView();
+                    break;
                 } else {
                     JOptionPane.showMessageDialog(frame, "CCCD hay SĐT đã bị trùng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     JOptionPane.showMessageDialog(frame, "Cập nhật thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
@@ -62,6 +63,7 @@ public class RegisterController {
                     JOptionPane.showMessageDialog(frame, "Cập nhật thành công thông tin người thuê trọ thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                     frame.dispose();
                     new loginView();
+                    break;
                 } else {
                     JOptionPane.showMessageDialog(frame, "CCCD hay SĐT đã bị trùng!", "Lỗi", JOptionPane.ERROR_MESSAGE);
                     JOptionPane.showMessageDialog(frame, "Cập nhật thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
